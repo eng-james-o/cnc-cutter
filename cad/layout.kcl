@@ -1,0 +1,187 @@
+// Structural model plus preliminary motion interfaces and workholding volumes.
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+import frameBodies from "main.kcl"
+import stock, disc from "parts.kcl"
+import guideSeparation, foamSpan, profileWide, towerOffset, railSpacing, profileNarrow, plateThickness, railHeight, blockHeight, guideAbovePlate, x1Position, x2Position, y1Position, y2Position, rotaryDiameter, takeupTravel, steel, plateBlue from "parameters.kcl"
+
+assembly = frameBodies
+footZ = profileWide + railHeight + blockHeight + plateThickness
+centerX = guideSeparation / 2 + towerOffset
+leftZ = footZ + guideAbovePlate + y1Position
+rightZ = footZ + guideAbovePlate + y2Position
+railFace = centerX - (profileWide / 2) - railHeight
+carrierFace = railFace - blockHeight - plateThickness
+
+// Four vertical carriage blocks, 45 mm long along world Z.
+leftFrontBlock = stock(
+  width = blockHeight,
+  depth = 27mm,
+  height = 45mm,
+  x = -railFace,
+  y = x1Position - (railSpacing / 2) - 13.5mm,
+  z = leftZ - 22.5mm,
+  color = plateBlue,
+)
+leftRearBlock = stock(
+  width = blockHeight,
+  depth = 27mm,
+  height = 45mm,
+  x = -railFace,
+  y = x1Position + railSpacing / 2 - 13.5mm,
+  z = leftZ - 22.5mm,
+  color = plateBlue,
+)
+rightFrontBlock = stock(
+  width = blockHeight,
+  depth = 27mm,
+  height = 45mm,
+  x = railFace - blockHeight,
+  y = x2Position - (railSpacing / 2) - 13.5mm,
+  z = rightZ - 22.5mm,
+  color = plateBlue,
+)
+rightRearBlock = stock(
+  width = blockHeight,
+  depth = 27mm,
+  height = 45mm,
+  x = railFace - blockHeight,
+  y = x2Position + railSpacing / 2 - 13.5mm,
+  z = rightZ - 22.5mm,
+  color = plateBlue,
+)
+leftCarrier = stock(
+  width = plateThickness,
+  depth = railSpacing + 30mm,
+  height = 70mm,
+  x = -railFace + blockHeight,
+  y = x1Position - (railSpacing / 2) - 15mm,
+  z = leftZ - 35mm,
+  color = plateBlue,
+)
+rightCarrier = stock(
+  width = plateThickness,
+  depth = railSpacing + 30mm,
+  height = 70mm,
+  x = carrierFace,
+  y = x2Position - (railSpacing / 2) - 15mm,
+  z = rightZ - 35mm,
+  color = plateBlue,
+)
+
+// Ceramic guide envelopes. Their center planes are exactly 2000 mm apart.
+armLength = carrierFace - (guideSeparation / 2)
+leftArm = stock(
+  width = armLength,
+  depth = 20mm,
+  height = 12mm,
+  x = -carrierFace,
+  y = x1Position - 10mm,
+  z = leftZ - 6mm,
+  color = steel,
+)
+rightArm = stock(
+  width = armLength,
+  depth = 20mm,
+  height = 12mm,
+  x = guideSeparation / 2,
+  y = x2Position - 10mm,
+  z = rightZ - 6mm,
+  color = steel,
+)
+leftGuide = disc(
+  radius = 6mm,
+  height = 8mm,
+  x = 0mm,
+  y = 0mm,
+  z = 0mm,
+  color = '#F3E7C9',
+)
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(
+       x = -guideSeparation / 2 - 4mm,
+       y = x1Position,
+       z = leftZ,
+       global = true,
+     )
+rightGuide = disc(
+  radius = 6mm,
+  height = 8mm,
+  x = 0mm,
+  y = 0mm,
+  z = 0mm,
+  color = '#F3E7C9',
+)
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(
+       x = guideSeparation / 2 - 4mm,
+       y = x2Position,
+       z = rightZ,
+       global = true,
+     )
+
+// Outboard take-up reservation; orange body is a keep-out, not a spring.
+// Above the guide arm, connected hardware and pulleys remain to be designed.
+takeupReservation = stock(
+  width = takeupTravel,
+  depth = 60mm,
+  height = 40mm,
+  x = centerX + profileWide / 2 + 10mm,
+  y = x2Position - 30mm,
+  z = rightZ + 40mm,
+  color = '#D88528',
+)
+
+// Separate work support, rotary mount and foam references; not frame members.
+leftSupport = stock(
+  width = 100mm,
+  depth = 400mm,
+  height = 95mm,
+  x = -foamSpan / 2 + 20mm,
+  y = -200mm,
+  z = 45mm,
+  color = '#667B58',
+)
+rightSupport = stock(
+  width = 100mm,
+  depth = 400mm,
+  height = 95mm,
+  x = foamSpan / 2 - 120mm,
+  y = -200mm,
+  z = 45mm,
+  color = '#667B58',
+)
+rotaryMount = stock(
+  width = 200mm,
+  depth = 200mm,
+  height = 75mm,
+  x = -100mm,
+  y = -100mm,
+  z = 45mm,
+  color = steel,
+)
+rotaryPlate = disc(
+  radius = rotaryDiameter / 2,
+  height = 12mm,
+  x = 0mm,
+  y = 0mm,
+  z = 120mm,
+  color = plateBlue,
+)
+fixtureSpacer = disc(
+  radius = 60mm,
+  height = 8mm,
+  x = 0mm,
+  y = 0mm,
+  z = 132mm,
+  color = steel,
+)
+foamReference = stock(
+  width = foamSpan,
+  depth = 300mm,
+  height = 300mm,
+  x = -foamSpan / 2,
+  y = -150mm,
+  z = 140mm,
+  color = '#E3D8B7',
+)

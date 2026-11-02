@@ -1,0 +1,56 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+// Fully dimensioned stock envelopes; no supplier-specific T-slot geometry.
+export fn stock(width, depth, height, x, y, z, color) {
+  profile = sketch(on = XY) {
+    bottom = line(start = [0mm, 0mm], end = [width, 0mm])
+    right = line(start = [width, 0mm], end = [width, depth])
+    top = line(start = [width, depth], end = [0mm, depth])
+    left = line(start = [0mm, depth], end = [0mm, 0mm])
+  }
+  body = extrude(region(segments = [profile.bottom, profile.right]), length = height)
+    |> translate(
+         x = x,
+         y = y,
+         z = z,
+         global = true,
+       )
+    |> appearance(color = color)
+  hide(profile)
+  return body
+}
+
+// Triangular tower side plate on the YZ plane, extruded along +X.
+export fn gusset(x, y, z, width, height, thickness) {
+  profile = sketch(on = YZ) {
+    bottom = line(start = [-width / 2, 0mm], end = [width / 2, 0mm])
+    slope = line(start = [width / 2, 0mm], end = [0mm, height])
+    back = line(start = [0mm, height], end = [-width / 2, 0mm])
+  }
+  body = extrude(region(segments = [profile.bottom, profile.slope]), length = thickness)
+    |> translate(
+         x = x,
+         y = y,
+         z = z,
+         global = true,
+       )
+    |> appearance(color = '#386A9C')
+  hide(profile)
+  return body
+}
+
+export fn disc(radius, height, x, y, z, color) {
+  profile = sketch(on = XY) {
+    perimeter = circle(center = [0mm, 0mm], start = [radius, 0mm])
+  }
+  body = extrude(region(segments = [profile.perimeter]), length = height)
+    |> translate(
+         x = x,
+         y = y,
+         z = z,
+         global = true,
+       )
+    |> appearance(color = color)
+  hide(profile)
+  return body
+}

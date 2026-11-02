@@ -1,0 +1,7 @@
+ID,Stock,Quantity,Nominal length mm,Notes
+E01,2040 aluminium,4,700.00,Bed beams; 40 mm vertical
+E02,2040 aluminium,4,2090.00,Span ties; 40 mm vertical
+E03,2040 aluminium,4,110.00,Tower bed end ties; 40 mm vertical
+E04,2040 aluminium,4,620.00,Moving uprights; 40 mm across span
+E05,2040 aluminium,2,150.00,Tower caps; 20 mm vertical
+S01,20 x 4 steel flat,2,2197.84,Diagonal centerline lengths; end holes/overlap allowance TBD
