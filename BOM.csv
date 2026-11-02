@@ -1,0 +1,30 @@
+ID,Subsystem,Component,Specification,Quantity,Unit,Priority,Status,Notes
+M01,Frame,2040 extrusion,Braced frame cut list TBD,1,lot,High,Estimate,Finalize CAD before purchase
+M02,Frame,Gussets and T-nuts,M5 compatible,1,lot,High,Estimate,Include cross bracing
+M03,Guides,MGN12H rails,550-600 mm,8,each,High,Candidate,Two per axis
+M04,Guides,MGN12H blocks,Matching rails,8,each,High,Candidate,Potentially 16 after CAD
+M05,Horizontal drive,GT2 belt,9 mm wide 2 mm pitch,4,m,High,Estimate,Two X axes plus spare
+M06,Horizontal drive,GT2 motor pulley,20T for 9 mm belt correct shaft bore,2,each,High,Candidate,Check motor shaft
+M07,Horizontal drive,GT2 idler,For 9 mm belt,2,each,High,Candidate,Check bearings
+M08,Vertical drive,T8x8 lead screw,550-600 mm,2,each,High,Candidate,8 mm lead
+M09,Vertical drive,Anti-backlash nut,T8x8,2,each,High,Candidate,Matching lead
+M10,Vertical drive,Bearing supports and couplers,Matching shafts,2,set,High,Candidate,
+M11,Motion,NEMA17 motor,0.45-0.6 Nm provisional,4,each,High,Estimate,Check torque and driver
+M12,Rotary,Vertical turntable,250-300 mm,1,each,Medium,Concept,Collision simulation
+M13,Rotary,Worm reducer and stepper,30:1 to 60:1 provisional,1,set,Medium,Concept,Torque TBD
+M14,Wire,NiCr80 resistance wire,0.40 mm diameter,10,m,High,Candidate,2.25 m blanks plus spares
+M15,Wire,MACOR ceramic wire guides,Custom eyelets,2,each,High,Candidate,Corning material
+M16,Wire,Copper/brass current clamps,Strain relieved,2,each,High,Design,Define energized span
+M17,Tension,Constant-force spring,8-10 N >=100 mm stroke,1,each,High,TBD,Vendor SKU unverified
+M18,Tension,Insulating cord pulley and stops,Heat suitable,1,set,High,Design,Keep spring electrically isolated
+M19,Electronics,Arduino Mega 2560,Compatible board,1,each,High,Existing design,Check stock
+M20,Electronics,RAMPS 1.4 shield,Five sockets,1,each,High,Existing design,Verify pin map
+M21,Electronics,Stepper drivers,A4988 or suitable,5,each,High,Candidate,Current and cooling tests
+M22,Power,Heater PSU,48 V 5 A isolated current limited,1,each,High,Candidate,Separate from RAMPS
+M23,Power,External PWM power stage,48 V fused fail-safe,1,each,High,Design,Hardware safe-off
+M24,Power,Motion PSU,24 V 10 A provisional,1,each,High,Estimate,Verify RAMPS rating
+M25,Safety,E-stop and safety disconnect,Hardwired,1,set,High,Design,Heater and motion
+M26,Safety,Limit switches,8 linear ends plus rotary home,9,each,High,Estimate,Verify firmware
+M27,Safety,Enclosure fuses fans and wiring,Appropriate ratings,1,lot,High,Design,Grounding and strain relief
+M28,Workholding,Foam cradle and datums,1600 mm span,1,set,High,Design,Adjustable
+M29,Test,Calibration equipment and foam samples,Tension scale and gauges,1,lot,High,Design,Kerf and profile tests
