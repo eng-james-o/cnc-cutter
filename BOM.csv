@@ -1,30 +1,36 @@
-ID,Subsystem,Component,Specification,Quantity,Unit,Priority,Status,Notes
-M01,Frame,2040 extrusion,Braced frame cut list TBD,1,lot,High,Estimate,Finalize CAD before purchase
-M02,Frame,Gussets and T-nuts,M5 compatible,1,lot,High,Estimate,Include cross bracing
-M03,Guides,MGN12H rails,550-600 mm,8,each,High,Candidate,Two per axis
-M04,Guides,MGN12H blocks,Matching rails,8,each,High,Candidate,Potentially 16 after CAD
-M05,Horizontal drive,GT2 belt,9 mm wide 2 mm pitch,4,m,High,Estimate,Two X axes plus spare
-M06,Horizontal drive,GT2 motor pulley,20T for 9 mm belt correct shaft bore,2,each,High,Candidate,Check motor shaft
-M07,Horizontal drive,GT2 idler,For 9 mm belt,2,each,High,Candidate,Check bearings
-M08,Vertical drive,T8x8 lead screw,550-600 mm,2,each,High,Candidate,8 mm lead
-M09,Vertical drive,Anti-backlash nut,T8x8,2,each,High,Candidate,Matching lead
-M10,Vertical drive,Bearing supports and couplers,Matching shafts,2,set,High,Candidate,
-M11,Motion,NEMA17 motor,0.45-0.6 Nm provisional,4,each,High,Estimate,Check torque and driver
-M12,Rotary,Vertical turntable,250-300 mm,1,each,Medium,Concept,Collision simulation
-M13,Rotary,Worm reducer and stepper,30:1 to 60:1 provisional,1,set,Medium,Concept,Torque TBD
-M14,Wire,NiCr80 resistance wire,0.40 mm diameter,10,m,High,Candidate,2.25 m blanks plus spares
-M15,Wire,MACOR ceramic wire guides,Custom eyelets,2,each,High,Candidate,Corning material
-M16,Wire,Copper/brass current clamps,Strain relieved,2,each,High,Design,Define energized span
-M17,Tension,Constant-force spring,8-10 N >=100 mm stroke,1,each,High,TBD,Vendor SKU unverified
-M18,Tension,Insulating cord pulley and stops,Heat suitable,1,set,High,Design,Keep spring electrically isolated
-M19,Electronics,Arduino Mega 2560,Compatible board,1,each,High,Existing design,Check stock
-M20,Electronics,RAMPS 1.4 shield,Five sockets,1,each,High,Existing design,Verify pin map
-M21,Electronics,Stepper drivers,A4988 or suitable,5,each,High,Candidate,Current and cooling tests
-M22,Power,Heater PSU,48 V 5 A isolated current limited,1,each,High,Candidate,Separate from RAMPS
-M23,Power,External PWM power stage,48 V fused fail-safe,1,each,High,Design,Hardware safe-off
-M24,Power,Motion PSU,24 V 10 A provisional,1,each,High,Estimate,Verify RAMPS rating
-M25,Safety,E-stop and safety disconnect,Hardwired,1,set,High,Design,Heater and motion
-M26,Safety,Limit switches,8 linear ends plus rotary home,9,each,High,Estimate,Verify firmware
-M27,Safety,Enclosure fuses fans and wiring,Appropriate ratings,1,lot,High,Design,Grounding and strain relief
-M28,Workholding,Foam cradle and datums,1600 mm span,1,set,High,Design,Adjustable
-M29,Test,Calibration equipment and foam samples,Tension scale and gauges,1,lot,High,Design,Kerf and profile tests
+ID,Component,Example product or search specification,Quantity,Unit,Unit low USD,Unit high USD,Extended low USD,Extended high USD,Purchase status,Price confidence,AliExpress search,Notes
+"M01","2040 aluminium extrusion","2040 T-slot aluminium profile","1","lot","90","180","90.00","180.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-2040-t-slot-aluminium-profile.html","Cut list TBD"
+"M02","Frame hardware","M5 T-nuts corner gussets and brackets","1","lot","25","60","25.00","60.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-m5-t-nuts-corner-gussets-and-brackets.html","Bracing"
+"M03","Linear guide assemblies","MGN12H 550mm rail with carriage","8","each","12","25","96.00","200.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-mgn12h-550mm-rail-with-carriage.html","8 rails and minimum 8 blocks"
+"M04","Extra guide carriages","MGN12H matching block","8","each","3","8","24.00","64.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-mgn12h-matching-block.html","Optional second blocks"
+"M05","GT2 timing belt","GT2 9mm width 2mm pitch","4","m","2","4","8.00","16.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-gt2-9mm-width-2mm-pitch.html","Horizontal X axes"
+"M06","GT2 drive pulleys","GT2 20T 9mm belt 5mm bore","2","each","2","5","4.00","10.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-gt2-20t-9mm-belt-5mm-bore.html","Match motor shaft"
+"M07","GT2 idlers","GT2 9mm idler bearing","4","each","2","5","8.00","20.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-gt2-9mm-idler-bearing.html","Verify layout"
+"M08","Vertical lead screws","T8x8 600mm lead screw","2","each","8","17","16.00","34.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-t8x8-600mm-lead-screw.html","Two vertical axes"
+"M09","Lead screw nuts","T8x8 anti backlash brass nut","2","each","3","8","6.00","16.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-t8x8-anti-backlash-brass-nut.html","Correct lead"
+"M10","Lead screw hardware","Flexible coupler plus bearing supports","2","set","6","15","12.00","30.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-flexible-coupler-plus-bearing-supports.html","Check dimensions"
+"M11","Linear stepper motors","17HS4401 NEMA17 1.7A 40mm","4","each","9","17","36.00","68.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-17hs4401-nema17-1.7a-40mm.html","Torque validation required"
+"M12","Rotary table","250mm aluminium rotary plate bearing","1","set","25","75","25.00","75.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-250mm-aluminium-rotary-plate-bearing.html","Geometry TBD"
+"M13","Rotary motor gearbox","NEMA17 with worm gear 30:1 to 60:1","1","set","30","85","30.00","85.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-nema17-with-worm-gear-30%3A1-to-60%3A1.html","Torque validation"
+"M14","Resistance wire","NiCr80 0.4mm 10m spool","1","roll","6","16","6.00","16.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-nicr80-0.4mm-10m-spool.html","Supplier resistivity verify"
+"M15","Ceramic insulation","MACOR machinable glass ceramic guides","2","each","12","40","24.00","80.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-macor-machinable-glass-ceramic-guides.html","Not necessarily on AliExpress"
+"M16","Wire electrical clamps","Copper brass terminal clamps","2","each","2","8","4.00","16.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-copper-brass-terminal-clamps.html","Energized span"
+"M17","Constant-force tension spring","8 to 10 N stroke >=100mm","1","each","12","40","12.00","40.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-8-to-10-n-stroke-%3E%3D100mm.html","Unverified SKU; specialty sourcing"
+"M18","Tension mechanism","Pulley insulated cord stops bracket","1","set","12","35","12.00","35.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-pulley-insulated-cord-stops-bracket.html","Spring out of electrical loop"
+"M19","Microcontroller","Arduino Mega 2560 R3 compatible","1","each","10","22","10.00","22.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-arduino-mega-2560-r3-compatible.html","Verify MCU"
+"M20","Shield","RAMPS 1.4 five driver slots","1","each","6","14","6.00","14.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-ramps-1.4-five-driver-slots.html","Pinout verification"
+"M21","Stepper drivers","DRV8825 module with heatsink","5","each","2","5","10.00","25.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-drv8825-module-with-heatsink.html","Verify thermal current"
+"M22","Heater power supply","48V 5A isolated switching PSU","1","each","20","45","20.00","45.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-48v-5a-isolated-switching-psu.html","Current limit and safety"
+"M23","Heater MOSFET stage","48V DC PWM rated MOSFET module","1","each","8","25","8.00","25.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-48v-dc-pwm-rated-mosfet-module.html","Fail-safe and fuse needed"
+"M24","Motion power supply","24V 10A switching PSU","1","each","15","35","15.00","35.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-24v-10a-switching-psu.html","Check board input rating"
+"M25","Safety disconnect","Emergency stop contactor fuse and switch","1","set","25","70","25.00","70.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-emergency-stop-contactor-fuse-and-switch.html","Hardwired isolation"
+"M26","Homing switches","Mechanical endstop switch module","9","each","1","3","9.00","27.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-mechanical-endstop-switch-module.html","8 linear and rotary home"
+"M27","Electrical enclosure","Project box fan terminal blocks wiring","1","lot","30","90","30.00","90.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-project-box-fan-terminal-blocks-wiring.html","Strain relief grounding"
+"M28","Foam fixture","Workholding cradle clamps and datum stops","1","lot","20","65","20.00","65.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-workholding-cradle-clamps-and-datum-stops.html","Local fabrication"
+"M29","Measurement and test","Spring force gauge caliper foam test blanks","1","lot","20","70","20.00","70.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-spring-force-gauge-caliper-foam-test-blanks.html","Commissioning"
+"M30","Banana connectors","4mm banana plug pair","6","pair","1","3","6.00","18.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-4mm-banana-plug-pair.html","Original planned 12 plugs"
+"M31","XT60 connectors","XT60 male female pair","3","pair","1","3","3.00","9.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-xt60-male-female-pair.html","Original planned 6 connectors"
+"M32","Aviation connectors","GX16 aviation plug socket pair","2","pair","2","6","4.00","12.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-gx16-aviation-plug-socket-pair.html","Original G16 likely GX16 verify"
+"M33","Silicone wire","14AWG silicone cable","5","m","1","3","5.00","15.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-14awg-silicone-cable.html","Check actual current"
+"M34","Belt tensioners","GT2 belt tensioning hardware","2","set","3","9","6.00","18.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-gt2-belt-tensioning-hardware.html","Original planned"
+"M35","CAM license optional","DevCNC Foam license","1","license","70","70","70.00","70.00","Not purchased","Unverified budget estimate","https://www.aliexpress.com/w/wholesale-devcnc-foam-license.html","Original estimate not AliExpress"
