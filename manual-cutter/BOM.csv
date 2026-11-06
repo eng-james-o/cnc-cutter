@@ -1,0 +1,43 @@
+ID,Category,Item,Quantity,Unit_or_allowance,Specification,Source,Status,Notes
+M01,Mechanical,Pressure-rated PVC pipe,1,3 m purchase allowance,Nominal 1 inch / DN25 candidate; measure OD and wall; metric 32 mm OD alternative requires matching fittings,Buy,Provisional,About 1.3 m crossbar stock plus two 0.6 m arm blanks; final cuts after CAD
+M02,Mechanical,Pipe end caps,4,each,Match selected arm pipe standard,Buy,Provisional,Keep unused pipe ends covered; fittings may change cap count
+M03,Mechanical,Pivot bolts,2,each,M6 shoulder bolts or smooth bearing shank; length from assembly stack,Buy,Select after measurements,One per pivot; no threaded bearing surface where avoidable
+M04,Mechanical,Pivot sleeves / bushings,2,sets,Metal sleeves with spacers and broad washers; match M6 pivot,Buy,Select after measurements,Prevent PVC crushing and maintain free pivot movement
+M05,Mechanical,Clamp and saddle fasteners,16,sets allowance,M5 bolts with broad washers and locknuts; lengths after print detailing,Buy,Allowance,For forks saddles and anchors; count subject to CAD
+M06,Mechanical,Preload adjuster,1,set,M5 threaded adjuster with wingnut locknut and load-spreading bracket; or rated small turnbuckle,Buy,Provisional,Keep in cool upper tie; ensure smooth cord connection
+M07,Mechanical,Extension spring,1,each,Tie force approximately 5.25–8.75 N; candidate rate 0.2–0.4 N/mm; >=20 mm usable travel/adjustment reserve,Buy,Measured curve required,Initial tension and installed extension must be checked; no verified SKU
+M08,Mechanical,Nonconductive upper tie cord,2,m allowance,Low-stretch abrasion-resistant cord with working load >=100 N; kept cool,Buy,Provisional,Includes knots/adjustment and slack spring-retention tether
+M09,Mechanical,Ceramic insulated lower anchors,2,assemblies,Ceramic standoffs/eyelets plus metal mechanical nichrome clamps and backing plates,Buy,Select and test,About 40–50 mm starting hot-zone clearance; verify heat and mechanical loading
+M10,Mechanical,Workpiece/template clamps,4,each,Nonconductive or independently isolated fixtures; sufficient reach for support,Buy,Provisional,Keep fasteners clear of wire; foam cannot shift
+M11,Mechanical,Template contact edge,2,profile sets,Smooth deburred 0.3–0.5 mm metal strip candidate or suitable ceramic edge,Buy/fabricate,Coupon validation required,Independently isolate each end; metal edges may be live and hot
+M12,Mechanical,Template mounting hardware,1,set,Registration pins bolts washers and nuts; dimensions after guide design,Buy,Select after measurements,No conductive bridge between guides
+M13,Mechanical,Nonflammable parking stand,1,set,Stable support with ceramic/metal hot-wire rest,Buy/fabricate,Required,Printed saddles may support cold arms only
+E01,Electrical,NiCr80 wire,5,m spool allowance,0.40 mm diameter; verified alloy/resistance,Buy,Baseline,About 1.4 m raw wire per fit; clip-to-clip length approximately 1.15–1.20 m
+E02,Electrical,Laptop adapter,1,each,Sealed isolated 19 V DC >=3.42 A / 65 W; approved undamaged unit,Reuse/buy,Read label first,Check connector polarity and actual continuous rating
+E03,Electrical,DC input connector pair,1,set,Match exact charger connector; >=30 V DC and >=5 A continuous,Buy,Match actual adapter,Do not assume standard barrel diameter or rating
+E04,Electrical,DC PWM power controller,1,each,>=30 V DC input and >=5 A verified continuous; manual dial,Buy,Verify actual datasheet/thermal rating,Suitable for resistive heating; no firmware; test on adapter
+E05,Electrical,Master disconnect,1,each,>=30 V DC and >=5 A resistive load rating,Buy,Required,Accessible physical power isolation
+E06,Electrical,Normally-open hold-to-heat switch or foot pedal,1,each,>=30 V DC and >=5 A resistive load rating; series PWM input,Buy,Required,Physical removal of heater power on release; signal-only pedals unsuitable
+E07,Electrical,DC fuse and holder,1,set plus spares,Provisional 3 A fuse with >=30 V DC rating; holder >=5 A,Buy,Confirm with actual wiring/load,Locate near DC entry; this value is for 0.40 mm baseline
+E08,Electrical,Flexible copper lead wire,5,m total allowance,0.75 mm² stranded copper with appropriate insulation; red/black,Buy,Provisional,Includes outgoing/return runs and service loops; verify contact heating
+E09,Electrical,Insulated alligator clips,2,each,>=30 V DC >=5 A; retained mechanical connection,Buy,Test contact reliability,Current injection outside foam/guide sweep; clips do not carry tension
+E10,Electrical,Terminals insulation and strain relief,1,kit,Rated screw terminals ferrules ring lugs heatshrink cable glands,Buy,Required,Keep all connections guarded; no solder-only hot nichrome joint
+P01,Printed,Crossbar pivot forks,2,each,PETG/ASA candidate; metal bushings and M6 pivots,Print,Detail after coupon,See PRINTED_PARTS.md
+P02,Printed,Arm pivot saddles,2,each,Load-spreading clamp around measured PVC OD,Print,Detail after coupon,Includes mechanical stop interfaces
+P03,Printed,Upper tie anchor saddles,2,each,Cool load-spreading bolted cord anchors,Print,Provisional,One accommodates preload adjuster
+P04,Printed,Lower terminal carrier saddles,2,each,Cool mounts for purchased ceramic/metal anchor assemblies,Print,Thermal test required,No hot wire directly on filament
+P05,Printed,Grips and pinch guards,2,sets,Cool hand positions near pivots,Print,Provisional,Avoid interference with arm movement
+P06,Printed,Spring guard,1,each,Removable cool guard with full travel clearance,Print,Provisional,Retention tether supplied by M08
+P07,Printed,Profile guide bodies,2,minimum,Root/tip with indexed datums stations and lead-in/out,Print,Actual profiles needed,Heat-resistant replaceable contact edges M11; extra pair for split upper/lower workflow
+P08,Printed,Guide registration brackets,4,each,Two per end; independently isolated,Print,Provisional,Repeatable alignment and incidence
+P09,Printed,Controller enclosure,1,each,Bench mount with ventilation fuse access and strain relief,Print,Fit actual electronics,Do not enclose mains or adapter inside
+P10,Printed,Cable clips and cold-arm parking saddles,1,set,Six cable clips plus two cold support saddles allowance,Print,Provisional,No printed contact with hot wire
+C01,Consumables,Filament,1,spool available,PETG baseline or suitable ASA; amount after slicing,Use stock/buy,Existing printer available,PLA for nonloaded fit checks only
+C02,Consumables,Scrap EPS/XPS,1,batch,Known grade/density matching intended material,Use stock/buy,Required,Kerf guide-edge heat and feed calibration
+T01,Tools,Multimeter,1,each,DC voltage resistance and suitable DC current measurement,Use/buy,Required tool,PWM readings require appropriate instrument interpretation
+T02,Tools,Force gauge / spring scale,1,each,Resolution suitable for 3–10 N loads,Use/buy,Required tool,Measure spring force and wire tension
+T03,Tools,Temperature probe,1,each,Contact probe suitable for fittings/clips; electrically appropriate placement,Use/buy,Required tool,Shiny wire IR temperature readings may be misleading
+T04,Tools,Assembly and measurement tools,1,kit,Calipers tape saw deburrer drill hex keys and crimper,Use/buy,Required tool,Actual dimensions determine CAD
+S01,Workshop,Extraction and safe cutting area,1,setup,Effective ventilation/extraction plus nonflammable clear bench,Provide,Required,Known EPS/XPS only; follow material guidance
+O01,Optional,Second series hold-to-heat switch,1,each,Same DC load rating as E06 with independent operator access,Buy if selected,Optional,Either operator can interrupt power directly; add cable/strain relief allowance
+O02,Optional,Alternative fine nichrome,1,spool,NiCr80 0.30 mm,Buy if testing,Alternative only,About 19.5 W at 1.2 m/19 V; revalidate tension and performance
