@@ -1,0 +1,35 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+// Requirements from ../ARCHITECTURE.md v0.2. World Z is vertical.
+export guideSeparation = 2000mm
+export foamSpan = 1600mm
+export linearTravel = 400mm
+export railLength = 550mm
+export towerHeight = 620mm
+export baseDepth = 700mm
+
+// Preliminary mechanical allowances; edit after supplier hardware selection.
+export profileNarrow = 20mm
+export profileWide = 40mm
+export towerOffset = 120mm // guide plane to tower center, outward
+export railSpacing = 130mm
+export carriageDepth = 200mm
+export basePlateWidth = 200mm
+export plateThickness = 8mm
+export railHeight = 8mm // envelope only
+export blockHeight = 13mm // envelope above rail
+export endMargin = 55mm // rail end to upright end
+export guideAbovePlate = 120mm // minimum guide height from tower foot
+export rotaryDiameter = 250mm
+export takeupTravel = 120mm
+
+// Set independently within +/-200 mm; this is a pose, not motion simulation.
+export x1Position = 0mm
+export x2Position = 0mm
+export y1Position = 200mm // 0..400 mm above minimum height
+export y2Position = 200mm
+
+// Keep the structural entry point uncluttered; layout.kcl adds reference bodies.
+export aluminium = '#ADB6C0'
+export steel = '#444E5C'
+export plateBlue = '#386A9C'

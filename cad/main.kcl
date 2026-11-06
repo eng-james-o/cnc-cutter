@@ -1,0 +1,402 @@
+// CNC hot-wire cutter frame, engineering layout v0.1, not fabrication release.
+// Open this file in Zoo Design Studio. All members are separate solid bodies.
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+import stock, gusset from "parts.kcl"
+import guideSeparation, linearTravel, railLength, towerHeight, baseDepth, profileNarrow, profileWide, towerOffset, railSpacing, carriageDepth, basePlateWidth, plateThickness, railHeight, blockHeight, endMargin, x1Position, x2Position, aluminium, steel, plateBlue from "parameters.kcl"
+
+// World X spans the hot wire, Y is horizontal cutting travel, Z is vertical.
+// Firmware X1/X2 move along world Y; firmware Y1/Y2 move along world Z.
+towerCenter = guideSeparation / 2 + towerOffset
+innerRail = towerCenter - (railSpacing / 2)
+outerRail = towerCenter + railSpacing / 2
+spanTieLength = 2 * innerRail - profileNarrow
+shortTieLength = railSpacing - profileNarrow
+baseTop = profileWide
+railTop = baseTop + railHeight
+plateBottom = railTop + blockHeight
+footZ = plateBottom + plateThickness
+
+// Four 2040 bed beams, 40 mm dimension vertical.
+leftInnerBed = stock(
+  width = profileNarrow,
+  depth = baseDepth,
+  height = profileWide,
+  x = -innerRail - (profileNarrow / 2),
+  y = -baseDepth / 2,
+  z = 0mm,
+  color = aluminium,
+)
+leftOuterBed = stock(
+  width = profileNarrow,
+  depth = baseDepth,
+  height = profileWide,
+  x = -outerRail - (profileNarrow / 2),
+  y = -baseDepth / 2,
+  z = 0mm,
+  color = aluminium,
+)
+rightInnerBed = stock(
+  width = profileNarrow,
+  depth = baseDepth,
+  height = profileWide,
+  x = innerRail - (profileNarrow / 2),
+  y = -baseDepth / 2,
+  z = 0mm,
+  color = aluminium,
+)
+rightOuterBed = stock(
+  width = profileNarrow,
+  depth = baseDepth,
+  height = profileWide,
+  x = outerRail - (profileNarrow / 2),
+  y = -baseDepth / 2,
+  z = 0mm,
+  color = aluminium,
+)
+
+// Span ties butt against inboard bed beams; short ties close each tower bed.
+frontTie = stock(
+  width = spanTieLength,
+  depth = profileNarrow,
+  height = profileWide,
+  x = -spanTieLength / 2,
+  y = -baseDepth / 2,
+  z = 0mm,
+  color = aluminium,
+)
+rearTie = stock(
+  width = spanTieLength,
+  depth = profileNarrow,
+  height = profileWide,
+  x = -spanTieLength / 2,
+  y = baseDepth / 2 - profileNarrow,
+  z = 0mm,
+  color = aluminium,
+)
+centerFrontTie = stock(
+  width = spanTieLength,
+  depth = profileNarrow,
+  height = profileWide,
+  x = -spanTieLength / 2,
+  y = -120mm,
+  z = 0mm,
+  color = aluminium,
+)
+centerRearTie = stock(
+  width = spanTieLength,
+  depth = profileNarrow,
+  height = profileWide,
+  x = -spanTieLength / 2,
+  y = 100mm,
+  z = 0mm,
+  color = aluminium,
+)
+leftFrontTie = stock(
+  width = shortTieLength,
+  depth = profileNarrow,
+  height = profileWide,
+  x = -outerRail + profileNarrow / 2,
+  y = -baseDepth / 2,
+  z = 0mm,
+  color = aluminium,
+)
+leftRearTie = stock(
+  width = shortTieLength,
+  depth = profileNarrow,
+  height = profileWide,
+  x = -outerRail + profileNarrow / 2,
+  y = baseDepth / 2 - profileNarrow,
+  z = 0mm,
+  color = aluminium,
+)
+rightFrontTie = stock(
+  width = shortTieLength,
+  depth = profileNarrow,
+  height = profileWide,
+  x = innerRail + profileNarrow / 2,
+  y = -baseDepth / 2,
+  z = 0mm,
+  color = aluminium,
+)
+rightRearTie = stock(
+  width = shortTieLength,
+  depth = profileNarrow,
+  height = profileWide,
+  x = innerRail + profileNarrow / 2,
+  y = baseDepth / 2 - profileNarrow,
+  z = 0mm,
+  color = aluminium,
+)
+
+// Underside steel X straps resist base racking. Separate levels avoid overlap.
+braceRun = spanTieLength
+braceRise = baseDepth - profileNarrow
+braceLength = sqrt(braceRun * braceRun + braceRise * braceRise)
+braceAngle = atan2(y = braceRise, x = braceRun)
+braceOne = stock(
+  width = braceLength,
+  depth = 20mm,
+  height = 4mm,
+  x = 0mm,
+  y = -10mm,
+  z = -4mm,
+  color = steel,
+)
+  |> rotate(axis = Z, angle = braceAngle, global = true)
+  |> translate(x = -spanTieLength / 2, y = -baseDepth / 2 + profileNarrow / 2, global = true)
+braceTwo = stock(
+  width = braceLength,
+  depth = 20mm,
+  height = 4mm,
+  x = 0mm,
+  y = -10mm,
+  z = -8mm,
+  color = steel,
+)
+  |> rotate(axis = Z, angle = -braceAngle, global = true)
+  |> translate(x = -spanTieLength / 2, y = baseDepth / 2 - (profileNarrow / 2), global = true)
+
+// Four X-axis rail envelopes on top of the four bed beams.
+leftRailInner = stock(
+  width = 12mm,
+  depth = railLength,
+  height = railHeight,
+  x = -innerRail - 6mm,
+  y = -railLength / 2,
+  z = baseTop,
+  color = steel,
+)
+leftRailOuter = stock(
+  width = 12mm,
+  depth = railLength,
+  height = railHeight,
+  x = -outerRail - 6mm,
+  y = -railLength / 2,
+  z = baseTop,
+  color = steel,
+)
+rightRailInner = stock(
+  width = 12mm,
+  depth = railLength,
+  height = railHeight,
+  x = innerRail - 6mm,
+  y = -railLength / 2,
+  z = baseTop,
+  color = steel,
+)
+rightRailOuter = stock(
+  width = 12mm,
+  depth = railLength,
+  height = railHeight,
+  x = outerRail - 6mm,
+  y = -railLength / 2,
+  z = baseTop,
+  color = steel,
+)
+
+// One 45 mm block per horizontal rail; minimum eight-block architecture.
+leftBlockInner = stock(
+  width = 27mm,
+  depth = 45mm,
+  height = blockHeight,
+  x = -innerRail - 13.5mm,
+  y = x1Position - 22.5mm,
+  z = railTop,
+  color = plateBlue,
+)
+leftBlockOuter = stock(
+  width = 27mm,
+  depth = 45mm,
+  height = blockHeight,
+  x = -outerRail - 13.5mm,
+  y = x1Position - 22.5mm,
+  z = railTop,
+  color = plateBlue,
+)
+rightBlockInner = stock(
+  width = 27mm,
+  depth = 45mm,
+  height = blockHeight,
+  x = innerRail - 13.5mm,
+  y = x2Position - 22.5mm,
+  z = railTop,
+  color = plateBlue,
+)
+rightBlockOuter = stock(
+  width = 27mm,
+  depth = 45mm,
+  height = blockHeight,
+  x = outerRail - 13.5mm,
+  y = x2Position - 22.5mm,
+  z = railTop,
+  color = plateBlue,
+)
+leftBasePlate = stock(
+  width = basePlateWidth,
+  depth = carriageDepth,
+  height = plateThickness,
+  x = -towerCenter - (basePlateWidth / 2),
+  y = x1Position - (carriageDepth / 2),
+  z = plateBottom,
+  color = plateBlue,
+)
+rightBasePlate = stock(
+  width = basePlateWidth,
+  depth = carriageDepth,
+  height = plateThickness,
+  x = towerCenter - (basePlateWidth / 2),
+  y = x2Position - (carriageDepth / 2),
+  z = plateBottom,
+  color = plateBlue,
+)
+
+// Moving towers: paired 2040 uprights, 40 mm dimension across the wire.
+leftUprightFront = stock(
+  width = profileWide,
+  depth = profileNarrow,
+  height = towerHeight,
+  x = -towerCenter - (profileWide / 2),
+  y = x1Position - (railSpacing / 2) - (profileNarrow / 2),
+  z = footZ,
+  color = aluminium,
+)
+leftUprightRear = stock(
+  width = profileWide,
+  depth = profileNarrow,
+  height = towerHeight,
+  x = -towerCenter - (profileWide / 2),
+  y = x1Position + railSpacing / 2 - (profileNarrow / 2),
+  z = footZ,
+  color = aluminium,
+)
+rightUprightFront = stock(
+  width = profileWide,
+  depth = profileNarrow,
+  height = towerHeight,
+  x = towerCenter - (profileWide / 2),
+  y = x2Position - (railSpacing / 2) - (profileNarrow / 2),
+  z = footZ,
+  color = aluminium,
+)
+rightUprightRear = stock(
+  width = profileWide,
+  depth = profileNarrow,
+  height = towerHeight,
+  x = towerCenter - (profileWide / 2),
+  y = x2Position + railSpacing / 2 - (profileNarrow / 2),
+  z = footZ,
+  color = aluminium,
+)
+leftTopTie = stock(
+  width = profileWide,
+  depth = railSpacing + profileNarrow,
+  height = profileNarrow,
+  x = -towerCenter - (profileWide / 2),
+  y = x1Position - ((railSpacing + profileNarrow) / 2),
+  z = footZ + towerHeight,
+  color = aluminium,
+)
+rightTopTie = stock(
+  width = profileWide,
+  depth = railSpacing + profileNarrow,
+  height = profileNarrow,
+  x = towerCenter - (profileWide / 2),
+  y = x2Position - ((railSpacing + profileNarrow) / 2),
+  z = footZ + towerHeight,
+  color = aluminium,
+)
+leftGusset = gusset(
+  x = -towerCenter - (profileWide / 2) - 6mm,
+  y = x1Position,
+  z = footZ,
+  width = carriageDepth,
+  height = 180mm,
+  thickness = 6mm,
+)
+rightGusset = gusset(
+  x = towerCenter + profileWide / 2,
+  y = x2Position,
+  z = footZ,
+  width = carriageDepth,
+  height = 180mm,
+  thickness = 6mm,
+)
+
+// Four Y-axis rails face inward; carrier and guides appear in layout.kcl.
+leftVerticalFront = stock(
+  width = railHeight,
+  depth = 12mm,
+  height = railLength,
+  x = -towerCenter + profileWide / 2,
+  y = x1Position - (railSpacing / 2) - 6mm,
+  z = footZ + endMargin,
+  color = steel,
+)
+leftVerticalRear = stock(
+  width = railHeight,
+  depth = 12mm,
+  height = railLength,
+  x = -towerCenter + profileWide / 2,
+  y = x1Position + railSpacing / 2 - 6mm,
+  z = footZ + endMargin,
+  color = steel,
+)
+rightVerticalFront = stock(
+  width = railHeight,
+  depth = 12mm,
+  height = railLength,
+  x = towerCenter - (profileWide / 2) - railHeight,
+  y = x2Position - (railSpacing / 2) - 6mm,
+  z = footZ + endMargin,
+  color = steel,
+)
+rightVerticalRear = stock(
+  width = railHeight,
+  depth = 12mm,
+  height = railLength,
+  x = towerCenter - (profileWide / 2) - railHeight,
+  y = x2Position + railSpacing / 2 - 6mm,
+  z = footZ + endMargin,
+  color = steel,
+)
+
+// Named export lets layout.kcl reuse this structural assembly.
+export frameBodies = [
+  leftInnerBed,
+  leftOuterBed,
+  rightInnerBed,
+  rightOuterBed,
+  frontTie,
+  rearTie,
+  centerFrontTie,
+  centerRearTie,
+  leftFrontTie,
+  leftRearTie,
+  rightFrontTie,
+  rightRearTie,
+  braceOne,
+  braceTwo,
+  leftRailInner,
+  leftRailOuter,
+  rightRailInner,
+  rightRailOuter,
+  leftBlockInner,
+  leftBlockOuter,
+  rightBlockInner,
+  rightBlockOuter,
+  leftBasePlate,
+  rightBasePlate,
+  leftUprightFront,
+  leftUprightRear,
+  rightUprightFront,
+  rightUprightRear,
+  leftTopTie,
+  rightTopTie,
+  leftGusset,
+  rightGusset,
+  leftVerticalFront,
+  leftVerticalRear,
+  rightVerticalFront,
+  rightVerticalRear
+]
