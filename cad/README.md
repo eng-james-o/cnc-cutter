@@ -19,6 +19,7 @@ Preliminary engineering layout v0.1, based on repository `ARCHITECTURE.md` v0.2 
 | `layout.kcl` | Structural assembly plus vertical carriers, guide locations and workholding/keep-out references |
 | `parameters.kcl` | Requirements, provisional dimensions, colors and displayed axis positions |
 | `parts.kcl` | Rectangular stock, triangular gusset and circular stock helpers |
+| `NOTES.md` | Zoo Studio AI project memory: design intent, coordinates, assumptions, validation status and analysis guidance |
 | `frame_cut_list.csv` | Nominal extrusion and diagonal-strap list generated from parameters |
 | `check_dimensions.py` | Dependency-free dimension checks and cut-list generation |
 
