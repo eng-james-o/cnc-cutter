@@ -1,0 +1,644 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+import block, pin, pinX, pinY, tube from "primitives.kcl"
+import clampBore, m3Clear, m5Clear, pivotSleeveBore, printBlue, housingLength, housingWidth, housingHeight from "parameters.kcl"
+
+// Split collar: two separately printable halves, 1 mm gap at Y=0.
+// Local axis Z, all fastener clearances are real through cuts.
+export fn collarHalf(length) {
+  stock = block(
+    w = 58mm,
+    d = 29mm,
+    h = length,
+    x = -29mm,
+    y = 0.5mm,
+    z = -length / 2,
+  )
+  bore = pin(
+    dia = clampBore,
+    length = length + 2mm,
+    x = 0mm,
+    y = 0mm,
+    z = -length / 2 - 1mm,
+  )
+  boltOne = pinY(
+    dia = m5Clear,
+    length = 32mm,
+    x = -23mm,
+    y = -1mm,
+    z = 0mm,
+  )
+  boltTwo = pinY(
+    dia = m5Clear,
+    length = 32mm,
+    x = 23mm,
+    y = -1mm,
+    z = 0mm,
+  )
+  return subtract(stock, tools = [bore, boltOne, boltTwo])
+    |> appearance(color = printBlue)
+}
+export fn pivotSaddleHalf() {
+  base = collarHalf(length = 48mm)
+  pivot = pinY(
+    dia = pivotSleeveBore,
+    length = 32mm,
+    x = 0mm,
+    y = -1mm,
+    z = 0mm,
+  )
+  return subtract(base, tools = pivot)
+}
+// P01: right fork socket center at X=-85; pivot center is origin.
+// A second socket half completes the clamp. Left end rotates 180deg about Z.
+export fn pivotFork() {
+  socketHalf = collarHalf(length = 60mm)
+    |> rotate(axis = Y, angle = 90deg, global = true)
+    |> translate(x = -85mm, global = true)
+  spine = block(
+    w = 12mm,
+    d = 76mm,
+    h = 48mm,
+    x = -57mm,
+    y = -38mm,
+    z = -24mm,
+  )
+  cheekA = block(
+    w = 72mm,
+    d = 8mm,
+    h = 48mm,
+    x = -50mm,
+    y = -38mm,
+    z = -24mm,
+  )
+  cheekB = block(
+    w = 72mm,
+    d = 8mm,
+    h = 48mm,
+    x = -50mm,
+    y = 30mm,
+    z = -24mm,
+  )
+  stopTop = block(
+    w = 27mm,
+    d = 60mm,
+    h = 5mm,
+    x = -57mm,
+    y = -30mm,
+    z = 19mm,
+  )
+  stopBottom = block(
+    w = 27mm,
+    d = 60mm,
+    h = 5mm,
+    x = -57mm,
+    y = -30mm,
+    z = -24mm,
+  )
+  joined = union([
+    socketHalf,
+    spine,
+    cheekA,
+    cheekB,
+    stopTop,
+    stopBottom
+  ])
+  pivot = pinY(
+    dia = 6.5mm,
+    length = 80mm,
+    x = 0mm,
+    y = -40mm,
+    z = 0mm,
+  )
+  guardA = pinY(
+    dia = 2.8mm,
+    length = 80mm,
+    x = -50mm,
+    y = -40mm,
+    z = -18mm,
+  )
+  guardB = pinY(
+    dia = 2.8mm,
+    length = 80mm,
+    x = -50mm,
+    y = -40mm,
+    z = 18mm,
+  )
+  return subtract(joined, tools = [pivot, guardA, guardB])
+    |> appearance(color = printBlue)
+}
+export fn forkCap() {
+  return collarHalf(length = 60mm)
+    |> rotate(axis = Z, angle = 180deg, global = true)
+    |> rotate(axis = Y, angle = 90deg, global = true)
+    |> translate(x = -85mm, global = true)
+}
+// P03 body with integral upper lug; mating half is collarHalf(36mm).
+export fn upperAnchor() {
+  clamp = collarHalf(length = 36mm)
+  lug = block(
+    w = 22mm,
+    d = 12mm,
+    h = 48mm,
+    x = -11mm,
+    y = 15mm,
+    z = 8mm,
+  )
+  united = union([clamp, lug])
+  eye = pinY(
+    dia = 5.5mm,
+    length = 32mm,
+    x = 0mm,
+    y = -1mm,
+    z = 35mm,
+  )
+  adjusterPassage = pinX(
+    dia = 5.5mm,
+    length = 26mm,
+    x = -13mm,
+    y = 21mm,
+    z = 35mm,
+  )
+  return subtract(united, tools = [eye, adjusterPassage])
+    |> appearance(color = printBlue)
+}
+// P04 mounts ceramic below arm; two M4 clearance holes and a central passage.
+export fn terminalCarrier() {
+  clamp = collarHalf(length = 40mm)
+  bridge = block(
+    w = 58mm,
+    d = 58mm,
+    h = 10mm,
+    x = -29mm,
+    y = -29mm,
+    z = -35mm,
+  )
+  web = block(
+    w = 58mm,
+    d = 12mm,
+    h = 20mm,
+    x = -29mm,
+    y = 17mm,
+    z = -28mm,
+  )
+  united = union([clamp, bridge, web])
+  holeA = pin(
+    dia = 4.5mm,
+    length = 14mm,
+    x = -18mm,
+    y = 0mm,
+    z = -37mm,
+  )
+  holeB = pin(
+    dia = 4.5mm,
+    length = 14mm,
+    x = 18mm,
+    y = 0mm,
+    z = -37mm,
+  )
+  passage = pin(
+    dia = 8mm,
+    length = 14mm,
+    x = 0mm,
+    y = 0mm,
+    z = -37mm,
+  )
+  return subtract(united, tools = [holeA, holeB, passage])
+    |> appearance(color = printBlue)
+}
+// P05 split sleeve grip; fastening is by two band-clamps or rated ties in grooves.
+export fn gripHalf() {
+  stock = pin(
+    dia = 44mm,
+    length = 90mm,
+    x = 0mm,
+    y = 0mm,
+    z = -45mm,
+  )
+  bore = pin(
+    dia = clampBore,
+    length = 92mm,
+    x = 0mm,
+    y = 0mm,
+    z = -46mm,
+  )
+  split = block(
+    w = 46mm,
+    d = 24mm,
+    h = 92mm,
+    x = -23mm,
+    y = -23.5mm,
+    z = -46mm,
+  )
+  grooveA = tube(od = 46mm, id = 41mm, length = 5mm)
+    |> translate(z = -33mm, global = true)
+  grooveB = tube(od = 46mm, id = 41mm, length = 5mm)
+    |> translate(z = 28mm, global = true)
+  return subtract(stock, tools = [bore, split, grooveA, grooveB])
+    |> appearance(color = printBlue)
+}
+export fn pinchGuard() {
+  stock = block(
+    w = 96mm,
+    d = 4mm,
+    h = 78mm,
+    x = -64mm,
+    y = 40mm,
+    z = -39mm,
+  )
+  pivotAccess = pinY(
+    dia = 22mm,
+    length = 8mm,
+    x = 0mm,
+    y = 38mm,
+    z = 0mm,
+  )
+  fastA = pinY(
+    dia = m3Clear,
+    length = 8mm,
+    x = -50mm,
+    y = 38mm,
+    z = -18mm,
+  )
+  fastB = pinY(
+    dia = m3Clear,
+    length = 8mm,
+    x = -50mm,
+    y = 38mm,
+    z = 18mm,
+  )
+  return subtract(stock, tools = [pivotAccess, fastA, fastB])
+    |> appearance(color = printBlue)
+}
+// P06: removable split tube; ties pass around guard and cool cord, not spring coils.
+export fn springGuardHalf() {
+  stock = block(
+    w = 130mm,
+    d = 18mm,
+    h = 36mm,
+    x = -65mm,
+    y = 0.5mm,
+    z = -18mm,
+  )
+  cavity = pinX(
+    dia = 28mm,
+    length = 132mm,
+    x = -66mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  window = block(
+    w = 70mm,
+    d = 20mm,
+    h = 10mm,
+    x = -35mm,
+    y = 10mm,
+    z = -5mm,
+  )
+  return subtract(stock, tools = [cavity, window])
+    |> appearance(color = printBlue)
+}
+// P08: L bracket with two real slotted mounting positions (overlapping drill/slot cuts).
+export fn registrationBracket() {
+  foot = block(
+    w = 55mm,
+    d = 35mm,
+    h = 6mm,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  back = block(
+    w = 55mm,
+    d = 6mm,
+    h = 45mm,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  joined = union([foot, back])
+  slotA = block(
+    w = 6mm,
+    d = 16mm,
+    h = 10mm,
+    x = 10mm,
+    y = 12mm,
+    z = -2mm,
+  )
+  slotB = block(
+    w = 6mm,
+    d = 16mm,
+    h = 10mm,
+    x = 39mm,
+    y = 12mm,
+    z = -2mm,
+  )
+  holeA = pinY(
+    dia = m5Clear,
+    length = 10mm,
+    x = 13mm,
+    y = -2mm,
+    z = 28mm,
+  )
+  holeB = pinY(
+    dia = m5Clear,
+    length = 10mm,
+    x = 42mm,
+    y = -2mm,
+    z = 28mm,
+  )
+  return subtract(joined, tools = [slotA, slotB, holeA, holeB])
+    |> appearance(color = printBlue)
+}
+// P09 base, lid and internal carrier; generic interfaces are deliberately editable.
+export fn enclosureBase() {
+  stock = block(
+    w = housingLength,
+    d = housingWidth,
+    h = housingHeight,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  cavity = block(
+    w = housingLength - 6mm,
+    d = housingWidth - 6mm,
+    h = housingHeight,
+    x = 3mm,
+    y = 3mm,
+    z = 3mm,
+  )
+  shell = subtract(stock, tools = cavity)
+  postA = pin(
+    dia = 9mm,
+    length = 45mm,
+    x = 10mm,
+    y = 10mm,
+    z = 2mm,
+  )
+  postB = pin(
+    dia = 9mm,
+    length = 45mm,
+    x = housingLength - 10mm,
+    y = 10mm,
+    z = 2mm,
+  )
+  postC = pin(
+    dia = 9mm,
+    length = 45mm,
+    x = 10mm,
+    y = housingWidth - 10mm,
+    z = 2mm,
+  )
+  postD = pin(
+    dia = 9mm,
+    length = 45mm,
+    x = housingLength - 10mm,
+    y = housingWidth - 10mm,
+    z = 2mm,
+  )
+  united = union([shell, postA, postB, postC, postD])
+  screwA = pin(
+    dia = 2.8mm,
+    length = 47mm,
+    x = 10mm,
+    y = 10mm,
+    z = 3mm,
+  )
+  screwB = pin(
+    dia = 2.8mm,
+    length = 47mm,
+    x = housingLength - 10mm,
+    y = 10mm,
+    z = 3mm,
+  )
+  screwC = pin(
+    dia = 2.8mm,
+    length = 47mm,
+    x = 10mm,
+    y = housingWidth - 10mm,
+    z = 3mm,
+  )
+  screwD = pin(
+    dia = 2.8mm,
+    length = 47mm,
+    x = housingLength - 10mm,
+    y = housingWidth - 10mm,
+    z = 3mm,
+  )
+  dcInput = pinY(
+    dia = 12.5mm,
+    length = 8mm,
+    x = 30mm,
+    y = -2mm,
+    z = 25mm,
+  )
+  outlet = pinY(
+    dia = 18.5mm,
+    length = 8mm,
+    x = 110mm,
+    y = -2mm,
+    z = 25mm,
+  )
+  ventA = block(
+    w = 5mm,
+    d = 8mm,
+    h = 18mm,
+    x = 55mm,
+    y = -2mm,
+    z = 24mm,
+  )
+  ventB = block(
+    w = 5mm,
+    d = 8mm,
+    h = 18mm,
+    x = 70mm,
+    y = -2mm,
+    z = 24mm,
+  )
+  ventC = block(
+    w = 5mm,
+    d = 8mm,
+    h = 18mm,
+    x = 85mm,
+    y = -2mm,
+    z = 24mm,
+  )
+  return subtract(
+    united,
+    tools = [
+      screwA,
+      screwB,
+      screwC,
+      screwD,
+      dcInput,
+      outlet,
+      ventA,
+      ventB,
+      ventC
+    ],
+  )
+    |> appearance(color = printBlue)
+}
+export fn enclosureLid() {
+  plate = block(
+    w = housingLength,
+    d = housingWidth,
+    h = 4mm,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  holeA = pin(
+    dia = m3Clear,
+    length = 6mm,
+    x = 10mm,
+    y = 10mm,
+    z = -1mm,
+  )
+  holeB = pin(
+    dia = m3Clear,
+    length = 6mm,
+    x = housingLength - 10mm,
+    y = 10mm,
+    z = -1mm,
+  )
+  holeC = pin(
+    dia = m3Clear,
+    length = 6mm,
+    x = 10mm,
+    y = housingWidth - 10mm,
+    z = -1mm,
+  )
+  holeD = pin(
+    dia = m3Clear,
+    length = 6mm,
+    x = housingLength - 10mm,
+    y = housingWidth - 10mm,
+    z = -1mm,
+  )
+  dial = pin(
+    dia = 7.5mm,
+    length = 6mm,
+    x = 50mm,
+    y = 50mm,
+    z = -1mm,
+  )
+  switchCut = block(
+    w = 13mm,
+    d = 19mm,
+    h = 6mm,
+    x = 88mm,
+    y = 40mm,
+    z = -1mm,
+  )
+  return subtract(
+    plate,
+    tools = [
+      holeA,
+      holeB,
+      holeC,
+      holeD,
+      dial,
+      switchCut
+    ],
+  )
+    |> appearance(color = printBlue)
+}
+export fn pcbCarrier() {
+  plate = block(
+    w = 85mm,
+    d = 55mm,
+    h = 4mm,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  slotA = block(
+    w = 65mm,
+    d = 4mm,
+    h = 6mm,
+    x = 10mm,
+    y = 10mm,
+    z = -1mm,
+  )
+  slotB = block(
+    w = 65mm,
+    d = 4mm,
+    h = 6mm,
+    x = 10mm,
+    y = 41mm,
+    z = -1mm,
+  )
+  return subtract(plate, tools = [slotA, slotB])
+    |> appearance(color = printBlue)
+}
+export fn cableClip() {
+  stock = block(
+    w = 20mm,
+    d = 14mm,
+    h = 12mm,
+    x = -10mm,
+    y = -7mm,
+    z = 0mm,
+  )
+  cable = pinY(
+    dia = 5mm,
+    length = 16mm,
+    x = 0mm,
+    y = -8mm,
+    z = 9mm,
+  )
+  opening = block(
+    w = 3mm,
+    d = 16mm,
+    h = 6mm,
+    x = -1.5mm,
+    y = -8mm,
+    z = 9mm,
+  )
+  tie = block(
+    w = 14mm,
+    d = 4mm,
+    h = 2.5mm,
+    x = -7mm,
+    y = -2mm,
+    z = 2mm,
+  )
+  return subtract(stock, tools = [cable, opening, tie])
+    |> appearance(color = printBlue)
+}
+// P10 cool-arm bench rest; no hot-wire contact.
+export fn parkingSaddle() {
+  stock = block(
+    w = 80mm,
+    d = 50mm,
+    h = 42mm,
+    x = -40mm,
+    y = -25mm,
+    z = 0mm,
+  )
+  seat = pinY(
+    dia = clampBore + 1mm,
+    length = 52mm,
+    x = 0mm,
+    y = -26mm,
+    z = 42mm,
+  )
+  screwA = pin(
+    dia = m5Clear,
+    length = 44mm,
+    x = -30mm,
+    y = 0mm,
+    z = -1mm,
+  )
+  screwB = pin(
+    dia = m5Clear,
+    length = 44mm,
+    x = 30mm,
+    y = 0mm,
+    z = -1mm,
+  )
+  return subtract(stock, tools = [seat, screwA, screwB])
+    |> appearance(color = printBlue)
+}

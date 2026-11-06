@@ -1,0 +1,11 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+import pinX from "primitives.kcl"
+import span from "parameters.kcl"
+part = pinX(
+  dia = 0.3mm,
+  length = span,
+  x = -span / 2,
+  y = 0mm,
+  z = 0mm,
+)

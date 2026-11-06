@@ -60,4 +60,4 @@ Do not force a low-voltage charger into repeated protection cycles. If the 19 V 
 - [ ] Demonstrate acceptable 19 V heating on actual foam.
 - [ ] Update architecture/BOM with selected parts and measured dimensions.
 
-Only then produce manual CAD, pipe cut list and printable exports inside `manual-cutter/cad/`. Do not modify root CNC CAD to represent this bow.
+The user has authorized preliminary manual CAD and a provisional pipe cut list inside `manual-cutter/cad/` before these gates are complete. Complete the gates before treating the models or printable exports as a fabrication release. Do not modify root CNC CAD to represent this bow.

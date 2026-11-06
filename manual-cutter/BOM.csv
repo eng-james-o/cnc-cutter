@@ -1,15 +1,15 @@
 ID,Category,Item,Quantity,Unit_or_allowance,Specification,Source,Status,Notes
 M01,Mechanical,Pressure-rated PVC pipe,1,3 m purchase allowance,Nominal 1 inch / DN25 candidate; measure OD and wall; metric 32 mm OD alternative requires matching fittings,Buy,Provisional,About 1.3 m crossbar stock plus two 0.6 m arm blanks; final cuts after CAD
-M02,Mechanical,Pipe end caps,4,each,Match selected arm pipe standard,Buy,Provisional,Keep unused pipe ends covered; fittings may change cap count
+M02,Mechanical,Internal flush pipe end plugs,4,each,Match selected arm pipe standard,Buy,Provisional,CAD proposes internal plugs to avoid collision with external clamp collars; source to measured pipe ID
 M03,Mechanical,Pivot bolts,2,each,M6 shoulder bolts or smooth bearing shank; length from assembly stack,Buy,Select after measurements,One per pivot; no threaded bearing surface where avoidable
 M04,Mechanical,Pivot sleeves / bushings,2,sets,Metal sleeves with spacers and broad washers; match M6 pivot,Buy,Select after measurements,Prevent PVC crushing and maintain free pivot movement
-M05,Mechanical,Clamp and saddle fasteners,16,sets allowance,M5 bolts with broad washers and locknuts; lengths after print detailing,Buy,Allowance,For forks saddles and anchors; count subject to CAD
-M06,Mechanical,Preload adjuster,1,set,M5 threaded adjuster with wingnut locknut and load-spreading bracket; or rated small turnbuckle,Buy,Provisional,Keep in cool upper tie; ensure smooth cord connection
+M05,Mechanical,Clamp and saddle fasteners,16,sets allowance,M5 bolts with broad washers and locknuts; lengths after print detailing,Buy,Allowance,"For forks saddles and anchors; count subject to CAD; CAD adds four M3 lid screws, eight M3 guard screws and four M4 ceramic mount sets in separate hardware groups"
+M06,Mechanical,Preload adjuster,1,set,M5 threaded adjuster with wingnut locknut and load-spreading bracket; or rated small turnbuckle,Buy,Provisional,CAD reference: 80 mm M5 eye-rod and wingnut; keep cool; verify actual rated hardware
 M07,Mechanical,Extension spring,1,each,Tie force approximately 5.25–8.75 N; candidate rate 0.2–0.4 N/mm; >=20 mm usable travel/adjustment reserve,Buy,Measured curve required,Initial tension and installed extension must be checked; no verified SKU
 M08,Mechanical,Nonconductive upper tie cord,2,m allowance,Low-stretch abrasion-resistant cord with working load >=100 N; kept cool,Buy,Provisional,Includes knots/adjustment and slack spring-retention tether
 M09,Mechanical,Ceramic insulated lower anchors,2,assemblies,Ceramic standoffs/eyelets plus metal mechanical nichrome clamps and backing plates,Buy,Select and test,About 40–50 mm starting hot-zone clearance; verify heat and mechanical loading
 M10,Mechanical,Workpiece/template clamps,4,each,Nonconductive or independently isolated fixtures; sufficient reach for support,Buy,Provisional,Keep fasteners clear of wire; foam cannot shift
-M11,Mechanical,Template contact edge,2,profile sets,Smooth deburred 0.3–0.5 mm metal strip candidate or suitable ceramic edge,Buy/fabricate,Coupon validation required,Independently isolate each end; metal edges may be live and hot
+M11,Mechanical,Template contact edge,2,profile sets,Smooth deburred 0.4 mm profile-cut metal face plates; independently isolated,Buy/fabricate,Coupon validation required,CAD example shares mounting holes with printed bodies; not a printable substitute; coupon validation required
 M12,Mechanical,Template mounting hardware,1,set,Registration pins bolts washers and nuts; dimensions after guide design,Buy,Select after measurements,No conductive bridge between guides
 M13,Mechanical,Nonflammable parking stand,1,set,Stable support with ceramic/metal hot-wire rest,Buy/fabricate,Required,Printed saddles may support cold arms only
 E01,Electrical,NiCr80 wire,5,m spool allowance,0.40 mm diameter; verified alloy/resistance,Buy,Baseline,About 1.4 m raw wire per fit; clip-to-clip length approximately 1.15–1.20 m

@@ -1,0 +1,5 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+// Purchased/reference component; no threads or vendor internals. Do not print.
+import washer from "hardware.kcl"
+part = washer(id = 6.2mm, od = 8mm, thick = 60mm)

@@ -1,0 +1,5 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+// M5 threaded eye-rod reference; threads omitted, 80mm adjustment shank.
+import adjusterBolt from "hardware.kcl"
+part = adjusterBolt()

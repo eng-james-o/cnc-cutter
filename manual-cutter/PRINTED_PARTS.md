@@ -43,3 +43,7 @@ Provide a flat registration base, labelled root/tip and left/right orientation, 
 - First actual root/tip outline, foam span and required wire endpoint offset.
 
 See [cad/README.md](cad/README.md) for the future modelling deliverables.
+
+## Preliminary CAD available
+
+The user has now authorized component modelling. [cad/parts.csv](cad/parts.csv) maps individual pieces to the above assembly groups; [cad/printable_catalogue.kcl](cad/printable_catalogue.kcl) displays one of each printed shape. P01–P06 include separate clamp/guard halves; P09 includes base, lid and carrier. The guide contact edge is modelled as a separately fabricated 0.4 mm metal face plate clamped through the shared mounting holes. Body recess is provisional and is not kerf compensation. No printed part is released for fabrication solely because its KCL mock-executes.

@@ -1,0 +1,11 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+// Purchased/reference body. No manufacturing details or electrical rating implied.
+import pin from "primitives.kcl"
+part = pin(
+  dia = 22mm,
+  length = 12mm,
+  x = 0mm,
+  y = 0mm,
+  z = 0mm,
+)

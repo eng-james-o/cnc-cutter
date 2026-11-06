@@ -1,0 +1,110 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+// All solids are freshly constructed. Boolean inputs are consumed.
+export fn block(w, d, h, x, y, z) {
+  s = sketch(on = XY) {
+    a = line(start = [0mm, 0mm], end = [w, 0mm])
+    b = line(start = [w, 0mm], end = [w, d])
+    c = line(start = [w, d], end = [0mm, d])
+    e = line(start = [0mm, d], end = [0mm, 0mm])
+  }
+  body = extrude(region(segments = [s.a, s.b]), length = h)
+    |> translate(
+         x = x,
+         y = y,
+         z = z,
+         global = true,
+       )
+  hide(s)
+  return body
+}
+export fn pin(dia, length, x, y, z) {
+  s = sketch(on = XY) {
+    c = circle(center = [0mm, 0mm], start = [dia / 2, 0mm])
+  }
+  body = extrude(region(segments = [s.c]), length = length)
+    |> translate(
+         x = x,
+         y = y,
+         z = z,
+         global = true,
+       )
+  hide(s)
+  return body
+}
+export fn pinX(dia, length, x, y, z) {
+  return pin(
+    dia = dia,
+    length = length,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+    |> rotate(axis = Y, angle = 90deg, global = true)
+    |> translate(
+         x = x,
+         y = y,
+         z = z,
+         global = true,
+       )
+}
+export fn pinY(dia, length, x, y, z) {
+  return pin(
+    dia = dia,
+    length = length,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+    |> rotate(axis = X, angle = -90deg, global = true)
+    |> translate(
+         x = x,
+         y = y,
+         z = z,
+         global = true,
+       )
+}
+export fn tube(od, id, length) {
+  outside = pin(
+    dia = od,
+    length = length,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  bore = pin(
+    dia = id,
+    length = length + 2mm,
+    x = 0mm,
+    y = 0mm,
+    z = -1mm,
+  )
+  return subtract(outside, tools = bore)
+}
+// Cylindrical axis between arbitrary points, used for reference leads/cord.
+export fn rodBetween(dia, x1, y1, z1, x2, y2, z2) {
+  dx = x2 - x1
+  dy = y2 - y1
+  dz = z2 - z1
+  dxn = dx / 1mm
+  dyn = dy / 1mm
+  dzn = dz / 1mm
+  length = sqrt(dxn * dxn + dyn * dyn + dzn * dzn) * 1mm
+  azimuth = atan2(y = dy, x = dx)
+  inclination = atan2(y = sqrt(dxn * dxn + dyn * dyn) * 1mm, x = dz)
+  return pin(
+    dia = dia,
+    length = length,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+    |> rotate(axis = Y, angle = inclination, global = true)
+    |> rotate(axis = Z, angle = azimuth, global = true)
+    |> translate(
+         x = x1,
+         y = y1,
+         z = z1,
+         global = true,
+       )
+}

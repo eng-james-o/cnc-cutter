@@ -1,0 +1,1325 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+import pin from "primitives.kcl"
+import templateThickness, edgeThickness, printBlue from "parameters.kcl"
+// NACA0012-derived UPPER tracing guide only; 60 chordwise samples.
+// This demonstration profile is replaceable, not the user's final airfoil.
+export fn guideBody(chord) {
+  profile = sketch(on = XY) {
+    l0 = line(
+      start = [
+        -0.0750000000 * chord,
+        0.1000000000 * chord - edgeThickness
+      ],
+      end = [
+        0.0 * chord,
+        0.1000000000 * chord - edgeThickness
+      ],
+    )
+    l1 = line(
+      start = [
+        0.0 * chord,
+        0.1000000000 * chord - edgeThickness
+      ],
+      end = [
+        0.0006852326 * chord,
+        0.1046112590 * chord - edgeThickness
+      ],
+    )
+    l2 = line(
+      start = [
+        0.0006852326 * chord,
+        0.1046112590 * chord - edgeThickness
+      ],
+      end = [
+        0.0027390523 * chord,
+        0.1091144757 * chord - edgeThickness
+      ],
+    )
+    l3 = line(
+      start = [
+        0.0027390523 * chord,
+        0.1091144757 * chord - edgeThickness
+      ],
+      end = [
+        0.0061558297 * chord,
+        0.1135033681 * chord - edgeThickness
+      ],
+    )
+    l4 = line(
+      start = [
+        0.0061558297 * chord,
+        0.1135033681 * chord - edgeThickness
+      ],
+      end = [
+        0.0109261996 * chord,
+        0.1177697166 * chord - edgeThickness
+      ],
+    )
+    l5 = line(
+      start = [
+        0.0109261996 * chord,
+        0.1177697166 * chord - edgeThickness
+      ],
+      end = [
+        0.0170370869 * chord,
+        0.1219035367 * chord - edgeThickness
+      ],
+    )
+    l6 = line(
+      start = [
+        0.0170370869 * chord,
+        0.1219035367 * chord - edgeThickness
+      ],
+      end = [
+        0.0244717419 * chord,
+        0.1258933127 * chord - edgeThickness
+      ],
+    )
+    l7 = line(
+      start = [
+        0.0244717419 * chord,
+        0.1258933127 * chord - edgeThickness
+      ],
+      end = [
+        0.0332097868 * chord,
+        0.1297262832 * chord - edgeThickness
+      ],
+    )
+    l8 = line(
+      start = [
+        0.0332097868 * chord,
+        0.1297262832 * chord - edgeThickness
+      ],
+      end = [
+        0.0432272712 * chord,
+        0.1333887691 * chord - edgeThickness
+      ],
+    )
+    l9 = line(
+      start = [
+        0.0432272712 * chord,
+        0.1333887691 * chord - edgeThickness
+      ],
+      end = [
+        0.0544967379 * chord,
+        0.1368665348 * chord - edgeThickness
+      ],
+    )
+    l10 = line(
+      start = [
+        0.0544967379 * chord,
+        0.1368665348 * chord - edgeThickness
+      ],
+      end = [
+        0.0669872981 * chord,
+        0.1401451679 * chord - edgeThickness
+      ],
+    )
+    l11 = line(
+      start = [
+        0.0669872981 * chord,
+        0.1401451679 * chord - edgeThickness
+      ],
+      end = [
+        0.0806647160 * chord,
+        0.1432104676 * chord - edgeThickness
+      ],
+    )
+    l12 = line(
+      start = [
+        0.0806647160 * chord,
+        0.1432104676 * chord - edgeThickness
+      ],
+      end = [
+        0.0954915028 * chord,
+        0.1460488284 * chord - edgeThickness
+      ],
+    )
+    l13 = line(
+      start = [
+        0.0954915028 * chord,
+        0.1460488284 * chord - edgeThickness
+      ],
+      end = [
+        0.1114270193 * chord,
+        0.1486476069 * chord - edgeThickness
+      ],
+    )
+    l14 = line(
+      start = [
+        0.1114270193 * chord,
+        0.1486476069 * chord - edgeThickness
+      ],
+      end = [
+        0.1284275873 * chord,
+        0.1509954607 * chord - edgeThickness
+      ],
+    )
+    l15 = line(
+      start = [
+        0.1284275873 * chord,
+        0.1509954607 * chord - edgeThickness
+      ],
+      end = [
+        0.1464466094 * chord,
+        0.1530826501 * chord - edgeThickness
+      ],
+    )
+    l16 = line(
+      start = [
+        0.1464466094 * chord,
+        0.1530826501 * chord - edgeThickness
+      ],
+      end = [
+        0.1654346968 * chord,
+        0.1549012929 * chord - edgeThickness
+      ],
+    )
+    l17 = line(
+      start = [
+        0.1654346968 * chord,
+        0.1549012929 * chord - edgeThickness
+      ],
+      end = [
+        0.1853398045 * chord,
+        0.1564455671 * chord - edgeThickness
+      ],
+    )
+    l18 = line(
+      start = [
+        0.1853398045 * chord,
+        0.1564455671 * chord - edgeThickness
+      ],
+      end = [
+        0.2061073739 * chord,
+        0.1577118565 * chord - edgeThickness
+      ],
+    )
+    l19 = line(
+      start = [
+        0.2061073739 * chord,
+        0.1577118565 * chord - edgeThickness
+      ],
+      end = [
+        0.2276804825 * chord,
+        0.1586988364 * chord - edgeThickness
+      ],
+    )
+    l20 = line(
+      start = [
+        0.2276804825 * chord,
+        0.1586988364 * chord - edgeThickness
+      ],
+      end = [
+        0.2500000000 * chord,
+        0.1594075000 * chord - edgeThickness
+      ],
+    )
+    l21 = line(
+      start = [
+        0.2500000000 * chord,
+        0.1594075000 * chord - edgeThickness
+      ],
+      end = [
+        0.2730047501 * chord,
+        0.1598411270 * chord - edgeThickness
+      ],
+    )
+    l22 = line(
+      start = [
+        0.2730047501 * chord,
+        0.1598411270 * chord - edgeThickness
+      ],
+      end = [
+        0.2966316785 * chord,
+        0.1600051983 * chord - edgeThickness
+      ],
+    )
+    l23 = line(
+      start = [
+        0.2966316785 * chord,
+        0.1600051983 * chord - edgeThickness
+      ],
+      end = [
+        0.3208160252 * chord,
+        0.1599072632 * chord - edgeThickness
+      ],
+    )
+    l24 = line(
+      start = [
+        0.3208160252 * chord,
+        0.1599072632 * chord - edgeThickness
+      ],
+      end = [
+        0.3454915028 * chord,
+        0.1595567645 * chord - edgeThickness
+      ],
+    )
+    l25 = line(
+      start = [
+        0.3454915028 * chord,
+        0.1595567645 * chord - edgeThickness
+      ],
+      end = [
+        0.3705904774 * chord,
+        0.1589648327 * chord - edgeThickness
+      ],
+    )
+    l26 = line(
+      start = [
+        0.3705904774 * chord,
+        0.1589648327 * chord - edgeThickness
+      ],
+      end = [
+        0.3960441546 * chord,
+        0.1581440552 * chord - edgeThickness
+      ],
+    )
+    l27 = line(
+      start = [
+        0.3960441546 * chord,
+        0.1581440552 * chord - edgeThickness
+      ],
+      end = [
+        0.4217827675 * chord,
+        0.1571082323 * chord - edgeThickness
+      ],
+    )
+    l28 = line(
+      start = [
+        0.4217827675 * chord,
+        0.1571082323 * chord - edgeThickness
+      ],
+      end = [
+        0.4477357684 * chord,
+        0.1558721285 * chord - edgeThickness
+      ],
+    )
+    l29 = line(
+      start = [
+        0.4477357684 * chord,
+        0.1558721285 * chord - edgeThickness
+      ],
+      end = [
+        0.4738320219 * chord,
+        0.1544512277 * chord - edgeThickness
+      ],
+    )
+    l30 = line(
+      start = [
+        0.4738320219 * chord,
+        0.1544512277 * chord - edgeThickness
+      ],
+      end = [
+        0.5000000000 * chord,
+        0.1528615020 * chord - edgeThickness
+      ],
+    )
+    l31 = line(
+      start = [
+        0.5000000000 * chord,
+        0.1528615020 * chord - edgeThickness
+      ],
+      end = [
+        0.5261679781 * chord,
+        0.1511191993 * chord - edgeThickness
+      ],
+    )
+    l32 = line(
+      start = [
+        0.5261679781 * chord,
+        0.1511191993 * chord - edgeThickness
+      ],
+      end = [
+        0.5522642316 * chord,
+        0.1492406577 * chord - edgeThickness
+      ],
+    )
+    l33 = line(
+      start = [
+        0.5522642316 * chord,
+        0.1492406577 * chord - edgeThickness
+      ],
+      end = [
+        0.5782172325 * chord,
+        0.1472421489 * chord - edgeThickness
+      ],
+    )
+    l34 = line(
+      start = [
+        0.5782172325 * chord,
+        0.1472421489 * chord - edgeThickness
+      ],
+      end = [
+        0.6039558454 * chord,
+        0.1451397549 * chord - edgeThickness
+      ],
+    )
+    l35 = line(
+      start = [
+        0.6039558454 * chord,
+        0.1451397549 * chord - edgeThickness
+      ],
+      end = [
+        0.6294095226 * chord,
+        0.1429492780 * chord - edgeThickness
+      ],
+    )
+    l36 = line(
+      start = [
+        0.6294095226 * chord,
+        0.1429492780 * chord - edgeThickness
+      ],
+      end = [
+        0.6545084972 * chord,
+        0.1406861839 * chord - edgeThickness
+      ],
+    )
+    l37 = line(
+      start = [
+        0.6545084972 * chord,
+        0.1406861839 * chord - edgeThickness
+      ],
+      end = [
+        0.6791839748 * chord,
+        0.1383655749 * chord - edgeThickness
+      ],
+    )
+    l38 = line(
+      start = [
+        0.6791839748 * chord,
+        0.1383655749 * chord - edgeThickness
+      ],
+      end = [
+        0.7033683215 * chord,
+        0.1360021906 * chord - edgeThickness
+      ],
+    )
+    l39 = line(
+      start = [
+        0.7033683215 * chord,
+        0.1360021906 * chord - edgeThickness
+      ],
+      end = [
+        0.7269952499 * chord,
+        0.1336104300 * chord - edgeThickness
+      ],
+    )
+    l40 = line(
+      start = [
+        0.7269952499 * chord,
+        0.1336104300 * chord - edgeThickness
+      ],
+      end = [
+        0.7500000000 * chord,
+        0.1312043904 * chord - edgeThickness
+      ],
+    )
+    l41 = line(
+      start = [
+        0.7500000000 * chord,
+        0.1312043904 * chord - edgeThickness
+      ],
+      end = [
+        0.7723195175 * chord,
+        0.1287979161 * chord - edgeThickness
+      ],
+    )
+    l42 = line(
+      start = [
+        0.7723195175 * chord,
+        0.1287979161 * chord - edgeThickness
+      ],
+      end = [
+        0.7938926261 * chord,
+        0.1264046500 * chord - edgeThickness
+      ],
+    )
+    l43 = line(
+      start = [
+        0.7938926261 * chord,
+        0.1264046500 * chord - edgeThickness
+      ],
+      end = [
+        0.8146601955 * chord,
+        0.1240380832 * chord - edgeThickness
+      ],
+    )
+    l44 = line(
+      start = [
+        0.8146601955 * chord,
+        0.1240380832 * chord - edgeThickness
+      ],
+      end = [
+        0.8345653032 * chord,
+        0.1217115946 * chord - edgeThickness
+      ],
+    )
+    l45 = line(
+      start = [
+        0.8345653032 * chord,
+        0.1217115946 * chord - edgeThickness
+      ],
+      end = [
+        0.8535533906 * chord,
+        0.1194384764 * chord - edgeThickness
+      ],
+    )
+    l46 = line(
+      start = [
+        0.8535533906 * chord,
+        0.1194384764 * chord - edgeThickness
+      ],
+      end = [
+        0.8715724127 * chord,
+        0.1172319406 * chord - edgeThickness
+      ],
+    )
+    l47 = line(
+      start = [
+        0.8715724127 * chord,
+        0.1172319406 * chord - edgeThickness
+      ],
+      end = [
+        0.8885729807 * chord,
+        0.1151051033 * chord - edgeThickness
+      ],
+    )
+    l48 = line(
+      start = [
+        0.8885729807 * chord,
+        0.1151051033 * chord - edgeThickness
+      ],
+      end = [
+        0.9045084972 * chord,
+        0.1130709457 * chord - edgeThickness
+      ],
+    )
+    l49 = line(
+      start = [
+        0.9045084972 * chord,
+        0.1130709457 * chord - edgeThickness
+      ],
+      end = [
+        0.9193352840 * chord,
+        0.1111422492 * chord - edgeThickness
+      ],
+    )
+    l50 = line(
+      start = [
+        0.9193352840 * chord,
+        0.1111422492 * chord - edgeThickness
+      ],
+      end = [
+        0.9330127019 * chord,
+        0.1093315085 * chord - edgeThickness
+      ],
+    )
+    l51 = line(
+      start = [
+        0.9330127019 * chord,
+        0.1093315085 * chord - edgeThickness
+      ],
+      end = [
+        0.9455032621 * chord,
+        0.1076508216 * chord - edgeThickness
+      ],
+    )
+    l52 = line(
+      start = [
+        0.9455032621 * chord,
+        0.1076508216 * chord - edgeThickness
+      ],
+      end = [
+        0.9567727288 * chord,
+        0.1061117634 * chord - edgeThickness
+      ],
+    )
+    l53 = line(
+      start = [
+        0.9567727288 * chord,
+        0.1061117634 * chord - edgeThickness
+      ],
+      end = [
+        0.9667902132 * chord,
+        0.1047252443 * chord - edgeThickness
+      ],
+    )
+    l54 = line(
+      start = [
+        0.9667902132 * chord,
+        0.1047252443 * chord - edgeThickness
+      ],
+      end = [
+        0.9755282581 * chord,
+        0.1035013623 * chord - edgeThickness
+      ],
+    )
+    l55 = line(
+      start = [
+        0.9755282581 * chord,
+        0.1035013623 * chord - edgeThickness
+      ],
+      end = [
+        0.9829629131 * chord,
+        0.1024492512 * chord - edgeThickness
+      ],
+    )
+    l56 = line(
+      start = [
+        0.9829629131 * chord,
+        0.1024492512 * chord - edgeThickness
+      ],
+      end = [
+        0.9890738004 * chord,
+        0.1015769341 * chord - edgeThickness
+      ],
+    )
+    l57 = line(
+      start = [
+        0.9890738004 * chord,
+        0.1015769341 * chord - edgeThickness
+      ],
+      end = [
+        0.9938441703 * chord,
+        0.1008911863 * chord - edgeThickness
+      ],
+    )
+    l58 = line(
+      start = [
+        0.9938441703 * chord,
+        0.1008911863 * chord - edgeThickness
+      ],
+      end = [
+        0.9972609477 * chord,
+        0.1003974140 * chord - edgeThickness
+      ],
+    )
+    l59 = line(
+      start = [
+        0.9972609477 * chord,
+        0.1003974140 * chord - edgeThickness
+      ],
+      end = [
+        0.9993147674 * chord,
+        0.1000995542 * chord - edgeThickness
+      ],
+    )
+    l60 = line(
+      start = [
+        0.9993147674 * chord,
+        0.1000995542 * chord - edgeThickness
+      ],
+      end = [
+        1.0 * chord,
+        0.1000000000 * chord - edgeThickness
+      ],
+    )
+    l61 = line(
+      start = [
+        1.0 * chord,
+        0.1000000000 * chord - edgeThickness
+      ],
+      end = [
+        1.0750000000 * chord,
+        0.1000000000 * chord - edgeThickness
+      ],
+    )
+    l62 = line(
+      start = [
+        1.0750000000 * chord,
+        0.1000000000 * chord - edgeThickness
+      ],
+      end = [
+        1.0750000000 * chord,
+        0.0 * chord - edgeThickness
+      ],
+    )
+    l63 = line(
+      start = [
+        1.0750000000 * chord,
+        0.0 * chord - edgeThickness
+      ],
+      end = [
+        -0.0750000000 * chord,
+        0.0 * chord - edgeThickness
+      ],
+    )
+    l64 = line(
+      start = [
+        -0.0750000000 * chord,
+        0.0 * chord - edgeThickness
+      ],
+      end = [
+        -0.0750000000 * chord,
+        0.1000000000 * chord - edgeThickness
+      ],
+    )
+  }
+  blank = extrude(region(segments = [profile.l0, profile.l1]), length = templateThickness)
+  hide(profile)
+  holeA = pin(
+    dia = 5.5mm,
+    length = templateThickness + 2mm,
+    x = 0.2 * chord,
+    y = 0.035 * chord,
+    z = -1mm,
+  )
+  holeB = pin(
+    dia = 5.5mm,
+    length = templateThickness + 2mm,
+    x = 0.8 * chord,
+    y = 0.035 * chord,
+    z = -1mm,
+  )
+  return subtract(blank, tools = [holeA, holeB])
+    |> appearance(color = printBlue)
+}
+// Mechanically bolted thin metal FACE plate, not a printed contact strip.
+// The full guide outline supplies retention area and two shared registration holes.
+export fn guideEdge(chord) {
+  profile = sketch(on = XY) {
+    l0 = line(
+      start = [
+        -0.0750000000 * chord,
+        0.1000000000 * chord
+      ],
+      end = [0.0 * chord, 0.1000000000 * chord],
+    )
+    l1 = line(
+      start = [0.0 * chord, 0.1000000000 * chord],
+      end = [
+        0.0006852326 * chord,
+        0.1046112590 * chord
+      ],
+    )
+    l2 = line(
+      start = [
+        0.0006852326 * chord,
+        0.1046112590 * chord
+      ],
+      end = [
+        0.0027390523 * chord,
+        0.1091144757 * chord
+      ],
+    )
+    l3 = line(
+      start = [
+        0.0027390523 * chord,
+        0.1091144757 * chord
+      ],
+      end = [
+        0.0061558297 * chord,
+        0.1135033681 * chord
+      ],
+    )
+    l4 = line(
+      start = [
+        0.0061558297 * chord,
+        0.1135033681 * chord
+      ],
+      end = [
+        0.0109261996 * chord,
+        0.1177697166 * chord
+      ],
+    )
+    l5 = line(
+      start = [
+        0.0109261996 * chord,
+        0.1177697166 * chord
+      ],
+      end = [
+        0.0170370869 * chord,
+        0.1219035367 * chord
+      ],
+    )
+    l6 = line(
+      start = [
+        0.0170370869 * chord,
+        0.1219035367 * chord
+      ],
+      end = [
+        0.0244717419 * chord,
+        0.1258933127 * chord
+      ],
+    )
+    l7 = line(
+      start = [
+        0.0244717419 * chord,
+        0.1258933127 * chord
+      ],
+      end = [
+        0.0332097868 * chord,
+        0.1297262832 * chord
+      ],
+    )
+    l8 = line(
+      start = [
+        0.0332097868 * chord,
+        0.1297262832 * chord
+      ],
+      end = [
+        0.0432272712 * chord,
+        0.1333887691 * chord
+      ],
+    )
+    l9 = line(
+      start = [
+        0.0432272712 * chord,
+        0.1333887691 * chord
+      ],
+      end = [
+        0.0544967379 * chord,
+        0.1368665348 * chord
+      ],
+    )
+    l10 = line(
+      start = [
+        0.0544967379 * chord,
+        0.1368665348 * chord
+      ],
+      end = [
+        0.0669872981 * chord,
+        0.1401451679 * chord
+      ],
+    )
+    l11 = line(
+      start = [
+        0.0669872981 * chord,
+        0.1401451679 * chord
+      ],
+      end = [
+        0.0806647160 * chord,
+        0.1432104676 * chord
+      ],
+    )
+    l12 = line(
+      start = [
+        0.0806647160 * chord,
+        0.1432104676 * chord
+      ],
+      end = [
+        0.0954915028 * chord,
+        0.1460488284 * chord
+      ],
+    )
+    l13 = line(
+      start = [
+        0.0954915028 * chord,
+        0.1460488284 * chord
+      ],
+      end = [
+        0.1114270193 * chord,
+        0.1486476069 * chord
+      ],
+    )
+    l14 = line(
+      start = [
+        0.1114270193 * chord,
+        0.1486476069 * chord
+      ],
+      end = [
+        0.1284275873 * chord,
+        0.1509954607 * chord
+      ],
+    )
+    l15 = line(
+      start = [
+        0.1284275873 * chord,
+        0.1509954607 * chord
+      ],
+      end = [
+        0.1464466094 * chord,
+        0.1530826501 * chord
+      ],
+    )
+    l16 = line(
+      start = [
+        0.1464466094 * chord,
+        0.1530826501 * chord
+      ],
+      end = [
+        0.1654346968 * chord,
+        0.1549012929 * chord
+      ],
+    )
+    l17 = line(
+      start = [
+        0.1654346968 * chord,
+        0.1549012929 * chord
+      ],
+      end = [
+        0.1853398045 * chord,
+        0.1564455671 * chord
+      ],
+    )
+    l18 = line(
+      start = [
+        0.1853398045 * chord,
+        0.1564455671 * chord
+      ],
+      end = [
+        0.2061073739 * chord,
+        0.1577118565 * chord
+      ],
+    )
+    l19 = line(
+      start = [
+        0.2061073739 * chord,
+        0.1577118565 * chord
+      ],
+      end = [
+        0.2276804825 * chord,
+        0.1586988364 * chord
+      ],
+    )
+    l20 = line(
+      start = [
+        0.2276804825 * chord,
+        0.1586988364 * chord
+      ],
+      end = [
+        0.2500000000 * chord,
+        0.1594075000 * chord
+      ],
+    )
+    l21 = line(
+      start = [
+        0.2500000000 * chord,
+        0.1594075000 * chord
+      ],
+      end = [
+        0.2730047501 * chord,
+        0.1598411270 * chord
+      ],
+    )
+    l22 = line(
+      start = [
+        0.2730047501 * chord,
+        0.1598411270 * chord
+      ],
+      end = [
+        0.2966316785 * chord,
+        0.1600051983 * chord
+      ],
+    )
+    l23 = line(
+      start = [
+        0.2966316785 * chord,
+        0.1600051983 * chord
+      ],
+      end = [
+        0.3208160252 * chord,
+        0.1599072632 * chord
+      ],
+    )
+    l24 = line(
+      start = [
+        0.3208160252 * chord,
+        0.1599072632 * chord
+      ],
+      end = [
+        0.3454915028 * chord,
+        0.1595567645 * chord
+      ],
+    )
+    l25 = line(
+      start = [
+        0.3454915028 * chord,
+        0.1595567645 * chord
+      ],
+      end = [
+        0.3705904774 * chord,
+        0.1589648327 * chord
+      ],
+    )
+    l26 = line(
+      start = [
+        0.3705904774 * chord,
+        0.1589648327 * chord
+      ],
+      end = [
+        0.3960441546 * chord,
+        0.1581440552 * chord
+      ],
+    )
+    l27 = line(
+      start = [
+        0.3960441546 * chord,
+        0.1581440552 * chord
+      ],
+      end = [
+        0.4217827675 * chord,
+        0.1571082323 * chord
+      ],
+    )
+    l28 = line(
+      start = [
+        0.4217827675 * chord,
+        0.1571082323 * chord
+      ],
+      end = [
+        0.4477357684 * chord,
+        0.1558721285 * chord
+      ],
+    )
+    l29 = line(
+      start = [
+        0.4477357684 * chord,
+        0.1558721285 * chord
+      ],
+      end = [
+        0.4738320219 * chord,
+        0.1544512277 * chord
+      ],
+    )
+    l30 = line(
+      start = [
+        0.4738320219 * chord,
+        0.1544512277 * chord
+      ],
+      end = [
+        0.5000000000 * chord,
+        0.1528615020 * chord
+      ],
+    )
+    l31 = line(
+      start = [
+        0.5000000000 * chord,
+        0.1528615020 * chord
+      ],
+      end = [
+        0.5261679781 * chord,
+        0.1511191993 * chord
+      ],
+    )
+    l32 = line(
+      start = [
+        0.5261679781 * chord,
+        0.1511191993 * chord
+      ],
+      end = [
+        0.5522642316 * chord,
+        0.1492406577 * chord
+      ],
+    )
+    l33 = line(
+      start = [
+        0.5522642316 * chord,
+        0.1492406577 * chord
+      ],
+      end = [
+        0.5782172325 * chord,
+        0.1472421489 * chord
+      ],
+    )
+    l34 = line(
+      start = [
+        0.5782172325 * chord,
+        0.1472421489 * chord
+      ],
+      end = [
+        0.6039558454 * chord,
+        0.1451397549 * chord
+      ],
+    )
+    l35 = line(
+      start = [
+        0.6039558454 * chord,
+        0.1451397549 * chord
+      ],
+      end = [
+        0.6294095226 * chord,
+        0.1429492780 * chord
+      ],
+    )
+    l36 = line(
+      start = [
+        0.6294095226 * chord,
+        0.1429492780 * chord
+      ],
+      end = [
+        0.6545084972 * chord,
+        0.1406861839 * chord
+      ],
+    )
+    l37 = line(
+      start = [
+        0.6545084972 * chord,
+        0.1406861839 * chord
+      ],
+      end = [
+        0.6791839748 * chord,
+        0.1383655749 * chord
+      ],
+    )
+    l38 = line(
+      start = [
+        0.6791839748 * chord,
+        0.1383655749 * chord
+      ],
+      end = [
+        0.7033683215 * chord,
+        0.1360021906 * chord
+      ],
+    )
+    l39 = line(
+      start = [
+        0.7033683215 * chord,
+        0.1360021906 * chord
+      ],
+      end = [
+        0.7269952499 * chord,
+        0.1336104300 * chord
+      ],
+    )
+    l40 = line(
+      start = [
+        0.7269952499 * chord,
+        0.1336104300 * chord
+      ],
+      end = [
+        0.7500000000 * chord,
+        0.1312043904 * chord
+      ],
+    )
+    l41 = line(
+      start = [
+        0.7500000000 * chord,
+        0.1312043904 * chord
+      ],
+      end = [
+        0.7723195175 * chord,
+        0.1287979161 * chord
+      ],
+    )
+    l42 = line(
+      start = [
+        0.7723195175 * chord,
+        0.1287979161 * chord
+      ],
+      end = [
+        0.7938926261 * chord,
+        0.1264046500 * chord
+      ],
+    )
+    l43 = line(
+      start = [
+        0.7938926261 * chord,
+        0.1264046500 * chord
+      ],
+      end = [
+        0.8146601955 * chord,
+        0.1240380832 * chord
+      ],
+    )
+    l44 = line(
+      start = [
+        0.8146601955 * chord,
+        0.1240380832 * chord
+      ],
+      end = [
+        0.8345653032 * chord,
+        0.1217115946 * chord
+      ],
+    )
+    l45 = line(
+      start = [
+        0.8345653032 * chord,
+        0.1217115946 * chord
+      ],
+      end = [
+        0.8535533906 * chord,
+        0.1194384764 * chord
+      ],
+    )
+    l46 = line(
+      start = [
+        0.8535533906 * chord,
+        0.1194384764 * chord
+      ],
+      end = [
+        0.8715724127 * chord,
+        0.1172319406 * chord
+      ],
+    )
+    l47 = line(
+      start = [
+        0.8715724127 * chord,
+        0.1172319406 * chord
+      ],
+      end = [
+        0.8885729807 * chord,
+        0.1151051033 * chord
+      ],
+    )
+    l48 = line(
+      start = [
+        0.8885729807 * chord,
+        0.1151051033 * chord
+      ],
+      end = [
+        0.9045084972 * chord,
+        0.1130709457 * chord
+      ],
+    )
+    l49 = line(
+      start = [
+        0.9045084972 * chord,
+        0.1130709457 * chord
+      ],
+      end = [
+        0.9193352840 * chord,
+        0.1111422492 * chord
+      ],
+    )
+    l50 = line(
+      start = [
+        0.9193352840 * chord,
+        0.1111422492 * chord
+      ],
+      end = [
+        0.9330127019 * chord,
+        0.1093315085 * chord
+      ],
+    )
+    l51 = line(
+      start = [
+        0.9330127019 * chord,
+        0.1093315085 * chord
+      ],
+      end = [
+        0.9455032621 * chord,
+        0.1076508216 * chord
+      ],
+    )
+    l52 = line(
+      start = [
+        0.9455032621 * chord,
+        0.1076508216 * chord
+      ],
+      end = [
+        0.9567727288 * chord,
+        0.1061117634 * chord
+      ],
+    )
+    l53 = line(
+      start = [
+        0.9567727288 * chord,
+        0.1061117634 * chord
+      ],
+      end = [
+        0.9667902132 * chord,
+        0.1047252443 * chord
+      ],
+    )
+    l54 = line(
+      start = [
+        0.9667902132 * chord,
+        0.1047252443 * chord
+      ],
+      end = [
+        0.9755282581 * chord,
+        0.1035013623 * chord
+      ],
+    )
+    l55 = line(
+      start = [
+        0.9755282581 * chord,
+        0.1035013623 * chord
+      ],
+      end = [
+        0.9829629131 * chord,
+        0.1024492512 * chord
+      ],
+    )
+    l56 = line(
+      start = [
+        0.9829629131 * chord,
+        0.1024492512 * chord
+      ],
+      end = [
+        0.9890738004 * chord,
+        0.1015769341 * chord
+      ],
+    )
+    l57 = line(
+      start = [
+        0.9890738004 * chord,
+        0.1015769341 * chord
+      ],
+      end = [
+        0.9938441703 * chord,
+        0.1008911863 * chord
+      ],
+    )
+    l58 = line(
+      start = [
+        0.9938441703 * chord,
+        0.1008911863 * chord
+      ],
+      end = [
+        0.9972609477 * chord,
+        0.1003974140 * chord
+      ],
+    )
+    l59 = line(
+      start = [
+        0.9972609477 * chord,
+        0.1003974140 * chord
+      ],
+      end = [
+        0.9993147674 * chord,
+        0.1000995542 * chord
+      ],
+    )
+    l60 = line(
+      start = [
+        0.9993147674 * chord,
+        0.1000995542 * chord
+      ],
+      end = [1.0 * chord, 0.1000000000 * chord],
+    )
+    l61 = line(
+      start = [1.0 * chord, 0.1000000000 * chord],
+      end = [
+        1.0750000000 * chord,
+        0.1000000000 * chord
+      ],
+    )
+    l62 = line(
+      start = [
+        1.0750000000 * chord,
+        0.1000000000 * chord
+      ],
+      end = [1.0750000000 * chord, 0.0 * chord],
+    )
+    l63 = line(start = [1.0750000000 * chord, 0.0 * chord], end = [-0.0750000000 * chord, 0.0 * chord])
+    l64 = line(
+      start = [-0.0750000000 * chord, 0.0 * chord],
+      end = [
+        -0.0750000000 * chord,
+        0.1000000000 * chord
+      ],
+    )
+  }
+  blank = extrude(region(segments = [profile.l0, profile.l1]), length = edgeThickness)
+  hide(profile)
+  holeA = pin(
+    dia = 5.5mm,
+    length = edgeThickness + 2mm,
+    x = 0.2 * chord,
+    y = 0.035 * chord,
+    z = -1mm,
+  )
+  holeB = pin(
+    dia = 5.5mm,
+    length = edgeThickness + 2mm,
+    x = 0.8 * chord,
+    y = 0.035 * chord,
+    z = -1mm,
+  )
+  return subtract(blank, tools = [holeA, holeB])
+    |> appearance(color = '#C3C8CF')
+}

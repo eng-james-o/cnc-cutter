@@ -1,0 +1,5 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+// Purchased/reference body. No manufacturing details or electrical rating implied.
+import washer from "hardware.kcl"
+part = washer(id = 41.2mm, od = 43mm, thick = 4mm)

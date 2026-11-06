@@ -4,7 +4,7 @@ Date: 2026-11-06. Preliminary design for EPS/XPS foam; build and thermal perform
 
 ## 1. Design basis
 
-Confirmed requirements: two-person manual tracing; a profile guide on each end of the foam; PVC H-frame; passive spring tensioning; a standard 19 V laptop charger; use the available 3D printer for suitable components; CAD comes later.
+Confirmed requirements: two-person manual tracing; a profile guide on each end of the foam; PVC H-frame; passive spring tensioning; a standard 19 V laptop charger; use the available 3D printer for suitable components; CAD is now represented by the preliminary M1-CAD-0.1 model set; prototype tests remain outstanding.
 
 | Parameter | Proposed baseline | Meaning / limitation |
 | --- | --- | --- |
@@ -109,3 +109,13 @@ Use the available 3D printer for cool clamps, forks, grips, registration fixture
 Only cut positively identified EPS/XPS at the lowest useful heat, with effective ventilation/extraction and a clear nonflammable work area. Do not hot-cut unknown plastics, PVC foam, or polyurethane. Do not use glow as a target; normal cutting wire need not visibly glow. Keep hands clear of hot wire and live guide edges, provide a nonflammable parking stand, unplug before adjustments, and release heat immediately if wire breaks, a clip slips, foam smokes excessively or either operator loses position. A fuse protects wiring faults; it does not prevent a hot-wire burn or all overheating failures.
 
 See [BUILD_AND_VALIDATION.md](BUILD_AND_VALIDATION.md) for release gates and [REFERENCES.md](REFERENCES.md) for source provenance. Numerical dimensions, spring specifications and print settings beyond explicit requirements are engineering proposals, not copied or validated tutorial designs.
+
+## CAD development record — M1-CAD-0.1, 2026-11-06
+
+The user has authorized preliminary component modelling before physical validation. See [cad/README.md](cad/README.md) and [cad/notes.md](cad/notes.md). The earlier validation gates remain required before fabrication release.
+
+- The 550 mm complete lever envelope is resolved into 480 mm PVC arms plus lower ceramic and upper anchor fittings; proposed crossbar stock cut is 1,080 mm. These are CAD assumptions to fit-check, not finalized manufacturing dimensions.
+- External arm end caps are represented by internal flush plugs to clear the split collars.
+- Electrical clips at ±575 mm define a 1,150 mm energized length, approximately 9.98 ohm / 1.90 A / 36.2 W cold for 0.40 mm NiCr80 at 19 V. Mechanical wire anchor separation remains 1,200 mm.
+- The guide edge candidate is now a 0.4 mm profile-cut metal face plate sharing mounting holes with the printed carrier. Guide bodies are recessed vertically by 0.4 mm. Each end remains electrically isolated; offsets, thermal performance and actual wing profiles require testing. The model includes a demonstration upper profile, not a final wing guide.
+- The spring is a helical reference shape only; its geometry does not establish spring force/rate or supplier selection. Full geometric rendering and interference checks have not run.
