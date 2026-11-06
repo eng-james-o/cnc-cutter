@@ -1,0 +1,5 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+// Preliminary printable component; see notes.md for interfaces and limits.
+import registrationBracket from "printed.kcl"
+part = registrationBracket()

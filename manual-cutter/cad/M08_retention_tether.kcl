@@ -1,0 +1,30 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+import rodBetween from "primitives.kcl"
+a = rodBetween(
+  dia = 2mm,
+  x1 = -80mm,
+  y1 = 0mm,
+  z1 = 0mm,
+  x2 = -60mm,
+  y2 = 0mm,
+  z2 = -28mm,
+)
+b = rodBetween(
+  dia = 2mm,
+  x1 = -60mm,
+  y1 = 0mm,
+  z1 = -28mm,
+  x2 = 60mm,
+  y2 = 0mm,
+  z2 = -28mm,
+)
+c = rodBetween(
+  dia = 2mm,
+  x1 = 60mm,
+  y1 = 0mm,
+  z1 = -28mm,
+  x2 = 80mm,
+  y2 = 0mm,
+  z2 = 0mm,
+)

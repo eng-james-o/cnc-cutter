@@ -1,0 +1,34 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+// M1 provisional dimensions; no supplier interfaces are frozen.
+export pipeOD = 33.4mm
+export pipeWall = 3.4mm
+export fitClearance = 0.4mm // diametral, coupon-calibrate
+export clampBore = pipeOD + fitClearance
+export span = 1200mm
+export foamSpan = 1000mm
+export pivotZ = 350mm
+export tieZ = 550mm
+export pipeBottom = 50mm
+export pipeTop = 530mm
+export armCut = pipeTop - pipeBottom
+export crossbarCut = span - 120mm
+export wireDiameter = 0.4mm
+export wireClipInset = 25mm
+export m3Clear = 3.4mm
+export m5Clear = 5.5mm
+export m6Clear = 6.5mm
+export pivotSleeveOD = 8mm
+export pivotSleeveBore = 8.3mm
+export printBlue = '#2878BA'
+export pvcWhite = '#E4E6E8'
+export steelGrey = '#7E8790'
+export ceramicWhite = '#FFF1CC'
+export hotRed = '#D84A38'
+// Generic demonstration section; not a user-approved wing profile.
+export templateChord = 200mm
+export templateThickness = 8mm
+export edgeThickness = 0.4mm
+export housingLength = 150mm
+export housingWidth = 100mm
+export housingHeight = 55mm

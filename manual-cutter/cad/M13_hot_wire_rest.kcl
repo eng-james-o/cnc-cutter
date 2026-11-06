@@ -1,0 +1,21 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+import block, pinY from "primitives.kcl"
+// Nonprinted ceramic block. Attach to an independent nonflammable bench support.
+blank = block(
+  w = 50mm,
+  d = 30mm,
+  h = 25mm,
+  x = -25mm,
+  y = -15mm,
+  z = 0mm,
+)
+notch = pinY(
+  dia = 6mm,
+  length = 32mm,
+  x = 0mm,
+  y = -16mm,
+  z = 25mm,
+)
+part = subtract(blank, tools = notch)
+  |> appearance(color = '#FFF1CC')

@@ -1,0 +1,12 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+import pinX from "primitives.kcl"
+import wireDiameter, span from "parameters.kcl"
+// Mechanical span; electrical clips sit 25mm inboard from each end in main.kcl.
+part = pinX(
+  dia = wireDiameter,
+  length = span,
+  x = -span / 2,
+  y = 0mm,
+  z = 0mm,
+)

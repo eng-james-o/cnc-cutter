@@ -1,0 +1,5 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+// Purchased/reference component; no threads or vendor internals. Do not print.
+import bolt from "hardware.kcl"
+part = bolt(dia = 6mm, length = 100mm)

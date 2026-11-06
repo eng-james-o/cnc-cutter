@@ -1,0 +1,4 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+import nut from "hardware.kcl"
+part = nut(dia = 4mm)

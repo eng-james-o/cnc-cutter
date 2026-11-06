@@ -1,0 +1,9 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+// Illustrative coil and separate hook bodies; spring force is NOT derived from geometry.
+import springCoil, springHook from "hardware.kcl"
+coil = springCoil()
+leftHook = springHook()
+  |> translate(x = -7mm, z = -8mm, global = true)
+rightHook = springHook()
+  |> translate(x = 87mm, z = -8mm, global = true)

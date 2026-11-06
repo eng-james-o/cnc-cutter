@@ -1,0 +1,13 @@
+# References and design provenance
+
+Reviewed 2026-11-06. Tutorials are original builder accounts and inspiration, not validation of this 1.2 m bow. Some Instructables pages exposed only indexed introductory text during review; no claim is made that hidden drawings, comments or downloadable files were inspected. The proposed dimensions, pivot geometry, ratings and validation targets are engineering estimates developed for this project.
+
+| ID | Primary source | Useful observation | Application / limitation |
+| --- | --- | --- | --- |
+| R1 | [Super Simple Hotwire Cutter — jasonwinfilednz, Instructables](https://www.instructables.com/Super-Simple-Hotwire-Cutter/) | Describes PC/laptop power, adjustable power and a printed flexible bow | Supports accessible power and printed accessories; M1 uses explicit spring take-up instead of relying on a printed bow's elastic tension |
+| R2 | [USB Foam Cutter (PVC) - Hot Wire — Olivier Iserbyt, Instructables](https://www.instructables.com/USB-Foam-Cutter-PVC-Hot-Wire/) | Small PVC-based handheld hot-wire construction | PVC construction inspiration only; its short span and USB supply do not establish this design's pipe size, stiffness or heat capacity |
+| R3 | [Nikrothal 80 wire datasheet — Kanthal](https://www.kanthal.com/products/datasheets/material-datasheets/wire/resistance-heating-wire-and-resistance-wire/nikrothal-80/) | Resistivity 1.09 ohm·mm²/m; density 8.30 g/cm³; moderate-temperature expansion about 14–15 × 10^-6/K; modest resistance temperature factors | Basis of resistance, load, sag and expansion estimates; verify the actual purchased alloy. Manufacturer maximum wire temperature is not a recommended cutting temperature |
+| R4 | [Build Classic R/C Airplanes With New Methods — Instructables](https://www.instructables.com/Build-Classic-RC-Airplanes-With-New-Methods/) | Describes spring/rope tension for larger cutters and two operators following marked templates | Basis for numbered guide stations and coordinated progression; not a source for M1 spring specifications |
+| R5 | [Hot Wire Foam Cutting Guide — University of Waterloo Aerial Robotics Group](https://uwarg-docs.atlassian.net/wiki/spaces/MEC/pages/3799580679/Hot%2BWire%2BFoam%2BCutting%2BGuide) | Team guide describes handheld template cutting with two people | Corroborates operating arrangement; project-specific fixture and safety validation remain necessary |
+
+R4 and R5 were reviewed through indexed excerpts, not a complete manual reproduction. No supplier SKU, local price, thermal guide-edge performance, charger compatibility or printed structural load rating has been validated. Add actual part datasheets and test evidence when hardware is selected.

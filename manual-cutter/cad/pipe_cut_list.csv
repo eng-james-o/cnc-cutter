@@ -1,0 +1,3 @@
+Part,Quantity,Length_mm,OD_mm,Wall_mm,Operation,Status
+Crossbar,1,1080,33.4,3.4,Square cut; ends clamp in P01 socket 60 mm inboard from each pivot,Provisional fit-check only
+End arm,2,480,33.4,3.4,Square cut; 8.3 mm cross-hole 300 mm from lower end for M04 pivot sleeve,Provisional; fixture before drilling

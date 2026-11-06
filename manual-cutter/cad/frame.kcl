@@ -1,0 +1,807 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+// Cold aligned pose. Manual bow only; use main.kcl for guides and power box.
+import pivotFork, forkCap, pivotSaddleHalf, collarHalf, upperAnchor, terminalCarrier, gripHalf, pinchGuard, springGuardHalf, cableClip from "printed.kcl"
+import armPipe, crossbarPipe, endCap, bolt, washer, nut, ceramicAnchor, wireClamp, alligatorClip, springCoil, springHook, wingnut, adjusterBolt from "hardware.kcl"
+import pinX, pinY, rodBetween from "primitives.kcl"
+import span, pivotZ, pipeBottom, pipeTop, crossbarCut, wireDiameter, tieZ from "parameters.kcl"
+
+crossbar = crossbarPipe()
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(x = -crossbarCut / 2, z = pivotZ, global = true)
+leftArm = armPipe()
+  |> translate(x = -span / 2, z = pipeBottom, global = true)
+leftFork = pivotFork()
+  |> rotate(axis = Z, angle = 180deg, global = true)
+  |> translate(x = -span / 2, z = 350mm, global = true)
+leftSocketCap = forkCap()
+  |> rotate(axis = Z, angle = 180deg, global = true)
+  |> translate(x = -span / 2, z = 350mm, global = true)
+leftGuardA = pinchGuard()
+  |> rotate(axis = Z, angle = 180deg, global = true)
+  |> translate(x = -span / 2, z = 350mm, global = true)
+leftGuardB = pinchGuard()
+  |> rotate(axis = X, angle = 180deg, global = true)
+  |> rotate(axis = Z, angle = 180deg, global = true)
+  |> translate(x = -span / 2, z = 350mm, global = true)
+leftPivotSaddle = pivotSaddleHalf()
+  |> translate(x = -span / 2, z = 350mm, global = true)
+leftUpperAnchor = upperAnchor()
+  |> translate(x = -span / 2, z = 515mm, global = true)
+leftTerminalCarrier = terminalCarrier()
+  |> translate(x = -span / 2, z = 75mm, global = true)
+leftGrip = gripHalf()
+  |> translate(x = -span / 2, z = 435mm, global = true)
+leftPivotSaddleCap = pivotSaddleHalf()
+  |> rotate(axis = Z, angle = 180deg, global = true)
+  |> translate(x = -span / 2, z = 350mm, global = true)
+leftUpperCap = collarHalf(length = 36mm)
+  |> rotate(axis = Z, angle = 180deg, global = true)
+  |> translate(x = -span / 2, z = 515mm, global = true)
+leftCarrierCap = collarHalf(length = 40mm)
+  |> rotate(axis = Z, angle = 180deg, global = true)
+  |> translate(x = -span / 2, z = 75mm, global = true)
+leftGripCap = gripHalf()
+  |> rotate(axis = Z, angle = 180deg, global = true)
+  |> translate(x = -span / 2, z = 435mm, global = true)
+leftBottomPlug = endCap()
+  |> translate(x = -span / 2, z = pipeBottom, global = true)
+leftTopPlug = endCap()
+  |> rotate(axis = X, angle = 180deg, global = true)
+  |> translate(x = -span / 2, z = pipeTop, global = true)
+leftCeramic = ceramicAnchor()
+  |> translate(x = -span / 2, z = -5mm, global = true)
+leftCeramicSpacer0 = washer(id = 4.5mm, od = 10mm, thick = 5mm)
+  |> translate(x = -span / 2 - 18mm, z = 35mm, global = true)
+leftCeramicMount0 = bolt(dia = 4mm, length = 60mm)
+  |> translate(x = -span / 2 - 18mm, z = -8mm, global = true)
+leftCeramicSpacer1 = washer(id = 4.5mm, od = 10mm, thick = 5mm)
+  |> translate(x = -span / 2 + 18mm, z = 35mm, global = true)
+leftCeramicMount1 = bolt(dia = 4mm, length = 60mm)
+  |> translate(x = -span / 2 + 18mm, z = -8mm, global = true)
+leftWireClamp = wireClamp()
+  |> translate(x = -span / 2, y = -14mm, global = true)
+leftAnchorStud = pinY(
+  dia = 4mm,
+  length = 30mm,
+  x = -span / 2,
+  y = -19mm,
+  z = 0mm,
+)
+leftPivotSleeve = washer(id = 6.2mm, od = 8mm, thick = 60mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2,
+       y = -30mm,
+       z = pivotZ,
+       global = true,
+     )
+leftPivotBolt = bolt(dia = 6mm, length = 100mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2,
+       y = -48mm,
+       z = pivotZ,
+       global = true,
+     )
+leftPivotWasher0 = washer(id = 6.5mm, od = 18mm, thick = 1.5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2,
+       y = -46mm,
+       z = pivotZ,
+       global = true,
+     )
+leftPivotWasher1 = washer(id = 6.5mm, od = 18mm, thick = 1.5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2,
+       y = 44mm,
+       z = pivotZ,
+       global = true,
+     )
+leftPivotNut = nut(dia = 6mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2,
+       y = 46mm,
+       z = pivotZ,
+       global = true,
+     )
+leftPivotClampBolt0 = bolt(dia = 5mm, length = 70mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2 - 23mm,
+       y = -34mm,
+       z = 350mm,
+       global = true,
+     )
+leftPivotClampNut0 = nut(dia = 5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2 - 23mm,
+       y = 30mm,
+       z = 350mm,
+       global = true,
+     )
+leftPivotClampBolt1 = bolt(dia = 5mm, length = 70mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2 + 23mm,
+       y = -34mm,
+       z = 350mm,
+       global = true,
+     )
+leftPivotClampNut1 = nut(dia = 5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2 + 23mm,
+       y = 30mm,
+       z = 350mm,
+       global = true,
+     )
+leftUpperClampBolt0 = bolt(dia = 5mm, length = 70mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2 - 23mm,
+       y = -34mm,
+       z = 515mm,
+       global = true,
+     )
+leftUpperClampNut0 = nut(dia = 5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2 - 23mm,
+       y = 30mm,
+       z = 515mm,
+       global = true,
+     )
+leftUpperClampBolt1 = bolt(dia = 5mm, length = 70mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2 + 23mm,
+       y = -34mm,
+       z = 515mm,
+       global = true,
+     )
+leftUpperClampNut1 = nut(dia = 5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2 + 23mm,
+       y = 30mm,
+       z = 515mm,
+       global = true,
+     )
+leftLowerClampBolt0 = bolt(dia = 5mm, length = 70mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2 - 23mm,
+       y = -34mm,
+       z = 75mm,
+       global = true,
+     )
+leftLowerClampNut0 = nut(dia = 5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2 - 23mm,
+       y = 30mm,
+       z = 75mm,
+       global = true,
+     )
+leftLowerClampBolt1 = bolt(dia = 5mm, length = 70mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2 + 23mm,
+       y = -34mm,
+       z = 75mm,
+       global = true,
+     )
+leftLowerClampNut1 = nut(dia = 5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2 + 23mm,
+       y = 30mm,
+       z = 75mm,
+       global = true,
+     )
+leftSocketBolt0 = bolt(dia = 5mm, length = 70mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2 + 85mm,
+       y = -34mm,
+       z = 327mm,
+       global = true,
+     )
+leftSocketNut0 = nut(dia = 5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2 + 85mm,
+       y = 30mm,
+       z = 327mm,
+       global = true,
+     )
+leftSocketBolt1 = bolt(dia = 5mm, length = 70mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2 + 85mm,
+       y = -34mm,
+       z = 373mm,
+       global = true,
+     )
+leftSocketNut1 = nut(dia = 5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2 + 85mm,
+       y = 30mm,
+       z = 373mm,
+       global = true,
+     )
+leftGuardScrew0Front = bolt(dia = 3mm, length = 10mm)
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> translate(
+       x = -span / 2 + 50mm,
+       y = 45mm,
+       z = 332mm,
+       global = true,
+     )
+leftGuardScrew0Back = bolt(dia = 3mm, length = 10mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2 + 50mm,
+       y = -45mm,
+       z = 332mm,
+       global = true,
+     )
+leftGuardScrew1Front = bolt(dia = 3mm, length = 10mm)
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> translate(
+       x = -span / 2 + 50mm,
+       y = 45mm,
+       z = 368mm,
+       global = true,
+     )
+leftGuardScrew1Back = bolt(dia = 3mm, length = 10mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -span / 2 + 50mm,
+       y = -45mm,
+       z = 368mm,
+       global = true,
+     )
+leftGripBand0 = washer(id = 41.2mm, od = 43mm, thick = 4mm)
+  |> translate(x = -span / 2, z = 403mm, global = true)
+leftGripBand1 = washer(id = 41.2mm, od = 43mm, thick = 4mm)
+  |> translate(x = -span / 2, z = 464mm, global = true)
+rightArm = armPipe()
+  |> translate(x = span / 2, z = pipeBottom, global = true)
+rightFork = pivotFork()
+  |> translate(x = span / 2, z = 350mm, global = true)
+rightSocketCap = forkCap()
+  |> translate(x = span / 2, z = 350mm, global = true)
+rightGuardA = pinchGuard()
+  |> translate(x = span / 2, z = 350mm, global = true)
+rightGuardB = pinchGuard()
+  |> rotate(axis = X, angle = 180deg, global = true)
+  |> translate(x = span / 2, z = 350mm, global = true)
+rightPivotSaddle = pivotSaddleHalf()
+  |> translate(x = span / 2, z = 350mm, global = true)
+rightUpperAnchor = upperAnchor()
+  |> translate(x = span / 2, z = 515mm, global = true)
+rightTerminalCarrier = terminalCarrier()
+  |> translate(x = span / 2, z = 75mm, global = true)
+rightGrip = gripHalf()
+  |> translate(x = span / 2, z = 435mm, global = true)
+rightPivotSaddleCap = pivotSaddleHalf()
+  |> rotate(axis = Z, angle = 180deg, global = true)
+  |> translate(x = span / 2, z = 350mm, global = true)
+rightUpperCap = collarHalf(length = 36mm)
+  |> rotate(axis = Z, angle = 180deg, global = true)
+  |> translate(x = span / 2, z = 515mm, global = true)
+rightCarrierCap = collarHalf(length = 40mm)
+  |> rotate(axis = Z, angle = 180deg, global = true)
+  |> translate(x = span / 2, z = 75mm, global = true)
+rightGripCap = gripHalf()
+  |> rotate(axis = Z, angle = 180deg, global = true)
+  |> translate(x = span / 2, z = 435mm, global = true)
+rightBottomPlug = endCap()
+  |> translate(x = span / 2, z = pipeBottom, global = true)
+rightTopPlug = endCap()
+  |> rotate(axis = X, angle = 180deg, global = true)
+  |> translate(x = span / 2, z = pipeTop, global = true)
+rightCeramic = ceramicAnchor()
+  |> translate(x = span / 2, z = -5mm, global = true)
+rightCeramicSpacer0 = washer(id = 4.5mm, od = 10mm, thick = 5mm)
+  |> translate(x = span / 2 - 18mm, z = 35mm, global = true)
+rightCeramicMount0 = bolt(dia = 4mm, length = 60mm)
+  |> translate(x = span / 2 - 18mm, z = -8mm, global = true)
+rightCeramicSpacer1 = washer(id = 4.5mm, od = 10mm, thick = 5mm)
+  |> translate(x = span / 2 + 18mm, z = 35mm, global = true)
+rightCeramicMount1 = bolt(dia = 4mm, length = 60mm)
+  |> translate(x = span / 2 + 18mm, z = -8mm, global = true)
+rightWireClamp = wireClamp()
+  |> translate(x = span / 2, y = -14mm, global = true)
+rightAnchorStud = pinY(
+  dia = 4mm,
+  length = 30mm,
+  x = span / 2,
+  y = -19mm,
+  z = 0mm,
+)
+rightPivotSleeve = washer(id = 6.2mm, od = 8mm, thick = 60mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2,
+       y = -30mm,
+       z = pivotZ,
+       global = true,
+     )
+rightPivotBolt = bolt(dia = 6mm, length = 100mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2,
+       y = -48mm,
+       z = pivotZ,
+       global = true,
+     )
+rightPivotWasher0 = washer(id = 6.5mm, od = 18mm, thick = 1.5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2,
+       y = -46mm,
+       z = pivotZ,
+       global = true,
+     )
+rightPivotWasher1 = washer(id = 6.5mm, od = 18mm, thick = 1.5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2,
+       y = 44mm,
+       z = pivotZ,
+       global = true,
+     )
+rightPivotNut = nut(dia = 6mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2,
+       y = 46mm,
+       z = pivotZ,
+       global = true,
+     )
+rightPivotClampBolt0 = bolt(dia = 5mm, length = 70mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2 - 23mm,
+       y = -34mm,
+       z = 350mm,
+       global = true,
+     )
+rightPivotClampNut0 = nut(dia = 5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2 - 23mm,
+       y = 30mm,
+       z = 350mm,
+       global = true,
+     )
+rightPivotClampBolt1 = bolt(dia = 5mm, length = 70mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2 + 23mm,
+       y = -34mm,
+       z = 350mm,
+       global = true,
+     )
+rightPivotClampNut1 = nut(dia = 5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2 + 23mm,
+       y = 30mm,
+       z = 350mm,
+       global = true,
+     )
+rightUpperClampBolt0 = bolt(dia = 5mm, length = 70mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2 - 23mm,
+       y = -34mm,
+       z = 515mm,
+       global = true,
+     )
+rightUpperClampNut0 = nut(dia = 5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2 - 23mm,
+       y = 30mm,
+       z = 515mm,
+       global = true,
+     )
+rightUpperClampBolt1 = bolt(dia = 5mm, length = 70mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2 + 23mm,
+       y = -34mm,
+       z = 515mm,
+       global = true,
+     )
+rightUpperClampNut1 = nut(dia = 5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2 + 23mm,
+       y = 30mm,
+       z = 515mm,
+       global = true,
+     )
+rightLowerClampBolt0 = bolt(dia = 5mm, length = 70mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2 - 23mm,
+       y = -34mm,
+       z = 75mm,
+       global = true,
+     )
+rightLowerClampNut0 = nut(dia = 5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2 - 23mm,
+       y = 30mm,
+       z = 75mm,
+       global = true,
+     )
+rightLowerClampBolt1 = bolt(dia = 5mm, length = 70mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2 + 23mm,
+       y = -34mm,
+       z = 75mm,
+       global = true,
+     )
+rightLowerClampNut1 = nut(dia = 5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2 + 23mm,
+       y = 30mm,
+       z = 75mm,
+       global = true,
+     )
+rightSocketBolt0 = bolt(dia = 5mm, length = 70mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2 - 85mm,
+       y = -34mm,
+       z = 327mm,
+       global = true,
+     )
+rightSocketNut0 = nut(dia = 5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2 - 85mm,
+       y = 30mm,
+       z = 327mm,
+       global = true,
+     )
+rightSocketBolt1 = bolt(dia = 5mm, length = 70mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2 - 85mm,
+       y = -34mm,
+       z = 373mm,
+       global = true,
+     )
+rightSocketNut1 = nut(dia = 5mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2 - 85mm,
+       y = 30mm,
+       z = 373mm,
+       global = true,
+     )
+rightGuardScrew0Front = bolt(dia = 3mm, length = 10mm)
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> translate(
+       x = span / 2 - 50mm,
+       y = 45mm,
+       z = 332mm,
+       global = true,
+     )
+rightGuardScrew0Back = bolt(dia = 3mm, length = 10mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2 - 50mm,
+       y = -45mm,
+       z = 332mm,
+       global = true,
+     )
+rightGuardScrew1Front = bolt(dia = 3mm, length = 10mm)
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> translate(
+       x = span / 2 - 50mm,
+       y = 45mm,
+       z = 368mm,
+       global = true,
+     )
+rightGuardScrew1Back = bolt(dia = 3mm, length = 10mm)
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = span / 2 - 50mm,
+       y = -45mm,
+       z = 368mm,
+       global = true,
+     )
+rightGripBand0 = washer(id = 41.2mm, od = 43mm, thick = 4mm)
+  |> translate(x = span / 2, z = 403mm, global = true)
+rightGripBand1 = washer(id = 41.2mm, od = 43mm, thick = 4mm)
+  |> translate(x = span / 2, z = 464mm, global = true)
+nichrome = pinX(
+  dia = wireDiameter,
+  length = span,
+  x = -span / 2,
+  y = -14mm,
+  z = 0mm,
+)
+  |> appearance(color = "#D84A38")
+leftClip = alligatorClip()
+  |> rotate(axis = Z, angle = 180deg, global = true)
+  |> translate(x = -span / 2 + 25mm, y = -14mm, global = true)
+leftClipLead = rodBetween(
+  dia = 3mm,
+  x1 = -span / 2 + 25mm,
+  y1 = -14mm,
+  z1 = 15mm,
+  x2 = -span / 2 + 25mm,
+  y2 = -45mm,
+  z2 = 320mm,
+)
+  |> appearance(color = "#252A31")
+rightClip = alligatorClip()
+  |> translate(x = span / 2 - 25mm, y = -14mm, global = true)
+rightClipLead = rodBetween(
+  dia = 3mm,
+  x1 = span / 2 - 25mm,
+  y1 = -14mm,
+  z1 = 15mm,
+  x2 = span / 2 - 25mm,
+  y2 = -45mm,
+  z2 = 320mm,
+)
+  |> appearance(color = "#252A31")
+spring = springCoil()
+  |> translate(
+       x = -40mm,
+       y = 21mm,
+       z = tieZ,
+       global = true,
+     )
+springHookLeft = springHook()
+  |> translate(
+       x = -47mm,
+       y = 21mm,
+       z = tieZ - 8mm,
+       global = true,
+     )
+springHookRight = springHook()
+  |> translate(
+       x = 47mm,
+       y = 21mm,
+       z = tieZ - 8mm,
+       global = true,
+     )
+springGuardFront = springGuardHalf()
+  |> translate(y = 21mm, z = tieZ, global = true)
+springGuardBack = springGuardHalf()
+  |> rotate(axis = X, angle = 180deg, global = true)
+  |> translate(y = 21mm, z = tieZ, global = true)
+upperCordLeft = rodBetween(
+  dia = 3mm,
+  x1 = -span / 2,
+  y1 = 21mm,
+  z1 = tieZ,
+  x2 = -53mm,
+  y2 = 21mm,
+  z2 = tieZ - 8mm,
+)
+upperCordRight = rodBetween(
+  dia = 3mm,
+  x1 = 53mm,
+  y1 = 21mm,
+  z1 = tieZ - 8mm,
+  x2 = span / 2 - 60mm,
+  y2 = 21mm,
+  z2 = tieZ,
+)
+preloadAdjuster = adjusterBolt()
+  |> translate(
+       x = span / 2 - 60mm,
+       y = 21mm,
+       z = tieZ,
+       global = true,
+     )
+tetherLeft = rodBetween(
+  dia = 2mm,
+  x1 = -80mm,
+  y1 = 21mm,
+  z1 = tieZ,
+  x2 = -60mm,
+  y2 = 21mm,
+  z2 = tieZ - 28mm,
+)
+tetherMiddle = rodBetween(
+  dia = 2mm,
+  x1 = -60mm,
+  y1 = 21mm,
+  z1 = tieZ - 28mm,
+  x2 = 60mm,
+  y2 = 21mm,
+  z2 = tieZ - 28mm,
+)
+tetherRight = rodBetween(
+  dia = 2mm,
+  x1 = 60mm,
+  y1 = 21mm,
+  z1 = tieZ - 28mm,
+  x2 = 80mm,
+  y2 = 21mm,
+  z2 = tieZ,
+)
+crossbarCableClip0 = cableClip()
+  |> translate(
+       x = -span / 3,
+       y = -25mm,
+       z = 335mm,
+       global = true,
+     )
+crossbarCableClip1 = cableClip()
+  |> translate(
+       x = 0mm,
+       y = -25mm,
+       z = 335mm,
+       global = true,
+     )
+crossbarCableClip2 = cableClip()
+  |> translate(
+       x = span / 3,
+       y = -25mm,
+       z = 335mm,
+       global = true,
+     )
+
+preloadWingnut = wingnut()
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(
+       x = span / 2 + 12mm,
+       y = 21mm,
+       z = tieZ,
+       global = true,
+     )
+leftCeramicMountNut0 = nut(dia = 4mm)
+  |> translate(x = -span / 2 - 18mm, z = 51mm, global = true)
+leftCeramicMountNut1 = nut(dia = 4mm)
+  |> translate(x = -span / 2 + 18mm, z = 51mm, global = true)
+rightCeramicMountNut0 = nut(dia = 4mm)
+  |> translate(x = span / 2 - 18mm, z = 51mm, global = true)
+rightCeramicMountNut1 = nut(dia = 4mm)
+  |> translate(x = span / 2 + 18mm, z = 51mm, global = true)
+export frameBodies = [
+  preloadWingnut,
+  leftCeramicMountNut0,
+  leftCeramicMountNut1,
+  rightCeramicMountNut0,
+  rightCeramicMountNut1,
+  crossbar,
+  leftArm,
+  leftFork,
+  leftSocketCap,
+  leftGuardA,
+  leftGuardB,
+  leftPivotSaddle,
+  leftUpperAnchor,
+  leftTerminalCarrier,
+  leftGrip,
+  leftPivotSaddleCap,
+  leftUpperCap,
+  leftCarrierCap,
+  leftGripCap,
+  leftBottomPlug,
+  leftTopPlug,
+  leftCeramic,
+  leftCeramicSpacer0,
+  leftCeramicMount0,
+  leftCeramicSpacer1,
+  leftCeramicMount1,
+  leftWireClamp,
+  leftAnchorStud,
+  leftPivotSleeve,
+  leftPivotBolt,
+  leftPivotWasher0,
+  leftPivotWasher1,
+  leftPivotNut,
+  leftPivotClampBolt0,
+  leftPivotClampNut0,
+  leftPivotClampBolt1,
+  leftPivotClampNut1,
+  leftUpperClampBolt0,
+  leftUpperClampNut0,
+  leftUpperClampBolt1,
+  leftUpperClampNut1,
+  leftLowerClampBolt0,
+  leftLowerClampNut0,
+  leftLowerClampBolt1,
+  leftLowerClampNut1,
+  leftSocketBolt0,
+  leftSocketNut0,
+  leftSocketBolt1,
+  leftSocketNut1,
+  leftGuardScrew0Front,
+  leftGuardScrew0Back,
+  leftGuardScrew1Front,
+  leftGuardScrew1Back,
+  leftGripBand0,
+  leftGripBand1,
+  rightArm,
+  rightFork,
+  rightSocketCap,
+  rightGuardA,
+  rightGuardB,
+  rightPivotSaddle,
+  rightUpperAnchor,
+  rightTerminalCarrier,
+  rightGrip,
+  rightPivotSaddleCap,
+  rightUpperCap,
+  rightCarrierCap,
+  rightGripCap,
+  rightBottomPlug,
+  rightTopPlug,
+  rightCeramic,
+  rightCeramicSpacer0,
+  rightCeramicMount0,
+  rightCeramicSpacer1,
+  rightCeramicMount1,
+  rightWireClamp,
+  rightAnchorStud,
+  rightPivotSleeve,
+  rightPivotBolt,
+  rightPivotWasher0,
+  rightPivotWasher1,
+  rightPivotNut,
+  rightPivotClampBolt0,
+  rightPivotClampNut0,
+  rightPivotClampBolt1,
+  rightPivotClampNut1,
+  rightUpperClampBolt0,
+  rightUpperClampNut0,
+  rightUpperClampBolt1,
+  rightUpperClampNut1,
+  rightLowerClampBolt0,
+  rightLowerClampNut0,
+  rightLowerClampBolt1,
+  rightLowerClampNut1,
+  rightSocketBolt0,
+  rightSocketNut0,
+  rightSocketBolt1,
+  rightSocketNut1,
+  rightGuardScrew0Front,
+  rightGuardScrew0Back,
+  rightGuardScrew1Front,
+  rightGuardScrew1Back,
+  rightGripBand0,
+  rightGripBand1,
+  nichrome,
+  leftClip,
+  leftClipLead,
+  rightClip,
+  rightClipLead,
+  spring,
+  springHookLeft,
+  springHookRight,
+  springGuardFront,
+  springGuardBack,
+  upperCordLeft,
+  upperCordRight,
+  preloadAdjuster,
+  tetherLeft,
+  tetherMiddle,
+  tetherRight,
+  crossbarCableClip0,
+  crossbarCableClip1,
+  crossbarCableClip2
+]

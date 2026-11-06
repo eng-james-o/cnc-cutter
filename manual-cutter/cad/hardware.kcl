@@ -1,0 +1,401 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+import block, pin, pinX, pinY, tube from "primitives.kcl"
+import pipeOD, pipeWall, armCut, pivotZ, pipeBottom, pivotSleeveBore, crossbarCut, steelGrey, pvcWhite, ceramicWhite from "parameters.kcl"
+// Purchased components are dimensional reference models, not vendor certified.
+export fn armPipe() {
+  stock = tube(od = pipeOD, id = pipeOD - (2 * pipeWall), length = armCut)
+  pivot = pinY(
+    dia = pivotSleeveBore,
+    length = pipeOD + 2mm,
+    x = 0mm,
+    y = -pipeOD / 2 - 1mm,
+    z = pivotZ - pipeBottom,
+  )
+  return subtract(stock, tools = pivot)
+    |> appearance(color = pvcWhite)
+}
+export fn crossbarPipe() {
+  return tube(od = pipeOD, id = pipeOD - (2 * pipeWall), length = crossbarCut)
+    |> appearance(color = pvcWhite)
+}
+// Internal flush plug alternative avoids interference with external carrier collars.
+export fn endCap() {
+  plug = pin(
+    dia = pipeOD - (2 * pipeWall) - 0.2mm,
+    length = 16mm,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  flange = pin(
+    dia = pipeOD,
+    length = 2mm,
+    x = 0mm,
+    y = 0mm,
+    z = -1mm,
+  )
+  return union([plug, flange])
+    |> appearance(color = pvcWhite)
+}
+export fn bolt(dia, length) {
+  shank = pin(
+    dia = dia,
+    length = length,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  head = pin(
+    dia = dia * 1.75,
+    length = dia * 0.65,
+    x = 0mm,
+    y = 0mm,
+    z = -dia * 0.65 + 0.1mm,
+  )
+  return union([shank, head])
+    |> appearance(color = steelGrey)
+}
+export fn washer(id, od, thick) {
+  return tube(od = od, id = id, length = thick)
+    |> appearance(color = steelGrey)
+}
+export fn nut(dia) {
+  s = sketch(on = XY) {
+    a = line(start = [dia, 0mm], end = [dia / 2, dia * 0.8660254])
+    b = line(start = [dia / 2, dia * 0.8660254], end = [-dia / 2, dia * 0.8660254])
+    c = line(start = [-dia / 2, dia * 0.8660254], end = [-dia, 0mm])
+    d = line(start = [-dia, 0mm], end = [-dia / 2, -dia * 0.8660254])
+    e = line(start = [-dia / 2, -dia * 0.8660254], end = [dia / 2, -dia * 0.8660254])
+    f = line(start = [dia / 2, -dia * 0.8660254], end = [dia, 0mm])
+  }
+  blank = extrude(region(segments = [s.a, s.b]), length = dia * 0.8)
+  hide(s)
+  bore = pin(
+    dia = dia,
+    length = dia,
+    x = 0mm,
+    y = 0mm,
+    z = -0.1mm,
+  )
+  return subtract(blank, tools = bore)
+    |> appearance(color = steelGrey)
+}
+// Ceramic isolates the central wire anchor from both mounting bolts/backing plate.
+export fn ceramicAnchor() {
+  blank = block(
+    w = 48mm,
+    d = 16mm,
+    h = 40mm,
+    x = -24mm,
+    y = -8mm,
+    z = 0mm,
+  )
+  mountA = pin(
+    dia = 4.5mm,
+    length = 42mm,
+    x = -18mm,
+    y = 0mm,
+    z = -1mm,
+  )
+  mountB = pin(
+    dia = 4.5mm,
+    length = 42mm,
+    x = 18mm,
+    y = 0mm,
+    z = -1mm,
+  )
+  anchor = pinY(
+    dia = 4.5mm,
+    length = 18mm,
+    x = 0mm,
+    y = -9mm,
+    z = 5mm,
+  )
+  return subtract(blank, tools = [mountA, mountB, anchor])
+    |> appearance(color = ceramicWhite)
+}
+export fn wireClamp() {
+  stock = block(
+    w = 12mm,
+    d = 12mm,
+    h = 10mm,
+    x = -6mm,
+    y = -6mm,
+    z = -5mm,
+  )
+  wire = pinX(
+    dia = 1mm,
+    length = 14mm,
+    x = -7mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  screw = pin(
+    dia = 3mm,
+    length = 8mm,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  return subtract(stock, tools = [wire, screw])
+    |> appearance(color = steelGrey)
+}
+export fn alligatorClip() {
+  jawA = block(
+    w = 35mm,
+    d = 7mm,
+    h = 2mm,
+    x = 0mm,
+    y = -3.5mm,
+    z = -3mm,
+  )
+  jawB = block(
+    w = 35mm,
+    d = 7mm,
+    h = 2mm,
+    x = 0mm,
+    y = -3.5mm,
+    z = 1mm,
+  )
+  hinge = pinY(
+    dia = 6mm,
+    length = 9mm,
+    x = 20mm,
+    y = -4.5mm,
+    z = 0mm,
+  )
+  return union([jawA, jawB, hinge])
+    |> appearance(color = steelGrey)
+}
+export fn adapter() {
+  return block(
+    w = 115mm,
+    d = 50mm,
+    h = 30mm,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+    |> appearance(color = '#24282B')
+}
+export fn pwmBoard() {
+  return block(
+    w = 70mm,
+    d = 45mm,
+    h = 18mm,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+    |> appearance(color = '#246947')
+}
+export fn barrelConnector() {
+  body = tube(od = 12mm, id = 5.5mm, length = 20mm)
+  flange = tube(od = 16mm, id = 5.5mm, length = 2mm)
+  return union([body, flange])
+    |> appearance(color = '#20272D')
+}
+export fn rockerSwitch() {
+  flange = block(
+    w = 17mm,
+    d = 23mm,
+    h = 2mm,
+    x = -2mm,
+    y = -2mm,
+    z = 0mm,
+  )
+  body = block(
+    w = 13mm,
+    d = 19mm,
+    h = 18mm,
+    x = 0mm,
+    y = 0mm,
+    z = -16mm,
+  )
+  return union([flange, body])
+    |> appearance(color = '#282C30')
+}
+export fn footPedal() {
+  return block(
+    w = 90mm,
+    d = 65mm,
+    h = 28mm,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+    |> appearance(color = '#22272B')
+}
+export fn fuseHolder() {
+  return pin(
+    dia = 16mm,
+    length = 40mm,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+    |> appearance(color = '#20272D')
+}
+export fn cableGland() {
+  stock = tube(od = 18mm, id = 6mm, length = 22mm)
+  flange = tube(od = 24mm, id = 6mm, length = 4mm)
+  return union([stock, flange])
+    |> appearance(color = '#22282D')
+}
+export fn templateClamp() {
+  blank = block(
+    w = 65mm,
+    d = 18mm,
+    h = 60mm,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  void = block(
+    w = 52mm,
+    d = 20mm,
+    h = 38mm,
+    x = -1mm,
+    y = -1mm,
+    z = 11mm,
+  )
+  cframe = subtract(blank, tools = void)
+  screw = pin(
+    dia = 6mm,
+    length = 45mm,
+    x = 18mm,
+    y = 9mm,
+    z = -10mm,
+  )
+  return union([cframe, screw])
+    |> appearance(color = steelGrey)
+}
+export fn terminalBlock() {
+  blank = block(
+    w = 25mm,
+    d = 18mm,
+    h = 14mm,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  boreA = pinY(
+    dia = 4mm,
+    length = 20mm,
+    x = 7mm,
+    y = -1mm,
+    z = 6mm,
+  )
+  boreB = pinY(
+    dia = 4mm,
+    length = 20mm,
+    x = 18mm,
+    y = -1mm,
+    z = 6mm,
+  )
+  return subtract(blank, tools = [boreA, boreB])
+    |> appearance(color = '#434D52')
+}
+// Helical spring reference: geometry is illustrative; not a spring-rate design.
+export fn springCoil() {
+  path = helix(
+    axis = Z,
+    radius = 8mm,
+    length = 80mm,
+    revolutions = 16,
+    angleStart = 0deg,
+  )
+  s = sketch(on = XY) {
+    c = circle(center = [0mm, 0mm], start = [0.6mm, 0mm])
+  }
+  coil = sweep(region(segments = [s.c]), path = path, translateProfileToPath = true)
+    |> rotate(axis = Y, angle = 90deg, global = true)
+    |> appearance(color = steelGrey)
+  hide(s)
+  hide(path)
+  return coil
+}
+export fn springHook() {
+  return tube(od = 13mm, id = 10.6mm, length = 1.2mm)
+    |> rotate(axis = X, angle = 90deg, global = true)
+    |> appearance(color = steelGrey)
+}
+
+export fn wingnut() {
+  body = nut(dia = 5mm)
+  wingA = block(
+    w = 13mm,
+    d = 4mm,
+    h = 8mm,
+    x = 3mm,
+    y = -2mm,
+    z = 0mm,
+  )
+  wingB = block(
+    w = 13mm,
+    d = 4mm,
+    h = 8mm,
+    x = -16mm,
+    y = -2mm,
+    z = 0mm,
+  )
+  return union([body, wingA, wingB])
+    |> appearance(color = steelGrey)
+}
+export fn ringTerminal() {
+  eye = tube(od = 12mm, id = 5.5mm, length = 1mm)
+  tongue = block(
+    w = 14mm,
+    d = 6mm,
+    h = 1mm,
+    x = 3mm,
+    y = -3mm,
+    z = 0mm,
+  )
+  barrel = tube(od = 5mm, id = 2.5mm, length = 10mm)
+    |> rotate(axis = Y, angle = 90deg, global = true)
+    |> translate(x = 12mm, z = 2mm, global = true)
+  return union([eye, tongue, barrel])
+    |> appearance(color = steelGrey)
+}
+export fn fuseInsert() {
+  glass = pin(
+    dia = 5mm,
+    length = 20mm,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  endA = pin(
+    dia = 5.2mm,
+    length = 4mm,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  endB = pin(
+    dia = 5.2mm,
+    length = 4mm,
+    x = 0mm,
+    y = 0mm,
+    z = 16mm,
+  )
+  return union([glass, endA, endB])
+    |> appearance(color = '#AFBAC0')
+}
+
+export fn adjusterBolt() {
+  rod = pinX(
+    dia = 5mm,
+    length = 80mm,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  eye = tube(od = 12mm, id = 6mm, length = 4mm)
+    |> rotate(axis = X, angle = 90deg, global = true)
+    |> translate(x = -5mm, y = 2mm, global = true)
+  return union([rod, eye])
+    |> appearance(color = steelGrey)
+}

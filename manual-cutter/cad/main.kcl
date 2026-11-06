@@ -1,0 +1,262 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+// Full cold setup at guide lead-in. Frame is moved as a single collection.
+import frameBodies from "frame.kcl"
+import guideBody, guideEdge from "guides.kcl"
+import enclosureBase, enclosureLid, pcbCarrier, registrationBracket, parkingSaddle from "printed.kcl"
+import adapter, pwmBoard, barrelConnector, rockerSwitch, footPedal, fuseHolder, cableGland, terminalBlock, bolt from "hardware.kcl"
+import block, pin, pinX, rodBetween from "primitives.kcl"
+import foamSpan, templateChord, templateThickness, edgeThickness, housingHeight from "parameters.kcl"
+
+bow = translate(frameBodies, y = -0.575 * templateChord + 14mm, global = true)
+// Local profile XY maps to world YZ; extrusion maps to +X.
+rootGuide = guideBody(chord = templateChord)
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> rotate(axis = Z, angle = 90deg, global = true)
+  |> translate(
+       x = -foamSpan / 2 - templateThickness,
+       y = -templateChord / 2,
+       z = -templateChord * 0.1,
+       global = true,
+     )
+tipGuide = guideBody(chord = templateChord)
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> rotate(axis = Z, angle = 90deg, global = true)
+  |> translate(
+       x = foamSpan / 2,
+       y = -templateChord / 2,
+       z = -templateChord * 0.1,
+       global = true,
+     )
+rootContactPlate = guideEdge(chord = templateChord)
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> rotate(axis = Z, angle = 90deg, global = true)
+  |> translate(
+       x = -foamSpan / 2 - templateThickness - edgeThickness,
+       y = -templateChord / 2,
+       z = -templateChord * 0.1,
+       global = true,
+     )
+tipContactPlate = guideEdge(chord = templateChord)
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> rotate(axis = Z, angle = 90deg, global = true)
+  |> translate(
+       x = foamSpan / 2 + templateThickness,
+       y = -templateChord / 2,
+       z = -templateChord * 0.1,
+       global = true,
+     )
+foamReference = block(
+  w = foamSpan,
+  d = templateChord,
+  h = 60mm,
+  x = -foamSpan / 2,
+  y = -templateChord / 2,
+  z = -20mm,
+)
+  |> appearance(color = '#DACCB2')
+// Independent support envelope; foam/bench are reference bodies, not cutter parts.
+foamSupport = block(
+  w = foamSpan - 100mm,
+  d = templateChord + 40mm,
+  h = 20mm,
+  x = -foamSpan / 2 + 50mm,
+  y = -templateChord / 2 - 20mm,
+  z = -40mm,
+)
+  |> appearance(color = '#78716B')
+
+controllerBase = enclosureBase()
+  |> translate(
+       x = -75mm,
+       y = 260mm,
+       z = -40mm,
+       global = true,
+     )
+controllerLid = enclosureLid()
+  |> translate(
+       x = -75mm,
+       y = 260mm,
+       z = -40mm + housingHeight,
+       global = true,
+     )
+controllerCarrier = pcbCarrier()
+  |> translate(
+       x = -50mm,
+       y = 280mm,
+       z = -32mm,
+       global = true,
+     )
+controllerBoard = pwmBoard()
+  |> translate(
+       x = -43mm,
+       y = 285mm,
+       z = -28mm,
+       global = true,
+     )
+master = rockerSwitch()
+  |> translate(
+       x = 13mm,
+       y = 300mm,
+       z = 19mm,
+       global = true,
+     )
+dial = pin(
+  dia = 22mm,
+  length = 12mm,
+  x = -25mm,
+  y = 310mm,
+  z = 19mm,
+)
+  |> appearance(color = '#22282D')
+inputSocket = barrelConnector()
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = -45mm,
+       y = 258mm,
+       z = -15mm,
+       global = true,
+     )
+outputGland = cableGland()
+  |> rotate(axis = X, angle = -90deg, global = true)
+  |> translate(
+       x = 35mm,
+       y = 256mm,
+       z = -15mm,
+       global = true,
+     )
+fuse = fuseHolder()
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(
+       x = -15mm,
+       y = 340mm,
+       z = -18mm,
+       global = true,
+     )
+connector = terminalBlock()
+  |> translate(
+       x = 40mm,
+       y = 285mm,
+       z = -30mm,
+       global = true,
+     )
+laptopAdapter = adapter()
+  |> translate(
+       x = 125mm,
+       y = 280mm,
+       z = -40mm,
+       global = true,
+     )
+holdPedal = footPedal()
+  |> translate(
+       x = 290mm,
+       y = 280mm,
+       z = -40mm,
+       global = true,
+     )
+// Reference lead sections: service loops and internal wiring are not generated.
+supplyLead = rodBetween(
+  dia = 4mm,
+  x1 = 125mm,
+  y1 = 305mm,
+  z1 = -25mm,
+  x2 = -45mm,
+  y2 = 240mm,
+  z2 = -15mm,
+)
+rootBracket0 = registrationBracket()
+  |> rotate(axis = Z, angle = 90deg, global = true)
+  |> translate(
+       x = -508.4mm,
+       y = -73mm,
+       z = -41mm,
+       global = true,
+     )
+rootGuideBolt0 = bolt(dia = 5mm, length = 30mm)
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(
+       x = -523mm,
+       y = -60mm,
+       z = -13mm,
+       global = true,
+     )
+rootBracket1 = registrationBracket()
+  |> rotate(axis = Z, angle = 90deg, global = true)
+  |> translate(
+       x = -508.4mm,
+       y = 47mm,
+       z = -41mm,
+       global = true,
+     )
+rootGuideBolt1 = bolt(dia = 5mm, length = 30mm)
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(
+       x = -523mm,
+       y = 60mm,
+       z = -13mm,
+       global = true,
+     )
+tipBracket0 = registrationBracket()
+  |> rotate(axis = Z, angle = -90deg, global = true)
+  |> translate(
+       x = 508.4mm,
+       y = -47mm,
+       z = -41mm,
+       global = true,
+     )
+tipGuideBolt0 = bolt(dia = 5mm, length = 30mm)
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(
+       x = 493mm,
+       y = -60mm,
+       z = -13mm,
+       global = true,
+     )
+tipBracket1 = registrationBracket()
+  |> rotate(axis = Z, angle = -90deg, global = true)
+  |> translate(
+       x = 508.4mm,
+       y = 73mm,
+       z = -41mm,
+       global = true,
+     )
+tipGuideBolt1 = bolt(dia = 5mm, length = 30mm)
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(
+       x = 493mm,
+       y = 60mm,
+       z = -13mm,
+       global = true,
+     )
+lidScrew0 = bolt(dia = 3mm, length = 16mm)
+  |> rotate(axis = X, angle = 180deg, global = true)
+  |> translate(
+       x = -65mm,
+       y = 270mm,
+       z = 20mm,
+       global = true,
+     )
+lidScrew1 = bolt(dia = 3mm, length = 16mm)
+  |> rotate(axis = X, angle = 180deg, global = true)
+  |> translate(
+       x = 65mm,
+       y = 270mm,
+       z = 20mm,
+       global = true,
+     )
+lidScrew2 = bolt(dia = 3mm, length = 16mm)
+  |> rotate(axis = X, angle = 180deg, global = true)
+  |> translate(
+       x = -65mm,
+       y = 350mm,
+       z = 20mm,
+       global = true,
+     )
+lidScrew3 = bolt(dia = 3mm, length = 16mm)
+  |> rotate(axis = X, angle = 180deg, global = true)
+  |> translate(
+       x = 65mm,
+       y = 350mm,
+       z = 20mm,
+       global = true,
+     )

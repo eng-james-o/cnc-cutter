@@ -1,0 +1,61 @@
+BOM_ID,Model,Quantity,Class,Status,Notes
+E01,E01_nichrome_wire.kcl,1,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+E02,E02_laptop_adapter.kcl,1,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+E03,E03_DC_socket.kcl,1,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+E04,E04_PWM_module.kcl,1,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+E04,E04_control_knob.kcl,1,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+E05,E05_master_switch.kcl,1,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+E06,E06_hold_to_heat_pedal.kcl,1,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+E07,E07_fuse_holder.kcl,1,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+E07,E07_fuse_insert.kcl,1,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+E08,E08_power_lead.kcl,2,stock/reference,provisional,Simplified reference; measure selected hardware; do not print; straight per-metre insulation envelope
+E09,E09_alligator_clip.kcl,2,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+E10,E10_cable_gland.kcl,1,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+E10,E10_grip_retention_band.kcl,4,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+E10,E10_heatshrink_sleeve.kcl,4,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+E10,E10_ring_terminal.kcl,4,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+E10,E10_terminal_block.kcl,1,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+M01,M01_arm_pipe.kcl,2,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+M01,M01_crossbar_pipe.kcl,1,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+M02,M02_end_cap.kcl,4,stock/reference,provisional,Simplified reference; measure selected hardware; do not print; internal flush plugs substituted to clear collars
+M03,M03_M6_pivot_bolt.kcl,2,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+M03,M03_M6_pivot_nut.kcl,2,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+M04,M04_pivot_sleeve.kcl,2,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+M04,M04_pivot_washer.kcl,4,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+M05,M05_M3_lid_screw.kcl,12,stock/reference,provisional,Simplified reference; measure selected hardware; do not print; four lid plus eight guard screws require different lengths
+M05,M05_M5_clamp_bolt.kcl,16,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+M05,M05_M5_nut.kcl,16,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+M06,M06_M5_wingnut.kcl,1,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+M06,M06_preload_adjuster.kcl,1,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+M07,M07_extension_spring.kcl,1,stock/reference,provisional,Simplified reference; measure selected hardware; do not print; force/rate not determined by shown coil geometry
+M08,M08_retention_tether.kcl,1,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+M08,M08_upper_tie_cord.kcl,2,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+M09,M09_M4_mount_bolt.kcl,4,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+M09,M09_ceramic_anchor.kcl,2,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+M09,M09_ceramic_spacer.kcl,4,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+M09,M09_wire_clamp.kcl,2,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+M10,M10_template_clamp.kcl,4,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+M11,M11_contact_edge.kcl,2,stock/reference,provisional,"Simplified reference; measure selected hardware; do not print; thin formed/profile-cut face plate, not printed"
+M12,M12_M5_registration_pin.kcl,4,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+M13,M13_hot_wire_rest.kcl,2,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+O02,O02_fine_wire.kcl,1,stock/reference,provisional,Simplified reference; measure selected hardware; do not print
+P01,P01_pivot_fork.kcl,2,print candidate,provisional,Preliminary geometry; fit/heat/load validation pending
+P01,P01_socket_cap.kcl,2,print candidate,provisional,Preliminary geometry; fit/heat/load validation pending
+P02,P02_pivot_saddle_half.kcl,4,print candidate,provisional,Preliminary geometry; fit/heat/load validation pending
+P03,P03_anchor_cap.kcl,2,print candidate,provisional,Preliminary geometry; fit/heat/load validation pending
+P03,P03_upper_anchor.kcl,2,print candidate,provisional,Preliminary geometry; fit/heat/load validation pending
+P04,P04_carrier_cap.kcl,2,print candidate,provisional,Preliminary geometry; fit/heat/load validation pending
+P04,P04_terminal_carrier.kcl,2,print candidate,provisional,Preliminary geometry; fit/heat/load validation pending
+P05,P05_grip_half.kcl,4,print candidate,provisional,Preliminary geometry; fit/heat/load validation pending
+P05,P05_pinch_guard.kcl,4,print candidate,provisional,Preliminary geometry; fit/heat/load validation pending
+P06,P06_spring_guard_half.kcl,2,print candidate,provisional,Preliminary geometry; fit/heat/load validation pending
+P07,P07_root_guide.kcl,1,print candidate,provisional,"Preliminary geometry; fit/heat/load validation pending; demonstration upper profile, not final wing"
+P07,P07_tip_guide.kcl,1,print candidate,provisional,"Preliminary geometry; fit/heat/load validation pending; demonstration upper profile, not final wing"
+P08,P08_registration_bracket.kcl,4,print candidate,provisional,Preliminary geometry; fit/heat/load validation pending
+P09,P09_enclosure_base.kcl,1,print candidate,provisional,Preliminary geometry; fit/heat/load validation pending
+P09,P09_enclosure_lid.kcl,1,print candidate,provisional,Preliminary geometry; fit/heat/load validation pending
+P09,P09_pcb_carrier.kcl,1,print candidate,provisional,Preliminary geometry; fit/heat/load validation pending
+P10,P10_cable_clip.kcl,6,print candidate,provisional,Preliminary geometry; fit/heat/load validation pending
+P10,P10_parking_saddle.kcl,2,print candidate,provisional,Preliminary geometry; fit/heat/load validation pending
+O01,E06_hold_to_heat_pedal.kcl,1,optional reference,optional,Second pedal uses same envelope; not in baseline assembly
+M09,M09_M4_mount_nut.kcl,4,stock/reference,provisional,Purchased M4 nuts; thread detail omitted

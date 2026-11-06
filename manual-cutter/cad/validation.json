@@ -1,0 +1,420 @@
+{
+  "validation_mode": "offline parse and mock execution; no solid kernel",
+  "zoo_kcl_version": "0.3.195",
+  "checks": {
+    "foam_end_clearance_mm": 100.0,
+    "pivot_sleeve_diametral_clearance_mm": 0.3,
+    "energized_length_mm": 1150.0,
+    "wire_resistance_ohm": 9.975,
+    "full_on_current_A": 1.9048,
+    "full_on_power_W": 36.19,
+    "manifest_rows": 60
+  },
+  "files": [
+    {
+      "file": "E01_nichrome_wire.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "E02_laptop_adapter.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "E03_DC_socket.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "E04_PWM_module.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "E04_control_knob.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "E05_master_switch.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "E06_hold_to_heat_pedal.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "E07_fuse_holder.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "E07_fuse_insert.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "E08_power_lead.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "E09_alligator_clip.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "E10_cable_gland.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "E10_grip_retention_band.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "E10_heatshrink_sleeve.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "E10_ring_terminal.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "E10_terminal_block.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M01_arm_pipe.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M01_crossbar_pipe.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M02_end_cap.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M03_M6_pivot_bolt.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M03_M6_pivot_nut.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M04_pivot_sleeve.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M04_pivot_washer.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M05_M3_lid_screw.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M05_M5_clamp_bolt.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M05_M5_nut.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M06_M5_wingnut.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M06_preload_adjuster.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M07_extension_spring.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M08_retention_tether.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M08_upper_tie_cord.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M09_M4_mount_bolt.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M09_M4_mount_nut.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M09_ceramic_anchor.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M09_ceramic_spacer.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M09_wire_clamp.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M10_template_clamp.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M11_contact_edge.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M12_M5_registration_pin.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "M13_hot_wire_rest.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "O02_fine_wire.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "P01_pivot_fork.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "P01_socket_cap.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "P02_pivot_saddle_half.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "P03_anchor_cap.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "P03_upper_anchor.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "P04_carrier_cap.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "P04_terminal_carrier.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "P05_grip_half.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "P05_pinch_guard.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "P06_spring_guard_half.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "P07_root_guide.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "P07_tip_guide.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "P08_registration_bracket.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "P09_enclosure_base.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "P09_enclosure_lid.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "P09_pcb_carrier.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "P10_cable_clip.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "P10_parking_saddle.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "frame.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "guides.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "hardware.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "main.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "parameters.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "primitives.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "printable_catalogue.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "file": "printed.kcl",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    }
+  ],
+  "engine_render_validated": false,
+  "step_stl_exports_validated": false,
+  "prototype_validated": false
+}
