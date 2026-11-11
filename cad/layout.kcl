@@ -3,7 +3,7 @@
 
 import frameBodies from "main.kcl"
 import stock, disc from "parts.kcl"
-import guideSeparation, foamSpan, profileWide, towerOffset, railSpacing, profileNarrow, plateThickness, railHeight, blockHeight, guideAbovePlate, x1Position, x2Position, y1Position, y2Position, rotaryDiameter, takeupTravel, steel, plateBlue from "parameters.kcl"
+import guideSeparation, foamSpan, foamHeight, profileWide, towerOffset, railSpacing, profileNarrow, plateThickness, railHeight, blockHeight, guideAbovePlate, x1Position, x2Position, y1Position, y2Position, rotaryDiameter, takeupTravel, fixtureBaseZ, fixtureLift, rotaryThickness, spacerThickness, steel, plateBlue from "parameters.kcl"
 
 assembly = frameBodies
 footZ = profileWide + railHeight + blockHeight + plateThickness
@@ -133,55 +133,59 @@ takeupReservation = stock(
 )
 
 // Separate work support, rotary mount and foam references; not frame members.
+foamBottom = footZ + guideAbovePlate + fixtureLift
+supportHeight = foamBottom - fixtureBaseZ
+rotaryTop = foamBottom - spacerThickness
+rotaryBottom = rotaryTop - rotaryThickness
 leftSupport = stock(
   width = 100mm,
   depth = 400mm,
-  height = 95mm,
+  height = supportHeight,
   x = -foamSpan / 2 + 20mm,
   y = -200mm,
-  z = 45mm,
+  z = fixtureBaseZ,
   color = '#667B58',
 )
 rightSupport = stock(
   width = 100mm,
   depth = 400mm,
-  height = 95mm,
+  height = supportHeight,
   x = foamSpan / 2 - 120mm,
   y = -200mm,
-  z = 45mm,
+  z = fixtureBaseZ,
   color = '#667B58',
 )
 rotaryMount = stock(
   width = 200mm,
   depth = 200mm,
-  height = 75mm,
+  height = rotaryBottom - fixtureBaseZ,
   x = -100mm,
   y = -100mm,
-  z = 45mm,
+  z = fixtureBaseZ,
   color = steel,
 )
 rotaryPlate = disc(
   radius = rotaryDiameter / 2,
-  height = 12mm,
+  height = rotaryThickness,
   x = 0mm,
   y = 0mm,
-  z = 120mm,
+  z = rotaryBottom,
   color = plateBlue,
 )
 fixtureSpacer = disc(
   radius = 60mm,
-  height = 8mm,
+  height = spacerThickness,
   x = 0mm,
   y = 0mm,
-  z = 132mm,
+  z = rotaryTop,
   color = steel,
 )
 foamReference = stock(
   width = foamSpan,
   depth = 300mm,
-  height = 300mm,
+  height = foamHeight,
   x = -foamSpan / 2,
   y = -150mm,
-  z = 140mm,
+  z = foamBottom,
   color = '#E3D8B7',
 )
