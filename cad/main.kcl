@@ -157,6 +157,26 @@ braceTwo = stock(
   |> rotate(axis = Z, angle = -braceAngle, global = true)
   |> translate(x = -spanTieLength / 2, y = baseDepth / 2 - (profileNarrow / 2), global = true)
 
+// Packing between the lower diagonal and the undersides of the two end ties.
+leftRearBraceSpacer = stock(
+  width = profileNarrow,
+  depth = profileNarrow,
+  height = 4mm,
+  x = -spanTieLength / 2,
+  y = baseDepth / 2 - profileNarrow,
+  z = -4mm,
+  color = steel,
+)
+rightFrontBraceSpacer = stock(
+  width = profileNarrow,
+  depth = profileNarrow,
+  height = 4mm,
+  x = spanTieLength / 2 - profileNarrow,
+  y = -baseDepth / 2,
+  z = -4mm,
+  color = steel,
+)
+
 // Four X-axis rail envelopes on top of the four bed beams.
 leftRailInner = stock(
   width = 12mm,
@@ -377,6 +397,8 @@ export frameBodies = [
   rightRearTie,
   braceOne,
   braceTwo,
+  leftRearBraceSpacer,
+  rightFrontBraceSpacer,
   leftRailInner,
   leftRailOuter,
   rightRailInner,

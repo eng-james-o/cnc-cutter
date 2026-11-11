@@ -33,3 +33,10 @@ export y2Position = 200mm
 export aluminium = '#ADB6C0'
 export steel = '#444E5C'
 export plateBlue = '#386A9C'
+
+// Independent fixture bench and workholding stack, measured from the bed underside.
+export fixtureBaseZ = 45mm
+export fixtureLift = 10mm // sacrificial clearance under the blank at minimum guide height
+export rotaryThickness = 12mm
+export spacerThickness = 8mm
+export foamHeight = 300mm
