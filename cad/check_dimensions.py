@@ -32,6 +32,14 @@ require(rail >= travel + 45, 'Horizontal blocks exceed rail at full travel')
 require(p['endMargin'] + rail <= p['towerHeight'], 'Vertical rail exceeds upright')
 require(p['guideAbovePlate'] - 22.5 >= p['endMargin'], 'Vertical block below rail at minimum')
 require(p['guideAbovePlate'] + travel + 22.5 <= p['endMargin'] + rail, 'Vertical block exceeds rail at maximum')
+guide_min = foot + p['guideAbovePlate']
+foam_bottom = guide_min + p['fixtureLift']
+foam_top = foam_bottom + p['foamHeight']
+require(0 <= p['fixtureLift'] and 0 < p['foamHeight'] and foam_top <= guide_min + travel,
+        'Blank exceeds vertical guide travel')
+require(foam_bottom - p['spacerThickness'] - p['rotaryThickness'] > p['fixtureBaseZ'],
+        'Rotary pedestal has nonpositive height')
+require(rail <= p['baseDepth'], 'Horizontal rail overhangs bed')
 for axis in ('x1Position', 'x2Position'):
     require(abs(p[axis]) <= travel / 2, f'{axis} exceeds horizontal travel')
 for axis in ('y1Position', 'y2Position'):
@@ -46,7 +54,7 @@ rows = [
     ('S01', '20 x 4 steel flat', 2, math.hypot(span_tie, p['baseDepth'] - p['profileNarrow']), 'Diagonal centerline lengths; end holes/overlap allowance TBD'),
 ]
 with (ROOT / 'frame_cut_list.csv').open('w', newline='') as f:
-    writer = csv.writer(f)
+    writer = csv.writer(f, lineterminator="\n")
     writer.writerow(['ID', 'Stock', 'Quantity', 'Nominal length mm', 'Notes'])
     writer.writerows((a,b,c,f'{d:.2f}',e) for a,b,c,d,e in rows)
 print('PASS: nominal guide spacing, foam clearance, full travel, rail fit and guide-arm reach')
@@ -55,4 +63,5 @@ print(f'Base stock footprint: {2*(center+p["railSpacing"]/2+p["profileNarrow"]/2
 print(f'Tower top: {foot+p["towerHeight"]+p["profileNarrow"]:.0f} mm above bed underside')
 print(f'Guide height range: {foot+p["guideAbovePlate"]:.0f}..{foot+p["guideAbovePlate"]+travel:.0f} mm')
 print(f'2040 total: {sum(q*length for _,stock,q,length,_ in rows if stock=="2040 aluminium")/1000:.2f} m before kerf/waste')
+print(f'Blank height range: {foam_bottom:g}..{foam_top:g} mm; upper travel margin: {guide_min + travel - foam_top:g} mm')
 print('Updated frame_cut_list.csv. Solid execution, fasteners, drive packaging and FEA are not checked.')

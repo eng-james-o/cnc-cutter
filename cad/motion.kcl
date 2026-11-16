@@ -1,0 +1,513 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+import block, pin, pinX, pinY, tube from "machining.kcl"
+import wrap, nutShelf, motor, beltBridge, idlerBridge, towerMotorPlate, beltClamp, beltJaw, wheel, nutFlange, coupler, switchCase, switchBracket, cornerPlate from "drive_parts.kcl"
+import baseDepth, towerHeight, guideSeparation, towerOffset, profileNarrow, profileWide, railSpacing, plateThickness, railHeight, blockHeight, guideAbovePlate, linearTravel, carriageDepth from "parameters.kcl"
+
+foot = profileWide + railHeight + blockHeight + plateThickness
+cap = foot + towerHeight + profileNarrow
+endY = baseDepth / 2 - 43mm
+pitchR = 20 * 2mm / (2 * 3.14159265)
+
+export fn stopUnit(x, y, z, tilt, heading) {
+  housing = switchCase()
+    |> rotate(axis = X, angle = tilt, global = true)
+    |> rotate(axis = Z, angle = heading, global = true)
+    |> translate(
+         x = x,
+         y = y,
+         z = z,
+         global = true,
+       )
+  plate = switchBracket()
+    |> rotate(axis = X, angle = tilt, global = true)
+    |> rotate(axis = Z, angle = heading, global = true)
+    |> translate(
+         x = x,
+         y = y,
+         z = z,
+         global = true,
+       )
+  lever = block(
+    w = 14.5mm,
+    d = 0.3mm,
+    h = 3.2mm,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+    |> rotate(axis = Z, angle = 12deg, global = true)
+    |> translate(
+         x = -7mm,
+         y = 7.3mm,
+         z = 1.6mm,
+         global = true,
+       )
+    |> rotate(axis = X, angle = tilt, global = true)
+    |> rotate(axis = Z, angle = heading, global = true)
+    |> translate(
+         x = x,
+         y = y,
+         z = z,
+         global = true,
+       )
+  return [housing, plate, lever]
+}
+
+fn horizontalStand(cx, sign, end, ex, ey) {
+  beam = cx + sign * railSpacing / 2
+  fixX = ex + end * 13mm
+  fixY = -end * ey + end * 3mm
+  bridgeY = -end * endY
+  anchorY = bridgeY + (10mm + end * 2mm) * end
+  mid = (fixX + beam) / 2
+  width = abs(fixX - beam) + 14mm
+  standBlank = block(
+    w = width,
+    d = 28mm,
+    h = foot - 10mm - profileWide - 6mm,
+    x = mid - (width / 2),
+    y = bridgeY - 14mm,
+    z = profileWide + 6mm,
+  )
+  bolt = pin(
+    dia = 5.5mm,
+    length = 20mm,
+    x = beam,
+    y = anchorY,
+    z = profileWide + 5mm,
+  )
+  tap = pin(
+    dia = 2.5mm,
+    length = 14mm,
+    x = fixX,
+    y = fixY,
+    z = foot - 21mm,
+  )
+  return subtract(standBlank, tools = [bolt, tap])
+}
+
+fn uprightStand(cx, sign, position, carrier, z, upper) {
+  // Short cross-piece from the rear upright to the back of the switch plate.
+  face = cx
+  sx = carrier + 13mm
+  width = abs(face - sx) + 12mm
+  center = (face + sx) / 2
+  near = position + 45mm - (upper * 4mm)
+  y0 = near - ((upper + 1) * 2.5mm)
+  pad = block(
+    w = width,
+    d = 5mm,
+    h = 15mm,
+    x = center - (width / 2),
+    y = y0,
+    z = z - 7.5mm,
+  )
+  toe = block(
+    w = 12mm,
+    d = position + railSpacing / 2 - 10mm - y0,
+    h = 15mm,
+    x = face - 6mm,
+    y = y0,
+    z = z - 7.5mm,
+  )
+  blank = union([pad, toe])
+  switchTap = pinY(
+    dia = 2.5mm,
+    length = 8mm,
+    x = sx,
+    y = y0 - 1mm,
+    z = z - (upper * 3mm),
+  )
+  footHole = pinY(
+    dia = 5.5mm,
+    length = 32mm,
+    x = face,
+    y = y0 - 1mm,
+    z = z,
+  )
+  return subtract(blank, tools = [switchTap, footHole])
+}
+
+fn linearStops(cx, sign, position) {
+  ex = cx + sign * (railSpacing / 2 + 20mm)
+  ey = linearTravel / 2 + carriageDepth / 2 + 8.8mm
+  ez = foot + guideAbovePlate
+  front = stopUnit(
+    x = ex,
+    y = -ey,
+    z = foot - 6mm,
+    tilt = 0deg,
+    heading = 0deg,
+  )
+  rear = stopUnit(
+    x = ex,
+    y = ey,
+    z = foot - 6mm,
+    tilt = 0deg,
+    heading = 180deg,
+  )
+  carrier = cx - (sign * (profileWide / 2 + railHeight + blockHeight + plateThickness / 2))
+  low = stopUnit(
+    x = carrier,
+    y = position + 45mm,
+    z = ez - 35mm - 8.8mm,
+    tilt = 90deg,
+    heading = 0deg,
+  )
+  high = stopUnit(
+    x = carrier,
+    y = position + 45mm,
+    z = ez + linearTravel + 35mm + 8.8mm,
+    tilt = -90deg,
+    heading = 0deg,
+  )
+  frontStand = horizontalStand(
+    cx = cx,
+    sign = sign,
+    end = 1,
+    ex = ex,
+    ey = ey,
+  )
+  rearStand = horizontalStand(
+    cx = cx,
+    sign = sign,
+    end = -1,
+    ex = ex,
+    ey = ey,
+  )
+  lowStand = uprightStand(
+    cx = cx,
+    sign = sign,
+    position = position,
+    carrier = carrier,
+    z = ez - 43.8mm,
+    upper = -1,
+  )
+  highStand = uprightStand(
+    cx = cx,
+    sign = sign,
+    position = position,
+    carrier = carrier,
+    z = ez + linearTravel + 43.8mm,
+    upper = 1,
+  )
+  return [
+    front,
+    rear,
+    low,
+    high,
+    frontStand,
+    rearStand,
+    lowStand,
+    highStand
+  ]
+}
+
+export fn linearSet(cx, sign, position, guideZ) {
+  sx = cx
+  bridge = beltBridge(spacing = railSpacing)
+    |> translate(
+         x = cx,
+         y = -endY,
+         z = profileWide,
+         global = true,
+       )
+  driveMotor = motor()
+    |> translate(
+         x = cx,
+         y = -endY,
+         z = profileWide,
+         global = true,
+       )
+  idlerMount = idlerBridge(spacing = railSpacing)
+    |> translate(
+         x = cx,
+         y = endY,
+         z = profileWide,
+         global = true,
+       )
+  pulley = wheel()
+    |> translate(
+         x = cx,
+         y = -endY,
+         z = profileWide + 7mm,
+         global = true,
+       )
+  idler = wheel()
+    |> translate(
+         x = cx,
+         y = endY,
+         z = profileWide + 7mm,
+         global = true,
+       )
+  driveRun = block(
+    w = 1.4mm,
+    d = 2 * endY,
+    h = 9mm,
+    x = cx - pitchR - 0.7mm,
+    y = -endY,
+    z = profileWide + 9.5mm,
+  )
+  returnRun = block(
+    w = 1.4mm,
+    d = 2 * endY,
+    h = 9mm,
+    x = cx + pitchR - 0.7mm,
+    y = -endY,
+    z = profileWide + 9.5mm,
+  )
+  clamp = beltClamp()
+    |> translate(
+         x = cx - 13mm,
+         y = position,
+         z = foot - plateThickness - 17mm,
+         global = true,
+       )
+
+  jaw = beltJaw()
+    |> translate(
+         x = cx - 13mm,
+         y = position,
+         z = foot - plateThickness - 17mm,
+         global = true,
+       )
+
+  liftPlate = towerMotorPlate()
+    |> rotate(axis = Z, angle = (1 - sign) * 90deg, global = true)
+    |> translate(
+         x = sx,
+         y = position,
+         z = cap,
+         global = true,
+       )
+  liftMotor = motor()
+    |> rotate(axis = X, angle = 180deg, global = true)
+    |> translate(
+         x = sx,
+         y = position,
+         z = cap + 6mm,
+         global = true,
+       )
+  coupling = coupler()
+    |> translate(
+         x = sx,
+         y = position,
+         z = cap - 30mm,
+         global = true,
+       )
+  screw = pin(
+    dia = 8mm,
+    length = 600mm,
+    x = sx,
+    y = position,
+    z = cap - 618mm,
+  )
+  nut = nutFlange()
+    |> translate(
+         x = sx,
+         y = position,
+         z = guideZ,
+         global = true,
+       )
+  sleeve = tube(od = 14mm, id = 8mm, length = 18mm)
+    |> translate(
+         x = sx,
+         y = position,
+         z = guideZ - 18mm,
+         global = true,
+       )
+  bearing = tube(od = 22mm, id = 8mm, length = 7mm)
+    |> translate(
+         x = sx,
+         y = position,
+         z = cap - 618mm,
+         global = true,
+       )
+  bearingRing = tube(od = 30mm, id = 22mm, length = cap - 611mm - foot)
+    |> translate(
+         x = sx,
+         y = position,
+         z = foot,
+         global = true,
+       )
+  footBlank = block(
+    w = 48mm,
+    d = 30mm,
+    h = 5mm,
+    x = cx - 24mm,
+    y = position - 15mm,
+    z = foot,
+  )
+  centerBore = pin(
+    dia = 22mm,
+    length = 7mm,
+    x = cx,
+    y = position,
+    z = foot - 1mm,
+  )
+  footA = pin(
+    dia = 3.3mm,
+    length = 7mm,
+    x = cx - 19mm,
+    y = position,
+    z = foot - 1mm,
+  )
+  footB = pin(
+    dia = 3.3mm,
+    length = 7mm,
+    x = cx + 19mm,
+    y = position,
+    z = foot - 1mm,
+  )
+  bearingFoot = subtract(footBlank, tools = [centerBore, footA, footB])
+  lip = tube(od = 23mm, id = 16mm, length = 2mm)
+    |> translate(
+         x = sx,
+         y = position,
+         z = cap - 620mm,
+         global = true,
+       )
+  bearingSeat = union([bearingFoot, bearingRing, lip])
+  frontWrap = wrap(radius = pitchR, rear = -1)
+    |> translate(
+         x = cx,
+         y = -endY,
+         z = profileWide + 9.5mm,
+         global = true,
+       )
+  rearWrap = wrap(radius = pitchR, rear = 1)
+    |> translate(
+         x = cx,
+         y = endY,
+         z = profileWide + 9.5mm,
+         global = true,
+       )
+  hubBlank = tube(od = 12mm, id = 5mm, length = 6mm)
+    |> translate(
+         x = cx,
+         y = -endY,
+         z = profileWide + 21mm,
+         global = true,
+       )
+  hub = subtract(
+    hubBlank,
+    tools = pinX(
+      dia = 2.5mm,
+      length = 6mm,
+      x = cx + 1mm,
+      y = -endY,
+      z = profileWide + 23mm,
+    ),
+  )
+  shelf = nutShelf(sign = sign)
+    |> translate(
+         x = cx,
+         y = position,
+         z = guideZ,
+         global = true,
+       )
+  switches = linearStops(cx = cx, sign = sign, position = position)
+  return [
+    bridge,
+    driveMotor,
+    idlerMount,
+    pulley,
+    idler,
+    driveRun,
+    returnRun,
+    clamp,
+    jaw,
+    liftPlate,
+    liftMotor,
+    coupling,
+    screw,
+    nut,
+    sleeve,
+    bearing,
+    bearingSeat,
+    switches,
+    frontWrap,
+    rearWrap,
+    hub,
+    shelf
+  ]
+}
+
+export fn baseCorners() {
+  inner = guideSeparation / 2 + towerOffset - (railSpacing / 2)
+  edge = inner + profileNarrow / 2
+  frontLeft = cornerPlate()
+    |> translate(
+         x = -edge,
+         y = -120mm,
+         z = -4mm,
+         global = true,
+       )
+  rearRight = cornerPlate()
+    |> rotate(axis = Z, angle = 180deg, global = true)
+    |> translate(
+         x = edge,
+         y = 120mm,
+         z = -4mm,
+         global = true,
+       )
+  frontRight = cornerPlate()
+    |> rotate(axis = Z, angle = 90deg, global = true)
+    |> translate(
+         x = edge,
+         y = -120mm,
+         z = -4mm,
+         global = true,
+       )
+  rearLeft = cornerPlate()
+    |> rotate(axis = Z, angle = -90deg, global = true)
+    |> translate(
+         x = -edge,
+         y = 120mm,
+         z = -4mm,
+         global = true,
+       )
+  outerEdge = edge + railSpacing
+  outerFL = cornerPlate()
+    |> translate(
+         x = -outerEdge,
+         y = -baseDepth / 2,
+         z = -4mm,
+         global = true,
+       )
+  outerRR = cornerPlate()
+    |> rotate(axis = Z, angle = 180deg, global = true)
+    |> translate(
+         x = outerEdge,
+         y = baseDepth / 2,
+         z = -4mm,
+         global = true,
+       )
+  outerFR = cornerPlate()
+    |> rotate(axis = Z, angle = 90deg, global = true)
+    |> translate(
+         x = outerEdge,
+         y = -baseDepth / 2,
+         z = -4mm,
+         global = true,
+       )
+  outerRL = cornerPlate()
+    |> rotate(axis = Z, angle = -90deg, global = true)
+    |> translate(
+         x = -outerEdge,
+         y = baseDepth / 2,
+         z = -4mm,
+         global = true,
+       )
+  return [
+    frontLeft,
+    rearRight,
+    frontRight,
+    rearLeft,
+    outerFL,
+    outerFR,
+    outerRL,
+    outerRR
+  ]
+}

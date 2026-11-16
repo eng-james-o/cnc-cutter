@@ -1,0 +1,37 @@
+Joint,Installed quantity,Fastener selection,Mating hardware or feature,CAD hole or interface
+Eight bed corner gussets,24,M5x10 socket cap + washer,M5 T-nut for selected 2040 slot,5.5 mm through 4 mm plate
+Four diagonal strap ends,4,M5x55 through bolt + washers + nyloc,M5 nut on upper face,5.5 mm through tie and strap; two lower ends packed 4 mm
+Tower side webs,4,M5x12 button head + washer,M5 side-slot T-nut,5.5 mm through 6 mm web
+Upright ends to base plate,8,M5x20 socket cap,Tap 2040 end bores M5,5.5 through plate and 4.2 pilot
+Tower caps to uprights,8,M5x30 socket cap,Tap 2040 end bores M5,5.5 through cap and 4.2 pilot
+Four bed rails and four upright rails,176,M3x10 low socket cap,176 M3 slot nuts or tapped rail adapter,22 counterbored 3.5 holes per rail; verify head and slot lips
+Eight blocks to moving plates,32,M3x20 socket cap,M3 carriage threads,20x20 pattern and 3.4 clearance in 8 mm plates plus 8 mm shims; verify engagement with final guide stack
+Five NEMA17s to faces,20,M3x10 socket cap,Motor M3 blind threads,3.4 clearance through 6 mm and 31 mm square
+Two horizontal bridges and two idler bridges,12,M5x12 socket cap + washer,M5 T-nut,5.5 holes; remaining four positions shared with switch stands
+Four horizontal switch stands sharing bridge bolts,4,M5x25 socket cap + washer,M5 T-nut,5.5 mm stand and bridge stack
+Two lift motor bridges to cap,8,M5x12 socket cap + washer,M5 T-nut,5.5 holes on both cap slots
+Two idler axles,2,5 mm shoulder bolt with 15 mm bearing seat + shim washers,M4 locknut if M4 threaded shoulder; verify grip,5.2 mm printed axle hole and 5 mm idler bore
+Two motor pulleys,2,M3x3 cup point set screw,Tap pulley hub M3,Radial 2.5 pilot on hub; orient on shaft flat
+Belt clamp pair,4,M3x30 through bolt + washer,M3 nyloc,3.4 mm holes through clamp and moving base
+Two lift couplers,4,M3x4 set screw,M3 tapped radial holes,2.5 pilot at each bore
+Two lower bearing feet,4,M4x12 socket cap,M4 tapped foot,4.5 plate and 3.3 foot pilot; verify thread insert for printed version
+Two anti-backlash flange envelopes to shelves,8,M3x16 through bolt,M3 nyloc,3.4 holes on provisional 18x20 pattern
+Nut shelves to vertical carriers,4,M3x16 socket cap,M3 tapped shelf end,3.4 through carrier into 2.5 pilot
+Guide arms to carriers,4,M3x16 socket cap,M3 tapped metal guide arm,3.4 carrier and 2.5 arm bores
+Eight linear switches and one rotary switch,18,M2x16 machine screw + washer,M2 nut,2.35 switch and 2.2 bracket
+Switch plates to stands,9,M3x8 socket cap,M3 tapped stand,3.4 plate and 2.5 stand pilot
+Vertical switch stands to upright slot,4,M5 screw with washer; cut to grip,M5 T-nut,5.5 mounting bore; high and low stand grips differ
+Spring mechanism to guide carrier,2,M3x12 socket cap,M3 tapped carrier,3.4 cheek and 2.5 carrier
+Redirect sheave and reel,2,5 mm shoulder axle with spacer and washer,Locknut to suit chosen shoulder thread,5.2 bracket and 5 mm sleeves
+Spring travel stops,2,M3x20 bolt + washer,M3 nyloc,3.4 plate and 3 mm stop sleeve bore
+Left wire anchor,1,M2x3 set screw,M2 tapped ferrule,1.6 mm radial pilot and tool access
+Wire injection terminals,2,M3x4 set screw,M3 tapped conductive clamp,2.5 pilot intersects wire bore
+Rotary plate to spindle flange,4,M5x12 socket cap,M5 tapped flange,5.5 clearance with 9x5.5 head recess and 4.2 flange pilot
+Rotary cam,1,M3x12 socket cap,M3 tapped table underside,3.4 cam and 2.5 table pilot
+Reducer foot to base,2,M5x10 socket cap,M5 tapped metal base,5.5 lug and 4.2 base pilot
+Rotary motor adapter to reducer,2,M4x12 socket cap,M4 tapped reducer reference face,4.5 face and 3.3 pilot
+Rotary pedestal to separate bench,4,M5 bolts to suit bench thickness,M5 washers and nuts,5.5 base on 116 mm bolt circle; transfer drill separate bench
+Control enclosure mounting ears,2,M5x10 socket cap + washer,M5 T-nut,5.5 mm holes
+Fixture spacer to rotary plate,4,M5x10 socket cap,M5 tapped rotary plate,5.5 clearance with 9x5.5 head recess on 96 mm bolt circle
+Four workholding jaw feet,4,M5x12 socket cap + large washer,M5 tapped work support,5.5 wide adjustable slot and 4.2 pilot in support
+Horizontal belt clamp pressure jaws,4,M3x12 socket cap,M3 tapped clamp body,3.4 side clearance and 2.5 pilot below belt

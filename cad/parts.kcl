@@ -39,9 +39,9 @@ export fn gusset(x, y, z, width, height, thickness) {
   return body
 }
 
-export fn disc(radius, height, x, y, z, color) {
+export fn disc(rad, height, x, y, z, color) {
   profile = sketch(on = XY) {
-    perimeter = circle(center = [0mm, 0mm], start = [radius, 0mm])
+    perimeter = circle(center = [0mm, 0mm], start = [rad, 0mm])
   }
   body = extrude(region(segments = [profile.perimeter]), length = height)
     |> translate(
