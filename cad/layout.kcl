@@ -1,6 +1,10 @@
 // Structural model plus preliminary motion interfaces and workholding volumes.
 @settings(defaultLengthUnit = mm, kclVersion = 3.0)
 
+import carriageHolesX, block, pin, pinX, pinY, tube, rodBetween from "machining.kcl"
+import linearSet, baseCorners from "motion.kcl"
+import rotaryDrive, currentClamp, takeup, foamJaw from "auxiliary.kcl"
+import baseDepth from "parameters.kcl"
 import frameBodies from "main.kcl"
 import stock, disc from "parts.kcl"
 import guideSeparation, foamSpan, foamHeight, profileWide, towerOffset, railSpacing, profileNarrow, plateThickness, railHeight, blockHeight, guideAbovePlate, x1Position, x2Position, y1Position, y2Position, rotaryDiameter, takeupTravel, fixtureBaseZ, fixtureLift, rotaryThickness, spacerThickness, steel, plateBlue from "parameters.kcl"
@@ -15,7 +19,7 @@ carrierFace = railFace - blockHeight - plateThickness
 
 // Four vertical carriage blocks, 45 mm long along world Z.
 leftFrontBlock = stock(
-  width = blockHeight,
+  width = blockHeight - 8mm,
   depth = 27mm,
   height = 45mm,
   x = -railFace,
@@ -23,8 +27,31 @@ leftFrontBlock = stock(
   z = leftZ - 22.5mm,
   color = plateBlue,
 )
+  |> subtract(tools = carriageHolesX(
+       dia = 2.5mm,
+       length = 55mm,
+       x = -centerX - 2mm,
+       y = x1Position - (railSpacing / 2),
+       z = leftZ,
+     ))
+leftFrontShim = stock(
+  width = 8mm,
+  depth = 27mm,
+  height = 45mm,
+  x = -railFace + blockHeight - 8mm,
+  y = x1Position - (railSpacing / 2) - 13.5mm,
+  z = leftZ - 22.5mm,
+  color = plateBlue,
+)
+  |> subtract(tools = carriageHolesX(
+       dia = 3.4mm,
+       length = 55mm,
+       x = -centerX - 2mm,
+       y = x1Position - (railSpacing / 2),
+       z = leftZ,
+     ))
 leftRearBlock = stock(
-  width = blockHeight,
+  width = blockHeight - 8mm,
   depth = 27mm,
   height = 45mm,
   x = -railFace,
@@ -32,8 +59,47 @@ leftRearBlock = stock(
   z = leftZ - 22.5mm,
   color = plateBlue,
 )
+  |> subtract(tools = carriageHolesX(
+       dia = 2.5mm,
+       length = 55mm,
+       x = -centerX - 2mm,
+       y = x1Position + railSpacing / 2,
+       z = leftZ,
+     ))
+leftRearShim = stock(
+  width = 8mm,
+  depth = 27mm,
+  height = 45mm,
+  x = -railFace + blockHeight - 8mm,
+  y = x1Position + railSpacing / 2 - 13.5mm,
+  z = leftZ - 22.5mm,
+  color = plateBlue,
+)
+  |> subtract(tools = carriageHolesX(
+       dia = 3.4mm,
+       length = 55mm,
+       x = -centerX - 2mm,
+       y = x1Position + railSpacing / 2,
+       z = leftZ,
+     ))
 rightFrontBlock = stock(
-  width = blockHeight,
+  width = blockHeight - 8mm,
+  depth = 27mm,
+  height = 45mm,
+  x = railFace - blockHeight + 8mm,
+  y = x2Position - (railSpacing / 2) - 13.5mm,
+  z = rightZ - 22.5mm,
+  color = plateBlue,
+)
+  |> subtract(tools = carriageHolesX(
+       dia = 2.5mm,
+       length = 55mm,
+       x = centerX - 53mm,
+       y = x2Position - (railSpacing / 2),
+       z = rightZ,
+     ))
+rightFrontShim = stock(
+  width = 8mm,
   depth = 27mm,
   height = 45mm,
   x = railFace - blockHeight,
@@ -41,8 +107,31 @@ rightFrontBlock = stock(
   z = rightZ - 22.5mm,
   color = plateBlue,
 )
+  |> subtract(tools = carriageHolesX(
+       dia = 3.4mm,
+       length = 55mm,
+       x = centerX - 53mm,
+       y = x2Position - (railSpacing / 2),
+       z = rightZ,
+     ))
 rightRearBlock = stock(
-  width = blockHeight,
+  width = blockHeight - 8mm,
+  depth = 27mm,
+  height = 45mm,
+  x = railFace - blockHeight + 8mm,
+  y = x2Position + railSpacing / 2 - 13.5mm,
+  z = rightZ - 22.5mm,
+  color = plateBlue,
+)
+  |> subtract(tools = carriageHolesX(
+       dia = 2.5mm,
+       length = 55mm,
+       x = centerX - 53mm,
+       y = x2Position + railSpacing / 2,
+       z = rightZ,
+     ))
+rightRearShim = stock(
+  width = 8mm,
   depth = 27mm,
   height = 45mm,
   x = railFace - blockHeight,
@@ -50,6 +139,13 @@ rightRearBlock = stock(
   z = rightZ - 22.5mm,
   color = plateBlue,
 )
+  |> subtract(tools = carriageHolesX(
+       dia = 3.4mm,
+       length = 55mm,
+       x = centerX - 53mm,
+       y = x2Position + railSpacing / 2,
+       z = rightZ,
+     ))
 leftCarrier = stock(
   width = plateThickness,
   depth = railSpacing + 30mm,
@@ -59,6 +155,56 @@ leftCarrier = stock(
   z = leftZ - 35mm,
   color = plateBlue,
 )
+  |> subtract(tools = [
+       pinX(
+         dia = 3.4mm,
+         length = 11mm,
+         x = -carrierFace - 10mm,
+         y = x1Position + 4mm,
+         z = leftZ,
+       )
+     ])
+  |> subtract(tools = [
+       pinX(
+         dia = 3.4mm,
+         length = 11mm,
+         x = -carrierFace - 10mm,
+         y = x1Position - 4mm,
+         z = leftZ,
+       )
+     ])
+  |> subtract(tools = [
+       pinX(
+         dia = 3.4mm,
+         length = 10mm,
+         x = -centerX + 40mm,
+         y = x1Position + 9mm,
+         z = leftZ - 3mm,
+       )
+     ])
+  |> subtract(tools = [
+       pinX(
+         dia = 3.4mm,
+         length = 10mm,
+         x = -centerX + 40mm,
+         y = x1Position - 9mm,
+         z = leftZ - 3mm,
+       )
+     ])
+  |> subtract(tools = carriageHolesX(
+       dia = 3.4mm,
+       length = 55mm,
+       x = -centerX - 2mm,
+       y = x1Position + railSpacing / 2,
+       z = leftZ,
+     ))
+  |> subtract(tools = carriageHolesX(
+       dia = 3.4mm,
+       length = 55mm,
+       x = -centerX - 2mm,
+       y = x1Position - (railSpacing / 2),
+       z = leftZ,
+     ))
 rightCarrier = stock(
   width = plateThickness,
   depth = railSpacing + 30mm,
@@ -68,6 +214,72 @@ rightCarrier = stock(
   z = rightZ - 35mm,
   color = plateBlue,
 )
+  |> subtract(tools = [
+       pinX(
+         dia = 3.4mm,
+         length = 11mm,
+         x = carrierFace - 1mm,
+         y = x2Position + 4mm,
+         z = rightZ,
+       )
+     ])
+  |> subtract(tools = [
+       pinX(
+         dia = 3.4mm,
+         length = 11mm,
+         x = carrierFace - 1mm,
+         y = x2Position - 4mm,
+         z = rightZ,
+       )
+     ])
+  |> subtract(tools = [
+       pinX(
+         dia = 3.4mm,
+         length = 10mm,
+         x = centerX - 50mm,
+         y = x2Position + 9mm,
+         z = rightZ - 3mm,
+       )
+     ])
+  |> subtract(tools = [
+       pinX(
+         dia = 3.4mm,
+         length = 10mm,
+         x = centerX - 50mm,
+         y = x2Position - 9mm,
+         z = rightZ - 3mm,
+       )
+     ])
+  |> subtract(tools = carriageHolesX(
+       dia = 3.4mm,
+       length = 55mm,
+       x = centerX - 53mm,
+       y = x2Position + railSpacing / 2,
+       z = rightZ,
+     ))
+  |> subtract(tools = carriageHolesX(
+       dia = 3.4mm,
+       length = 55mm,
+       x = centerX - 53mm,
+       y = x2Position - (railSpacing / 2),
+       z = rightZ,
+     ))
+  |> subtract(tools = [
+       pinX(
+         dia = 2.5mm,
+         length = 10mm,
+         x = carrierFace - 1mm,
+         y = x2Position - 16mm,
+         z = rightZ + 2mm,
+       ),
+       pinX(
+         dia = 2.5mm,
+         length = 10mm,
+         x = carrierFace - 1mm,
+         y = x2Position - 30mm,
+         z = rightZ + 2mm,
+       )
+     ])
 
 // Ceramic guide envelopes. Their center planes are exactly 2000 mm apart.
 armLength = carrierFace - (guideSeparation / 2)
@@ -80,6 +292,58 @@ leftArm = stock(
   z = leftZ - 6mm,
   color = steel,
 )
+  |> subtract(tools = [
+       pin(
+         dia = 4mm,
+         length = 8mm,
+         x = -carrierFace + 12mm,
+         y = x1Position,
+         z = leftZ,
+       )
+     ])
+  |> subtract(tools = [
+       pinX(
+         dia = 10mm,
+         length = 12mm,
+         x = -carrierFace + 7mm,
+         y = x1Position,
+         z = leftZ,
+       )
+     ])
+  |> subtract(tools = [
+       pinX(
+         dia = 2.5mm,
+         length = 13mm,
+         x = -carrierFace - 1mm,
+         y = x1Position + 4mm,
+         z = leftZ,
+       )
+     ])
+  |> subtract(tools = [
+       pinX(
+         dia = 2.5mm,
+         length = 13mm,
+         x = -carrierFace - 1mm,
+         y = x1Position - 4mm,
+         z = leftZ,
+       )
+     ])
+  |> subtract(tools = [
+       pinX(
+         dia = 2mm,
+         length = armLength + 10mm,
+         x = -carrierFace - 1mm,
+         y = x1Position,
+         z = leftZ,
+       ),
+       pinX(
+         dia = 12mm,
+         length = 9mm,
+         x = -guideSeparation / 2 - 4.5mm,
+         y = x1Position,
+         z = leftZ,
+       )
+     ])
 rightArm = stock(
   width = armLength,
   depth = 20mm,
@@ -89,14 +353,65 @@ rightArm = stock(
   z = rightZ - 6mm,
   color = steel,
 )
+  |> subtract(tools = [
+       pinX(
+         dia = 2.5mm,
+         length = 13mm,
+         x = carrierFace - 12mm,
+         y = x2Position + 4mm,
+         z = rightZ,
+       )
+     ])
+  |> subtract(tools = [
+       pinX(
+         dia = 2.5mm,
+         length = 13mm,
+         x = carrierFace - 12mm,
+         y = x2Position - 4mm,
+         z = rightZ,
+       )
+     ])
+  |> subtract(tools = [
+       pinX(
+         dia = 2mm,
+         length = armLength + 10mm,
+         x = guideSeparation / 2 - 1mm,
+         y = x2Position,
+         z = rightZ,
+       ),
+       pinX(
+         dia = 12mm,
+         length = 9mm,
+         x = guideSeparation / 2 - 4.5mm,
+         y = x2Position,
+         z = rightZ,
+       )
+     ])
+  |> subtract(tools = block(
+       w = 34mm,
+       d = 16mm,
+       h = 14mm,
+       x = guideSeparation / 2 + 7mm,
+       y = x2Position - 11mm,
+       z = rightZ - 7mm,
+     ))
 leftGuide = disc(
-  radius = 6mm,
+  rad = 6mm,
   height = 8mm,
   x = 0mm,
   y = 0mm,
   z = 0mm,
   color = '#F3E7C9',
 )
+  |> subtract(tools = [
+       pin(
+         dia = 3.2mm,
+         length = 10mm,
+         x = 0mm,
+         y = 0mm,
+         z = -1mm,
+       )
+     ])
   |> rotate(axis = Y, angle = 90deg, global = true)
   |> translate(
        x = -guideSeparation / 2 - 4mm,
@@ -105,13 +420,22 @@ leftGuide = disc(
        global = true,
      )
 rightGuide = disc(
-  radius = 6mm,
+  rad = 6mm,
   height = 8mm,
   x = 0mm,
   y = 0mm,
   z = 0mm,
   color = '#F3E7C9',
 )
+  |> subtract(tools = [
+       pin(
+         dia = 3.2mm,
+         length = 10mm,
+         x = 0mm,
+         y = 0mm,
+         z = -1mm,
+       )
+     ])
   |> rotate(axis = Y, angle = 90deg, global = true)
   |> translate(
        x = guideSeparation / 2 - 4mm,
@@ -119,18 +443,6 @@ rightGuide = disc(
        z = rightZ,
        global = true,
      )
-
-// Outboard take-up reservation; orange body is a keep-out, not a spring.
-// Above the guide arm, connected hardware and pulleys remain to be designed.
-takeupReservation = stock(
-  width = takeupTravel,
-  depth = 60mm,
-  height = 40mm,
-  x = centerX + profileWide / 2 + 10mm,
-  y = x2Position - 30mm,
-  z = rightZ + 40mm,
-  color = '#D88528',
-)
 
 // Separate work support, rotary mount and foam references; not frame members.
 foamBottom = footZ + guideAbovePlate + fixtureLift
@@ -146,6 +458,22 @@ leftSupport = stock(
   z = fixtureBaseZ,
   color = '#667B58',
 )
+  |> subtract(tools = [
+       pin(
+         dia = 4.2mm,
+         length = 14mm,
+         x = -foamSpan / 2 + 70mm,
+         y = -168mm,
+         z = foamBottom - 13mm,
+       ),
+       pin(
+         dia = 4.2mm,
+         length = 14mm,
+         x = -foamSpan / 2 + 70mm,
+         y = 168mm,
+         z = foamBottom - 13mm,
+       )
+     ])
 rightSupport = stock(
   width = 100mm,
   depth = 400mm,
@@ -155,31 +483,105 @@ rightSupport = stock(
   z = fixtureBaseZ,
   color = '#667B58',
 )
-rotaryMount = stock(
-  width = 200mm,
-  depth = 200mm,
-  height = rotaryBottom - fixtureBaseZ,
-  x = -100mm,
-  y = -100mm,
-  z = fixtureBaseZ,
-  color = steel,
-)
+  |> subtract(tools = [
+       pin(
+         dia = 4.2mm,
+         length = 14mm,
+         x = foamSpan / 2 - 70mm,
+         y = -168mm,
+         z = foamBottom - 13mm,
+       ),
+       pin(
+         dia = 4.2mm,
+         length = 14mm,
+         x = foamSpan / 2 - 70mm,
+         y = 168mm,
+         z = foamBottom - 13mm,
+       )
+     ])
 rotaryPlate = disc(
-  radius = rotaryDiameter / 2,
+  rad = rotaryDiameter / 2,
   height = rotaryThickness,
   x = 0mm,
   y = 0mm,
   z = rotaryBottom,
   color = plateBlue,
 )
+  |> subtract(tools = patternCircular3d(
+       pin(
+         dia = 5.5mm,
+         length = rotaryThickness + 2mm,
+         x = 30mm,
+         y = 0mm,
+         z = rotaryBottom - 1mm,
+       ),
+       instances = 4,
+       axis = Z,
+       center = [0mm, 0mm, 0mm],
+     ))
+  |> subtract(tools = pin(
+       dia = 2.5mm,
+       length = 9mm,
+       x = 82mm,
+       y = 0mm,
+       z = rotaryBottom - 1mm,
+     ))
+  |> subtract(tools = patternCircular3d(
+       pin(
+         dia = 9mm,
+         length = 6mm,
+         x = 30mm,
+         y = 0mm,
+         z = rotaryTop - 5.5mm,
+       ),
+       instances = 4,
+       axis = Z,
+       center = [0mm, 0mm, 0mm],
+     ))
+  |> subtract(tools = patternCircular3d(
+       pin(
+         dia = 4.2mm,
+         length = 11mm,
+         x = 48mm,
+         y = 0mm,
+         z = rotaryTop - 10mm,
+       ),
+       instances = 4,
+       axis = Z,
+       center = [0mm, 0mm, 0mm],
+     ))
 fixtureSpacer = disc(
-  radius = 60mm,
+  rad = 60mm,
   height = spacerThickness,
   x = 0mm,
   y = 0mm,
   z = rotaryTop,
   color = steel,
 )
+  |> subtract(tools = patternCircular3d(
+       pin(
+         dia = 5.5mm,
+         length = spacerThickness + 2mm,
+         x = 48mm,
+         y = 0mm,
+         z = rotaryTop - 1mm,
+       ),
+       instances = 4,
+       axis = Z,
+       center = [0mm, 0mm, 0mm],
+     ))
+  |> subtract(tools = patternCircular3d(
+       pin(
+         dia = 9mm,
+         length = 6mm,
+         x = 48mm,
+         y = 0mm,
+         z = foamBottom - 5.5mm,
+       ),
+       instances = 4,
+       axis = Z,
+       center = [0mm, 0mm, 0mm],
+     ))
 foamReference = stock(
   width = foamSpan,
   depth = 300mm,
@@ -189,3 +591,163 @@ foamReference = stock(
   z = foamBottom,
   color = '#E3D8B7',
 )
+
+// Both assemblies use the same local drive geometry. sign orients their
+// brackets toward their mating upright while retaining the same belt-clamp offset.
+leftDrive = linearSet(
+  cx = -centerX,
+  sign = -1,
+  position = x1Position,
+  guideZ = leftZ,
+)
+rightDrive = linearSet(
+  cx = centerX,
+  sign = 1,
+  position = x2Position,
+  guideZ = rightZ,
+)
+corners = baseCorners()
+
+wire = rodBetween(
+  dia = 0.4mm,
+  x1 = -guideSeparation / 2,
+  y1 = x1Position,
+  z1 = leftZ,
+  x2 = guideSeparation / 2,
+  y2 = x2Position,
+  z2 = rightZ,
+)
+controllerBody = block(
+  w = 160mm,
+  d = 80mm,
+  h = 55mm,
+  x = 200mm,
+  y = -baseDepth / 2 - 80mm,
+  z = 0mm,
+)
+
+pathLength = sqrt((guideSeparation / 1mm) ^ 2 + ((x1Position - x2Position) / 1mm) ^ 2 + ((leftZ - rightZ) / 1mm) ^ 2) * 1mm
+tensioner = takeup(
+  x = guideSeparation / 2,
+  y = x2Position,
+  z = rightZ,
+  arm = armLength,
+  travel = takeupTravel,
+  payout = 15mm + pathLength - guideSeparation,
+)
+rotary = rotaryDrive(bottom = rotaryBottom, bed = fixtureBaseZ)
+
+insetRatio = 50mm / guideSeparation
+leftTerminal = currentClamp(x = -guideSeparation / 2 + 50mm, y = x1Position + insetRatio * (x2Position - x1Position), z = leftZ + insetRatio * (rightZ - leftZ))
+rightTerminal = currentClamp(x = guideSeparation / 2 - 50mm, y = x2Position + insetRatio * (x1Position - x2Position), z = rightZ + insetRatio * (leftZ - rightZ))
+
+leftTail = pinX(
+  dia = 0.4mm,
+  length = armLength - 10mm,
+  x = -carrierFace + 10mm,
+  y = x1Position,
+  z = leftZ,
+)
+anchorInsulator = tube(od = 10mm, id = 5mm, length = 10mm)
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(
+       x = -carrierFace + 8mm,
+       y = x1Position,
+       z = leftZ,
+       global = true,
+     )
+  |> subtract(tools = pin(
+       dia = 4mm,
+       length = 7mm,
+       x = -carrierFace + 12mm,
+       y = x1Position,
+       z = leftZ,
+     ))
+anchorBlank = tube(od = 5mm, id = 1mm, length = 9mm)
+  |> rotate(axis = Y, angle = 90deg, global = true)
+  |> translate(
+       x = -carrierFace + 8mm,
+       y = x1Position,
+       z = leftZ,
+       global = true,
+     )
+anchorFerrule = subtract(
+  anchorBlank,
+  tools = pin(
+    dia = 1.6mm,
+    length = 4mm,
+    x = -carrierFace + 12mm,
+    y = x1Position,
+    z = leftZ,
+  ),
+)
+
+// Two external mounting ears over the front tie. The box is a keep-out.
+controlEarL = block(
+  w = 12mm,
+  d = 24mm,
+  h = 4mm,
+  x = 206mm,
+  y = -baseDepth / 2 - 4mm,
+  z = profileWide,
+)
+  |> subtract(tools = pin(
+       dia = 5.5mm,
+       length = 6mm,
+       x = 212mm,
+       y = -baseDepth / 2 + 10mm,
+       z = profileWide - 1mm,
+     ))
+controlEarR = block(
+  w = 12mm,
+  d = 24mm,
+  h = 4mm,
+  x = 342mm,
+  y = -baseDepth / 2 - 4mm,
+  z = profileWide,
+)
+  |> subtract(tools = pin(
+       dia = 5.5mm,
+       length = 6mm,
+       x = 348mm,
+       y = -baseDepth / 2 + 10mm,
+       z = profileWide - 1mm,
+     ))
+controlBox = union([
+  controllerBody,
+  controlEarL,
+  controlEarR
+])
+
+// Panel opening and external operator silhouette. Electrical contacts are inside the box.
+panel = subtract(
+  controlBox,
+  tools = pinY(
+    dia = 22.5mm,
+    length = 16mm,
+    x = 280mm,
+    y = -baseDepth / 2 - 81mm,
+    z = 29mm,
+  ),
+)
+estopNeck = pinY(
+  dia = 22mm,
+  length = 17mm,
+  x = 280mm,
+  y = -baseDepth / 2 - 88mm,
+  z = 29mm,
+)
+estopHead = pinY(
+  dia = 40mm,
+  length = 12mm,
+  x = 280mm,
+  y = -baseDepth / 2 - 100mm,
+  z = 29mm,
+)
+  |> appearance(color = '#C03932')
+
+// Paired foam edge jaws on each stationary wing support.
+leftFrontJaw = foamJaw(cx = -foamSpan / 2 + 70mm, side = -1, top = foamBottom)
+leftRearJaw = foamJaw(cx = -foamSpan / 2 + 70mm, side = 1, top = foamBottom)
+rightFrontJaw = foamJaw(cx = foamSpan / 2 - 70mm, side = -1, top = foamBottom)
+rightRearJaw = foamJaw(cx = foamSpan / 2 - 70mm, side = 1, top = foamBottom)

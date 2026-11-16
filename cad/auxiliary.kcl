@@ -1,0 +1,599 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+import block, pin, pinX, pinY, tube, rodBetween from "machining.kcl"
+import motor from "drive_parts.kcl"
+import stopUnit from "motion.kcl"
+
+fn drilledClamp() {
+  blank = block(
+    w = 8mm,
+    d = 8mm,
+    h = 8mm,
+    x = -4mm,
+    y = -4mm,
+    z = -4mm,
+  )
+  wireBore = pinX(
+    dia = 1mm,
+    length = 10mm,
+    x = -5mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  clampTap = pin(
+    dia = 2.5mm,
+    length = 6mm,
+    x = 0mm,
+    y = 0mm,
+    z = -0.5mm,
+  )
+  return subtract(blank, tools = [wireBore, clampTap])
+    |> appearance(color = '#AE743B')
+}
+
+// Local origin on the right guide. One fixed-axis redirect, 1:1 payout.
+// Plate and spring reel move with the vertical carrier, including in skew cuts.
+export fn takeup(x, y, z, arm, travel, payout) {
+  px = x + 22mm
+  py = y - 10mm
+  axleX = px + 10mm
+  reelY = py - travel - 50mm
+  stock = block(
+    w = arm - 9mm,
+    d = travel + 76mm,
+    h = 5mm,
+    x = x + 9mm,
+    y = reelY - 8mm,
+    z = z - 14mm,
+  )
+  pulleyHole = pin(
+    dia = 5.2mm,
+    length = 7mm,
+    x = px,
+    y = py,
+    z = z - 15mm,
+  )
+  reelHole = pin(
+    dia = 5.2mm,
+    length = 7mm,
+    x = axleX + 12mm,
+    y = reelY,
+    z = z - 15mm,
+  )
+  stop1 = pin(
+    dia = 3.4mm,
+    length = 8mm,
+    x = axleX - 5mm,
+    y = reelY + 8mm,
+    z = z - 15mm,
+  )
+  stop2 = pin(
+    dia = 3.4mm,
+    length = 8mm,
+    x = axleX - 5mm,
+    y = reelY + 16mm + travel,
+    z = z - 15mm,
+  )
+  bracket = subtract(stock, tools = [pulleyHole, reelHole, stop1, stop2])
+  nearStop = tube(od = 6mm, id = 3mm, length = 11mm)
+    |> translate(
+         x = axleX - 5mm,
+         y = reelY + 8mm,
+         z = z - 9mm,
+         global = true,
+       )
+  farStop = tube(od = 6mm, id = 3mm, length = 11mm)
+    |> translate(
+         x = axleX - 5mm,
+         y = reelY + 16mm + travel,
+         z = z - 9mm,
+         global = true,
+       )
+  cheekBlank = block(
+    w = 6mm,
+    d = 36mm,
+    h = 20mm,
+    x = x + arm - 6mm,
+    y = y - 36mm,
+    z = z - 9mm,
+  )
+  a = pinX(
+    dia = 3.4mm,
+    length = 9mm,
+    x = x + arm - 7mm,
+    y = y - 16mm,
+    z = z + 2mm,
+  )
+  b = pinX(
+    dia = 3.4mm,
+    length = 9mm,
+    x = x + arm - 7mm,
+    y = y - 30mm,
+    z = z + 2mm,
+  )
+  foot = subtract(cheekBlank, tools = [a, b])
+  mount = union([bracket, foot])
+  sheave = tube(od = 20mm, id = 5mm, length = 8mm)
+    |> translate(
+         x = px,
+         y = py,
+         z = z - 4mm,
+         global = true,
+       )
+  spacer = tube(od = 9mm, id = 5mm, length = 5mm)
+    |> translate(
+         x = px,
+         y = py,
+         z = z - 9mm,
+         global = true,
+       )
+  reel = tube(od = 24mm, id = 5mm, length = 12mm)
+    |> translate(
+         x = axleX + 12mm,
+         y = reelY,
+         z = z - 6mm,
+         global = true,
+       )
+  reelSpacer = tube(od = 9mm, id = 5mm, length = 3mm)
+    |> translate(
+         x = axleX + 12mm,
+         y = reelY,
+         z = z - 9mm,
+         global = true,
+       )
+  jointY = reelY + 12mm + payout
+  strip = block(
+    w = 0.3mm,
+    d = jointY - reelY,
+    h = 8mm,
+    x = axleX - 0.15mm,
+    y = reelY,
+    z = z - 4mm,
+  )
+  tabBlank = block(
+    w = 9mm,
+    d = 2mm,
+    h = 5mm,
+    x = axleX - 7mm,
+    y = jointY - 1mm,
+    z = z - 2.5mm,
+  )
+  eye = pinY(
+    dia = 1.4mm,
+    length = 4mm,
+    x = axleX,
+    y = jointY - 2mm,
+    z = z,
+  )
+  tab = subtract(tabBlank, tools = eye)
+  cord = pinY(
+    dia = 1mm,
+    length = 12mm,
+    x = axleX,
+    y = jointY,
+    z = z,
+  )
+  slidingTail = pinY(
+    dia = 0.4mm,
+    length = py - jointY - 12mm,
+    x = axleX,
+    y = jointY + 12mm,
+    z = z,
+  )
+  quadrant = tube(od = 20.4mm, id = 19.6mm, length = 0.4mm)
+    |> translate(
+         x = px,
+         y = py,
+         z = z - 0.2mm,
+         global = true,
+       )
+  cutLeft = block(
+    w = 12mm,
+    d = 24mm,
+    h = 2mm,
+    x = px - 12mm,
+    y = py - 12mm,
+    z = z - 1mm,
+  )
+  cutBottom = block(
+    w = 24mm,
+    d = 12mm,
+    h = 2mm,
+    x = px - 12mm,
+    y = py - 12mm,
+    z = z - 1mm,
+  )
+  bend = subtract(quadrant, tools = [cutLeft, cutBottom])
+  tail = pinX(
+    dia = 0.4mm,
+    length = 22mm,
+    x = x,
+    y = y,
+    z = z,
+  )
+  return [
+    mount,
+    nearStop,
+    farStop,
+    tab,
+    sheave,
+    spacer,
+    reel,
+    reelSpacer,
+    strip,
+    cord,
+    tail,
+    slidingTail,
+    bend
+  ]
+}
+
+export fn rotaryDrive(bottom, bed) {
+  // Independent bearing and spindle carry table weight. Worm reducer envelope
+  // and shaft adapter are provisional until a supplier drawing is selected.
+  h = bottom - bed
+  lower = block(
+    w = 192mm,
+    d = 140mm,
+    h = 6mm,
+    x = -75mm,
+    y = -70mm,
+    z = bed,
+  )
+  holes = patternCircular3d(
+    pin(
+      dia = 5.5mm,
+      length = 8mm,
+      x = 58mm,
+      y = 0mm,
+      z = bed - 1mm,
+    ),
+    instances = 4,
+    axis = Z,
+    center = [0mm, 0mm, 0mm],
+  )
+  drilledBase = subtract(lower, tools = holes)
+  leftTap = pin(
+    dia = 4.2mm,
+    length = 8mm,
+    x = -41mm,
+    y = -22mm,
+    z = bed - 1mm,
+  )
+  rightTap = pin(
+    dia = 4.2mm,
+    length = 8mm,
+    x = 41mm,
+    y = -22mm,
+    z = bed - 1mm,
+  )
+  base = subtract(drilledBase, tools = [leftTap, rightTap])
+  housing = block(
+    w = 70mm,
+    d = 86mm,
+    h = h - 24mm,
+    x = -35mm,
+    y = -35mm,
+    z = bed + 6mm,
+  )
+  bore = pin(
+    dia = 20mm,
+    length = h,
+    x = 0mm,
+    y = 0mm,
+    z = bed,
+  )
+  input = pinX(
+    dia = 23mm,
+    length = 25mm,
+    x = 11mm,
+    y = 20mm,
+    z = bed + 46mm,
+  )
+  a = pinX(
+    dia = 6mm,
+    length = 10mm,
+    x = 28mm,
+    y = 4.5mm,
+    z = bed + 30.5mm,
+  )
+  b = pinX(
+    dia = 6mm,
+    length = 10mm,
+    x = 28mm,
+    y = 4.5mm,
+    z = bed + 61.5mm,
+  )
+  c = pinX(
+    dia = 6mm,
+    length = 10mm,
+    x = 28mm,
+    y = 35.5mm,
+    z = bed + 30.5mm,
+  )
+  e = pinX(
+    dia = 6mm,
+    length = 10mm,
+    x = 28mm,
+    y = 35.5mm,
+    z = bed + 61.5mm,
+  )
+  gearbox = subtract(housing, tools = [bore, input, a, b, c, e])
+  plateBlank = block(
+    w = 6mm,
+    d = 60mm,
+    h = 48mm,
+    x = 35mm,
+    y = -10mm,
+    z = bed + 22mm,
+  )
+  pilot = pinX(
+    dia = 22.5mm,
+    length = 8mm,
+    x = 34mm,
+    y = 20mm,
+    z = bed + 46mm,
+  )
+  motorA = pinX(
+    dia = 3.4mm,
+    length = 8mm,
+    x = 34mm,
+    y = 4.5mm,
+    z = bed + 30.5mm,
+  )
+  motorB = pinX(
+    dia = 3.4mm,
+    length = 8mm,
+    x = 34mm,
+    y = 4.5mm,
+    z = bed + 61.5mm,
+  )
+  motorC = pinX(
+    dia = 3.4mm,
+    length = 8mm,
+    x = 34mm,
+    y = 35.5mm,
+    z = bed + 30.5mm,
+  )
+  motorD = pinX(
+    dia = 3.4mm,
+    length = 8mm,
+    x = 34mm,
+    y = 35.5mm,
+    z = bed + 61.5mm,
+  )
+  plateA = pinX(
+    dia = 4.5mm,
+    length = 8mm,
+    x = 34mm,
+    y = -5mm,
+    z = bed + 46mm,
+  )
+  plateB = pinX(
+    dia = 4.5mm,
+    length = 8mm,
+    x = 34mm,
+    y = 45mm,
+    z = bed + 46mm,
+  )
+  rotaryMotorMount = subtract(
+    plateBlank,
+    tools = [
+      pilot,
+      motorA,
+      motorB,
+      motorC,
+      motorD,
+      plateA,
+      plateB
+    ],
+  )
+  gearA = pinX(
+    dia = 3.3mm,
+    length = 10mm,
+    x = 26mm,
+    y = -5mm,
+    z = bed + 46mm,
+  )
+  gearB = pinX(
+    dia = 3.3mm,
+    length = 10mm,
+    x = 26mm,
+    y = 45mm,
+    z = bed + 46mm,
+  )
+  caseWithMount = subtract(gearbox, tools = [gearA, gearB])
+  drive = motor()
+    |> rotate(axis = Y, angle = -90deg, global = true)
+    |> translate(
+         x = 41mm,
+         y = 20mm,
+         z = bed + 46mm,
+         global = true,
+       )
+  shaftBlank = pin(
+    dia = 20mm,
+    length = h - 6mm,
+    x = 0mm,
+    y = 0mm,
+    z = bed + 6mm,
+  )
+  shaftKeyway = block(
+    w = 5mm,
+    d = 6mm,
+    h = 10mm,
+    x = 7mm,
+    y = -3mm,
+    z = bottom - 10mm,
+  )
+  shaft = subtract(shaftBlank, tools = shaftKeyway)
+  driveKey = block(
+    w = 6mm,
+    d = 6mm,
+    h = 10mm,
+    x = 7mm,
+    y = -3mm,
+    z = bottom - 10mm,
+  )
+  thrust = tube(od = 42mm, id = 20mm, length = 8mm)
+    |> translate(z = bottom - 18mm, global = true)
+  flangeBlank = tube(od = 80mm, id = 20mm, length = 10mm)
+    |> translate(z = bottom - 10mm, global = true)
+  flangeHoles = patternCircular3d(
+    pin(
+      dia = 4.2mm,
+      length = 12mm,
+      x = 30mm,
+      y = 0mm,
+      z = bottom - 11mm,
+    ),
+    instances = 4,
+    axis = Z,
+    center = [0mm, 0mm, 0mm],
+  )
+  keyedFlange = subtract(
+    flangeBlank,
+    tools = block(
+      w = 5mm,
+      d = 6mm,
+      h = 12mm,
+      x = 8mm,
+      y = -3mm,
+      z = bottom - 11mm,
+    ),
+  )
+  flange = subtract(keyedFlange, tools = flangeHoles)
+  cam = block(
+    w = 12mm,
+    d = 8mm,
+    h = 10mm,
+    x = 76mm,
+    y = -4mm,
+    z = bottom - 10mm,
+  )
+  camHole = pin(
+    dia = 3.4mm,
+    length = 12mm,
+    x = 82mm,
+    y = 0mm,
+    z = bottom - 11mm,
+  )
+  flag = subtract(cam, tools = camHole)
+  home = stopUnit(
+    x = 82mm,
+    y = -12.8mm,
+    z = bottom - 8mm,
+    tilt = 0deg,
+    heading = 0deg,
+  )
+  lugStock = block(
+    w = 94mm,
+    d = 24mm,
+    h = 6mm,
+    x = -47mm,
+    y = -32mm,
+    z = bed + 6mm,
+  )
+  leftBolt = pin(
+    dia = 5.5mm,
+    length = 8mm,
+    x = -41mm,
+    y = -22mm,
+    z = bed + 5mm,
+  )
+  rightBolt = pin(
+    dia = 5.5mm,
+    length = 8mm,
+    x = 41mm,
+    y = -22mm,
+    z = bed + 5mm,
+  )
+  lugs = subtract(lugStock, tools = [leftBolt, rightBolt])
+  reducer = union([caseWithMount, lugs])
+  mast = block(
+    w = 22mm,
+    d = 16mm,
+    h = h - 18mm,
+    x = 85mm,
+    y = -19mm,
+    z = bed + 6mm,
+  )
+  mastTap = pin(
+    dia = 2.5mm,
+    length = 12mm,
+    x = 95mm,
+    y = -9.8mm,
+    z = bottom - 22mm,
+  )
+  stand = subtract(mast, tools = mastTap)
+  pedestal = union([stand, base])
+  return [
+    pedestal,
+    reducer,
+    shaft,
+    driveKey,
+    drive,
+    rotaryMotorMount,
+    thrust,
+    flange,
+    flag,
+    home
+  ]
+}
+
+export fn currentClamp(x, y, z) {
+  return drilledClamp()
+    |> translate(
+         x = x,
+         y = y,
+         z = z,
+         global = true,
+       )
+}
+
+// Angle toe and overhanging stop face reference the edge of the 300 mm blank.
+// An elongated clearance hole gives the rear jaw 8 mm of adjustment.
+export fn foamJaw(cx, side, top) {
+  blockY = side * 150mm - ((1 - side) * 3mm)
+  upright = block(
+    w = 36mm,
+    d = 6mm,
+    h = 12mm,
+    x = cx - 18mm,
+    y = blockY,
+    z = top,
+  )
+  footY = side * 150mm - ((1 - side) * 15mm)
+  foot = block(
+    w = 36mm,
+    d = 30mm,
+    h = 5mm,
+    x = cx - 18mm,
+    y = footY,
+    z = top,
+  )
+  blank = union([upright, foot])
+  slot = block(
+    w = 5.5mm,
+    d = 8mm,
+    h = 7mm,
+    x = cx - 2.75mm,
+    y = side * 168mm - 4mm,
+    z = top - 1mm,
+  )
+  a = pin(
+    dia = 5.5mm,
+    length = 7mm,
+    x = cx,
+    y = side * 168mm - 4mm,
+    z = top - 1mm,
+  )
+  b = pin(
+    dia = 5.5mm,
+    length = 7mm,
+    x = cx,
+    y = side * 168mm + 4mm,
+    z = top - 1mm,
+  )
+  return subtract(blank, tools = [slot, a, b])
+}

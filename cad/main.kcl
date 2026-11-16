@@ -2,6 +2,8 @@
 // Open this file in Zoo Design Studio. All members are separate solid bodies.
 @settings(defaultLengthUnit = mm, kclVersion = 3.0)
 
+import drilledRail from "drive_parts.kcl"
+import carriageHolesZ, pin, pinX from "machining.kcl"
 import stock, gusset from "parts.kcl"
 import guideSeparation, linearTravel, railLength, towerHeight, baseDepth, profileNarrow, profileWide, towerOffset, railSpacing, carriageDepth, basePlateWidth, plateThickness, railHeight, blockHeight, endMargin, x1Position, x2Position, aluminium, steel, plateBlue from "parameters.kcl"
 
@@ -16,6 +18,11 @@ baseTop = profileWide
 railTop = baseTop + railHeight
 plateBottom = railTop + blockHeight
 footZ = plateBottom + plateThickness
+
+braceRun = spanTieLength
+braceRise = baseDepth - profileNarrow
+braceLength = sqrt((braceRun / 1mm) ^ 2 + (braceRise / 1mm) ^ 2) * 1mm
+braceAngle = atan2(y = braceRise, x = braceRun)
 
 // Four 2040 bed beams, 40 mm dimension vertical.
 leftInnerBed = stock(
@@ -65,6 +72,22 @@ frontTie = stock(
   z = 0mm,
   color = aluminium,
 )
+  |> subtract(tools = [
+       pin(
+         dia = 5.5mm,
+         length = 42mm,
+         x = -spanTieLength / 2 + 10mm * cos(braceAngle),
+         y = -baseDepth / 2 + profileNarrow / 2 + 10mm * sin(braceAngle),
+         z = -1mm,
+       ),
+       pin(
+         dia = 5.5mm,
+         length = 42mm,
+         x = spanTieLength / 2 - (10mm * cos(braceAngle)),
+         y = -baseDepth / 2 + profileNarrow / 2 + 10mm * sin(braceAngle),
+         z = -1mm,
+       )
+     ])
 rearTie = stock(
   width = spanTieLength,
   depth = profileNarrow,
@@ -74,6 +97,22 @@ rearTie = stock(
   z = 0mm,
   color = aluminium,
 )
+  |> subtract(tools = [
+       pin(
+         dia = 5.5mm,
+         length = 42mm,
+         x = -spanTieLength / 2 + 10mm * cos(braceAngle),
+         y = baseDepth / 2 - (profileNarrow / 2) - (10mm * sin(braceAngle)),
+         z = -1mm,
+       ),
+       pin(
+         dia = 5.5mm,
+         length = 42mm,
+         x = spanTieLength / 2 - (10mm * cos(braceAngle)),
+         y = baseDepth / 2 - (profileNarrow / 2) - (10mm * sin(braceAngle)),
+         z = -1mm,
+       )
+     ])
 centerFrontTie = stock(
   width = spanTieLength,
   depth = profileNarrow,
@@ -130,10 +169,6 @@ rightRearTie = stock(
 )
 
 // Underside steel X straps resist base racking. Separate levels avoid overlap.
-braceRun = spanTieLength
-braceRise = baseDepth - profileNarrow
-braceLength = sqrt(braceRun * braceRun + braceRise * braceRise)
-braceAngle = atan2(y = braceRise, x = braceRun)
 braceOne = stock(
   width = braceLength,
   depth = 20mm,
@@ -143,6 +178,22 @@ braceOne = stock(
   z = -4mm,
   color = steel,
 )
+  |> subtract(tools = [
+       pin(
+         dia = 5.5mm,
+         length = 12mm,
+         x = 10mm,
+         y = 0mm,
+         z = -10mm,
+       ),
+       pin(
+         dia = 5.5mm,
+         length = 12mm,
+         x = braceLength - 10mm,
+         y = 0mm,
+         z = -10mm,
+       )
+     ])
   |> rotate(axis = Z, angle = braceAngle, global = true)
   |> translate(x = -spanTieLength / 2, y = -baseDepth / 2 + profileNarrow / 2, global = true)
 braceTwo = stock(
@@ -154,6 +205,22 @@ braceTwo = stock(
   z = -8mm,
   color = steel,
 )
+  |> subtract(tools = [
+       pin(
+         dia = 5.5mm,
+         length = 12mm,
+         x = 10mm,
+         y = 0mm,
+         z = -10mm,
+       ),
+       pin(
+         dia = 5.5mm,
+         length = 12mm,
+         x = braceLength - 10mm,
+         y = 0mm,
+         z = -10mm,
+       )
+     ])
   |> rotate(axis = Z, angle = -braceAngle, global = true)
   |> translate(x = -spanTieLength / 2, y = baseDepth / 2 - (profileNarrow / 2), global = true)
 
@@ -167,6 +234,15 @@ leftRearBraceSpacer = stock(
   z = -4mm,
   color = steel,
 )
+  |> subtract(tools = [
+       pin(
+         dia = 5.5mm,
+         length = 6mm,
+         x = -spanTieLength / 2 + 10mm * cos(braceAngle),
+         y = baseDepth / 2 - (profileNarrow / 2) - (10mm * sin(braceAngle)),
+         z = -5mm,
+       )
+     ])
 rightFrontBraceSpacer = stock(
   width = profileNarrow,
   depth = profileNarrow,
@@ -176,82 +252,175 @@ rightFrontBraceSpacer = stock(
   z = -4mm,
   color = steel,
 )
+  |> subtract(tools = [
+       pin(
+         dia = 5.5mm,
+         length = 6mm,
+         x = spanTieLength / 2 - (10mm * cos(braceAngle)),
+         y = -baseDepth / 2 + profileNarrow / 2 + 10mm * sin(braceAngle),
+         z = -5mm,
+       )
+     ])
 
 // Four X-axis rail envelopes on top of the four bed beams.
-leftRailInner = stock(
-  width = 12mm,
-  depth = railLength,
-  height = railHeight,
-  x = -innerRail - 6mm,
-  y = -railLength / 2,
-  z = baseTop,
-  color = steel,
-)
-leftRailOuter = stock(
-  width = 12mm,
-  depth = railLength,
-  height = railHeight,
-  x = -outerRail - 6mm,
-  y = -railLength / 2,
-  z = baseTop,
-  color = steel,
-)
-rightRailInner = stock(
-  width = 12mm,
-  depth = railLength,
-  height = railHeight,
-  x = innerRail - 6mm,
-  y = -railLength / 2,
-  z = baseTop,
-  color = steel,
-)
-rightRailOuter = stock(
-  width = 12mm,
-  depth = railLength,
-  height = railHeight,
-  x = outerRail - 6mm,
-  y = -railLength / 2,
-  z = baseTop,
-  color = steel,
-)
+leftRailInner = drilledRail(length = railLength, height = railHeight)
+  |> translate(
+       x = -innerRail - 6mm,
+       y = -railLength / 2,
+       z = baseTop,
+       global = true,
+     )
+leftRailOuter = drilledRail(length = railLength, height = railHeight)
+  |> translate(
+       x = -outerRail - 6mm,
+       y = -railLength / 2,
+       z = baseTop,
+       global = true,
+     )
+rightRailInner = drilledRail(length = railLength, height = railHeight)
+  |> translate(
+       x = innerRail - 6mm,
+       y = -railLength / 2,
+       z = baseTop,
+       global = true,
+     )
+rightRailOuter = drilledRail(length = railLength, height = railHeight)
+  |> translate(
+       x = outerRail - 6mm,
+       y = -railLength / 2,
+       z = baseTop,
+       global = true,
+     )
 
 // One 45 mm block per horizontal rail; minimum eight-block architecture.
+leftShimInner = stock(
+  width = 27mm,
+  depth = 45mm,
+  height = 8mm,
+  x = -innerRail - 13.5mm,
+  y = x1Position - 22.5mm,
+  z = plateBottom - 8mm,
+  color = plateBlue,
+)
+  |> subtract(tools = carriageHolesZ(
+       dia = 3.4mm,
+       length = 10mm,
+       x = -innerRail,
+       y = x1Position,
+       z = plateBottom - 9mm,
+     ))
 leftBlockInner = stock(
   width = 27mm,
   depth = 45mm,
-  height = blockHeight,
+  height = blockHeight - 8mm,
   x = -innerRail - 13.5mm,
   y = x1Position - 22.5mm,
   z = railTop,
   color = plateBlue,
 )
+  |> subtract(tools = carriageHolesZ(
+       dia = 2.5mm,
+       length = 6mm,
+       x = -innerRail,
+       y = x1Position,
+       z = railTop - 1mm,
+     ))
+leftShimOuter = stock(
+  width = 27mm,
+  depth = 45mm,
+  height = 8mm,
+  x = -outerRail - 13.5mm,
+  y = x1Position - 22.5mm,
+  z = plateBottom - 8mm,
+  color = plateBlue,
+)
+  |> subtract(tools = carriageHolesZ(
+       dia = 3.4mm,
+       length = 10mm,
+       x = -outerRail,
+       y = x1Position,
+       z = plateBottom - 9mm,
+     ))
 leftBlockOuter = stock(
   width = 27mm,
   depth = 45mm,
-  height = blockHeight,
+  height = blockHeight - 8mm,
   x = -outerRail - 13.5mm,
   y = x1Position - 22.5mm,
   z = railTop,
   color = plateBlue,
 )
+  |> subtract(tools = carriageHolesZ(
+       dia = 2.5mm,
+       length = 6mm,
+       x = -outerRail,
+       y = x1Position,
+       z = railTop - 1mm,
+     ))
+rightShimInner = stock(
+  width = 27mm,
+  depth = 45mm,
+  height = 8mm,
+  x = innerRail - 13.5mm,
+  y = x2Position - 22.5mm,
+  z = plateBottom - 8mm,
+  color = plateBlue,
+)
+  |> subtract(tools = carriageHolesZ(
+       dia = 3.4mm,
+       length = 10mm,
+       x = innerRail,
+       y = x2Position,
+       z = plateBottom - 9mm,
+     ))
 rightBlockInner = stock(
   width = 27mm,
   depth = 45mm,
-  height = blockHeight,
+  height = blockHeight - 8mm,
   x = innerRail - 13.5mm,
   y = x2Position - 22.5mm,
   z = railTop,
   color = plateBlue,
 )
+  |> subtract(tools = carriageHolesZ(
+       dia = 2.5mm,
+       length = 6mm,
+       x = innerRail,
+       y = x2Position,
+       z = railTop - 1mm,
+     ))
+rightShimOuter = stock(
+  width = 27mm,
+  depth = 45mm,
+  height = 8mm,
+  x = outerRail - 13.5mm,
+  y = x2Position - 22.5mm,
+  z = plateBottom - 8mm,
+  color = plateBlue,
+)
+  |> subtract(tools = carriageHolesZ(
+       dia = 3.4mm,
+       length = 10mm,
+       x = outerRail,
+       y = x2Position,
+       z = plateBottom - 9mm,
+     ))
 rightBlockOuter = stock(
   width = 27mm,
   depth = 45mm,
-  height = blockHeight,
+  height = blockHeight - 8mm,
   x = outerRail - 13.5mm,
   y = x2Position - 22.5mm,
   z = railTop,
   color = plateBlue,
 )
+  |> subtract(tools = carriageHolesZ(
+       dia = 2.5mm,
+       length = 6mm,
+       x = outerRail,
+       y = x2Position,
+       z = railTop - 1mm,
+     ))
 leftBasePlate = stock(
   width = basePlateWidth,
   depth = carriageDepth,
@@ -261,6 +430,126 @@ leftBasePlate = stock(
   z = plateBottom,
   color = plateBlue,
 )
+  |> subtract(tools = [
+       pin(
+         dia = 4.5mm,
+         length = 10mm,
+         x = -towerCenter - 19mm,
+         y = x1Position,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 4.5mm,
+         length = 10mm,
+         x = -towerCenter + 19mm,
+         y = x1Position,
+         z = plateBottom - 1mm,
+       )
+     ])
+  |> subtract(tools = [
+       pin(
+         dia = 5.5mm,
+         length = 10mm,
+         x = -towerCenter - 10mm,
+         y = x1Position + railSpacing / 2,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 5.5mm,
+         length = 10mm,
+         x = -towerCenter + 10mm,
+         y = x1Position + railSpacing / 2,
+         z = plateBottom - 1mm,
+       )
+     ])
+  |> subtract(tools = [
+       pin(
+         dia = 5.5mm,
+         length = 10mm,
+         x = -towerCenter - 10mm,
+         y = x1Position - (railSpacing / 2),
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 5.5mm,
+         length = 10mm,
+         x = -towerCenter + 10mm,
+         y = x1Position - (railSpacing / 2),
+         z = plateBottom - 1mm,
+       )
+     ])
+  |> subtract(tools = [
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = -towerCenter - 13mm,
+         y = x1Position - 10mm,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = -towerCenter - 13mm,
+         y = x1Position + 10mm,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = -innerRail - 10mm,
+         y = x1Position - 10mm,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = -innerRail - 10mm,
+         y = x1Position + 10mm,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = -innerRail + 10mm,
+         y = x1Position - 10mm,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = -innerRail + 10mm,
+         y = x1Position + 10mm,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = -outerRail - 10mm,
+         y = x1Position - 10mm,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = -outerRail - 10mm,
+         y = x1Position + 10mm,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = -outerRail + 10mm,
+         y = x1Position - 10mm,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = -outerRail + 10mm,
+         y = x1Position + 10mm,
+         z = plateBottom - 1mm,
+       )
+     ])
 rightBasePlate = stock(
   width = basePlateWidth,
   depth = carriageDepth,
@@ -270,6 +559,126 @@ rightBasePlate = stock(
   z = plateBottom,
   color = plateBlue,
 )
+  |> subtract(tools = [
+       pin(
+         dia = 4.5mm,
+         length = 10mm,
+         x = towerCenter - 19mm,
+         y = x2Position,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 4.5mm,
+         length = 10mm,
+         x = towerCenter + 19mm,
+         y = x2Position,
+         z = plateBottom - 1mm,
+       )
+     ])
+  |> subtract(tools = [
+       pin(
+         dia = 5.5mm,
+         length = 10mm,
+         x = towerCenter - 10mm,
+         y = x2Position + railSpacing / 2,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 5.5mm,
+         length = 10mm,
+         x = towerCenter + 10mm,
+         y = x2Position + railSpacing / 2,
+         z = plateBottom - 1mm,
+       )
+     ])
+  |> subtract(tools = [
+       pin(
+         dia = 5.5mm,
+         length = 10mm,
+         x = towerCenter - 10mm,
+         y = x2Position - (railSpacing / 2),
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 5.5mm,
+         length = 10mm,
+         x = towerCenter + 10mm,
+         y = x2Position - (railSpacing / 2),
+         z = plateBottom - 1mm,
+       )
+     ])
+  |> subtract(tools = [
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = towerCenter - 13mm,
+         y = x2Position - 10mm,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = towerCenter - 13mm,
+         y = x2Position + 10mm,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = innerRail - 10mm,
+         y = x2Position - 10mm,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = innerRail - 10mm,
+         y = x2Position + 10mm,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = innerRail + 10mm,
+         y = x2Position - 10mm,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = innerRail + 10mm,
+         y = x2Position + 10mm,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = outerRail - 10mm,
+         y = x2Position - 10mm,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = outerRail - 10mm,
+         y = x2Position + 10mm,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = outerRail + 10mm,
+         y = x2Position - 10mm,
+         z = plateBottom - 1mm,
+       ),
+       pin(
+         dia = 3.4mm,
+         length = plateThickness + 2mm,
+         x = outerRail + 10mm,
+         y = x2Position + 10mm,
+         z = plateBottom - 1mm,
+       )
+     ])
 
 // Moving towers: paired 2040 uprights, 40 mm dimension across the wire.
 leftUprightFront = stock(
@@ -281,6 +690,38 @@ leftUprightFront = stock(
   z = footZ,
   color = aluminium,
 )
+  |> subtract(tools = [
+       pin(
+         dia = 4.2mm,
+         length = 16mm,
+         x = -towerCenter - 10mm,
+         y = x1Position - (railSpacing / 2),
+         z = footZ + towerHeight - 15mm,
+       ),
+       pin(
+         dia = 4.2mm,
+         length = 16mm,
+         x = -towerCenter + 10mm,
+         y = x1Position - (railSpacing / 2),
+         z = footZ + towerHeight - 15mm,
+       )
+     ])
+  |> subtract(tools = [
+       pin(
+         dia = 4.2mm,
+         length = 16mm,
+         x = -towerCenter - 10mm,
+         y = x1Position - (railSpacing / 2),
+         z = footZ - 1mm,
+       ),
+       pin(
+         dia = 4.2mm,
+         length = 16mm,
+         x = -towerCenter + 10mm,
+         y = x1Position - (railSpacing / 2),
+         z = footZ - 1mm,
+       )
+     ])
 leftUprightRear = stock(
   width = profileWide,
   depth = profileNarrow,
@@ -290,6 +731,38 @@ leftUprightRear = stock(
   z = footZ,
   color = aluminium,
 )
+  |> subtract(tools = [
+       pin(
+         dia = 4.2mm,
+         length = 16mm,
+         x = -towerCenter - 10mm,
+         y = x1Position + railSpacing / 2,
+         z = footZ + towerHeight - 15mm,
+       ),
+       pin(
+         dia = 4.2mm,
+         length = 16mm,
+         x = -towerCenter + 10mm,
+         y = x1Position + railSpacing / 2,
+         z = footZ + towerHeight - 15mm,
+       )
+     ])
+  |> subtract(tools = [
+       pin(
+         dia = 4.2mm,
+         length = 16mm,
+         x = -towerCenter - 10mm,
+         y = x1Position + railSpacing / 2,
+         z = footZ - 1mm,
+       ),
+       pin(
+         dia = 4.2mm,
+         length = 16mm,
+         x = -towerCenter + 10mm,
+         y = x1Position + railSpacing / 2,
+         z = footZ - 1mm,
+       )
+     ])
 rightUprightFront = stock(
   width = profileWide,
   depth = profileNarrow,
@@ -299,6 +772,38 @@ rightUprightFront = stock(
   z = footZ,
   color = aluminium,
 )
+  |> subtract(tools = [
+       pin(
+         dia = 4.2mm,
+         length = 16mm,
+         x = towerCenter - 10mm,
+         y = x2Position - (railSpacing / 2),
+         z = footZ + towerHeight - 15mm,
+       ),
+       pin(
+         dia = 4.2mm,
+         length = 16mm,
+         x = towerCenter + 10mm,
+         y = x2Position - (railSpacing / 2),
+         z = footZ + towerHeight - 15mm,
+       )
+     ])
+  |> subtract(tools = [
+       pin(
+         dia = 4.2mm,
+         length = 16mm,
+         x = towerCenter - 10mm,
+         y = x2Position - (railSpacing / 2),
+         z = footZ - 1mm,
+       ),
+       pin(
+         dia = 4.2mm,
+         length = 16mm,
+         x = towerCenter + 10mm,
+         y = x2Position - (railSpacing / 2),
+         z = footZ - 1mm,
+       )
+     ])
 rightUprightRear = stock(
   width = profileWide,
   depth = profileNarrow,
@@ -308,6 +813,38 @@ rightUprightRear = stock(
   z = footZ,
   color = aluminium,
 )
+  |> subtract(tools = [
+       pin(
+         dia = 4.2mm,
+         length = 16mm,
+         x = towerCenter - 10mm,
+         y = x2Position + railSpacing / 2,
+         z = footZ + towerHeight - 15mm,
+       ),
+       pin(
+         dia = 4.2mm,
+         length = 16mm,
+         x = towerCenter + 10mm,
+         y = x2Position + railSpacing / 2,
+         z = footZ + towerHeight - 15mm,
+       )
+     ])
+  |> subtract(tools = [
+       pin(
+         dia = 4.2mm,
+         length = 16mm,
+         x = towerCenter - 10mm,
+         y = x2Position + railSpacing / 2,
+         z = footZ - 1mm,
+       ),
+       pin(
+         dia = 4.2mm,
+         length = 16mm,
+         x = towerCenter + 10mm,
+         y = x2Position + railSpacing / 2,
+         z = footZ - 1mm,
+       )
+     ])
 leftTopTie = stock(
   width = profileWide,
   depth = railSpacing + profileNarrow,
@@ -317,6 +854,75 @@ leftTopTie = stock(
   z = footZ + towerHeight,
   color = aluminium,
 )
+  |> subtract(tools = [
+       pin(
+         dia = 5.5mm,
+         length = 22mm,
+         x = -towerCenter - 10mm,
+         y = x1Position + railSpacing / 2,
+         z = footZ + towerHeight - 1mm,
+       ),
+       pin(
+         dia = 5.5mm,
+         length = 22mm,
+         x = -towerCenter + 10mm,
+         y = x1Position + railSpacing / 2,
+         z = footZ + towerHeight - 1mm,
+       )
+     ])
+  |> subtract(tools = [
+       pin(
+         dia = 5.5mm,
+         length = 22mm,
+         x = -towerCenter - 10mm,
+         y = x1Position - (railSpacing / 2),
+         z = footZ + towerHeight - 1mm,
+       ),
+       pin(
+         dia = 5.5mm,
+         length = 22mm,
+         x = -towerCenter + 10mm,
+         y = x1Position - (railSpacing / 2),
+         z = footZ + towerHeight - 1mm,
+       )
+     ])
+  |> subtract(tools = [
+       pin(
+         dia = 24mm,
+         length = 22mm,
+         x = -towerCenter,
+         y = x1Position,
+         z = footZ + towerHeight - 1mm,
+       ),
+       pin(
+         dia = 7mm,
+         length = 22mm,
+         x = -towerCenter - 15.5mm,
+         y = x1Position - 15.5mm,
+         z = footZ + towerHeight - 1mm,
+       ),
+       pin(
+         dia = 7mm,
+         length = 22mm,
+         x = -towerCenter - 15.5mm,
+         y = x1Position + 15.5mm,
+         z = footZ + towerHeight - 1mm,
+       ),
+       pin(
+         dia = 7mm,
+         length = 22mm,
+         x = -towerCenter + 15.5mm,
+         y = x1Position - 15.5mm,
+         z = footZ + towerHeight - 1mm,
+       ),
+       pin(
+         dia = 7mm,
+         length = 22mm,
+         x = -towerCenter + 15.5mm,
+         y = x1Position + 15.5mm,
+         z = footZ + towerHeight - 1mm,
+       )
+     ])
 rightTopTie = stock(
   width = profileWide,
   depth = railSpacing + profileNarrow,
@@ -326,6 +932,75 @@ rightTopTie = stock(
   z = footZ + towerHeight,
   color = aluminium,
 )
+  |> subtract(tools = [
+       pin(
+         dia = 5.5mm,
+         length = 22mm,
+         x = towerCenter - 10mm,
+         y = x2Position + railSpacing / 2,
+         z = footZ + towerHeight - 1mm,
+       ),
+       pin(
+         dia = 5.5mm,
+         length = 22mm,
+         x = towerCenter + 10mm,
+         y = x2Position + railSpacing / 2,
+         z = footZ + towerHeight - 1mm,
+       )
+     ])
+  |> subtract(tools = [
+       pin(
+         dia = 5.5mm,
+         length = 22mm,
+         x = towerCenter - 10mm,
+         y = x2Position - (railSpacing / 2),
+         z = footZ + towerHeight - 1mm,
+       ),
+       pin(
+         dia = 5.5mm,
+         length = 22mm,
+         x = towerCenter + 10mm,
+         y = x2Position - (railSpacing / 2),
+         z = footZ + towerHeight - 1mm,
+       )
+     ])
+  |> subtract(tools = [
+       pin(
+         dia = 24mm,
+         length = 22mm,
+         x = towerCenter,
+         y = x2Position,
+         z = footZ + towerHeight - 1mm,
+       ),
+       pin(
+         dia = 7mm,
+         length = 22mm,
+         x = towerCenter - 15.5mm,
+         y = x2Position - 15.5mm,
+         z = footZ + towerHeight - 1mm,
+       ),
+       pin(
+         dia = 7mm,
+         length = 22mm,
+         x = towerCenter - 15.5mm,
+         y = x2Position + 15.5mm,
+         z = footZ + towerHeight - 1mm,
+       ),
+       pin(
+         dia = 7mm,
+         length = 22mm,
+         x = towerCenter + 15.5mm,
+         y = x2Position - 15.5mm,
+         z = footZ + towerHeight - 1mm,
+       ),
+       pin(
+         dia = 7mm,
+         length = 22mm,
+         x = towerCenter + 15.5mm,
+         y = x2Position + 15.5mm,
+         z = footZ + towerHeight - 1mm,
+       )
+     ])
 leftGusset = gusset(
   x = -towerCenter - (profileWide / 2) - 6mm,
   y = x1Position,
@@ -334,6 +1009,24 @@ leftGusset = gusset(
   height = 180mm,
   thickness = 6mm,
 )
+  |> subtract(tools = [
+       pinX(
+         dia = 5.5mm,
+         length = 60mm,
+         x = -towerCenter - 30mm,
+         y = x1Position + railSpacing / 2,
+         z = footZ + 24mm,
+       )
+     ])
+  |> subtract(tools = [
+       pinX(
+         dia = 5.5mm,
+         length = 60mm,
+         x = -towerCenter - 30mm,
+         y = x1Position - (railSpacing / 2),
+         z = footZ + 24mm,
+       )
+     ])
 rightGusset = gusset(
   x = towerCenter + profileWide / 2,
   y = x2Position,
@@ -342,44 +1035,62 @@ rightGusset = gusset(
   height = 180mm,
   thickness = 6mm,
 )
+  |> subtract(tools = [
+       pinX(
+         dia = 5.5mm,
+         length = 60mm,
+         x = towerCenter - 30mm,
+         y = x2Position + railSpacing / 2,
+         z = footZ + 24mm,
+       )
+     ])
+  |> subtract(tools = [
+       pinX(
+         dia = 5.5mm,
+         length = 60mm,
+         x = towerCenter - 30mm,
+         y = x2Position - (railSpacing / 2),
+         z = footZ + 24mm,
+       )
+     ])
 
 // Four Y-axis rails face inward; carrier and guides appear in layout.kcl.
-leftVerticalFront = stock(
-  width = railHeight,
-  depth = 12mm,
-  height = railLength,
-  x = -towerCenter + profileWide / 2,
-  y = x1Position - (railSpacing / 2) - 6mm,
-  z = footZ + endMargin,
-  color = steel,
-)
-leftVerticalRear = stock(
-  width = railHeight,
-  depth = 12mm,
-  height = railLength,
-  x = -towerCenter + profileWide / 2,
-  y = x1Position + railSpacing / 2 - 6mm,
-  z = footZ + endMargin,
-  color = steel,
-)
-rightVerticalFront = stock(
-  width = railHeight,
-  depth = 12mm,
-  height = railLength,
-  x = towerCenter - (profileWide / 2) - railHeight,
-  y = x2Position - (railSpacing / 2) - 6mm,
-  z = footZ + endMargin,
-  color = steel,
-)
-rightVerticalRear = stock(
-  width = railHeight,
-  depth = 12mm,
-  height = railLength,
-  x = towerCenter - (profileWide / 2) - railHeight,
-  y = x2Position + railSpacing / 2 - 6mm,
-  z = footZ + endMargin,
-  color = steel,
-)
+leftVerticalFront = drilledRail(length = railLength, height = railHeight)
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> rotate(axis = Z, angle = 90deg, global = true)
+  |> translate(
+       x = -towerCenter + profileWide / 2,
+       y = x1Position - (railSpacing / 2) - 6mm,
+       z = footZ + endMargin,
+       global = true,
+     )
+leftVerticalRear = drilledRail(length = railLength, height = railHeight)
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> rotate(axis = Z, angle = 90deg, global = true)
+  |> translate(
+       x = -towerCenter + profileWide / 2,
+       y = x1Position + railSpacing / 2 - 6mm,
+       z = footZ + endMargin,
+       global = true,
+     )
+rightVerticalFront = drilledRail(length = railLength, height = railHeight)
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> rotate(axis = Z, angle = -90deg, global = true)
+  |> translate(
+       x = towerCenter - (profileWide / 2),
+       y = x2Position - (railSpacing / 2) + 6mm,
+       z = footZ + endMargin,
+       global = true,
+     )
+rightVerticalRear = drilledRail(length = railLength, height = railHeight)
+  |> rotate(axis = X, angle = 90deg, global = true)
+  |> rotate(axis = Z, angle = -90deg, global = true)
+  |> translate(
+       x = towerCenter - (profileWide / 2),
+       y = x2Position + railSpacing / 2 + 6mm,
+       z = footZ + endMargin,
+       global = true,
+     )
 
 // Named export lets layout.kcl reuse this structural assembly.
 export frameBodies = [
@@ -404,9 +1115,13 @@ export frameBodies = [
   rightRailInner,
   rightRailOuter,
   leftBlockInner,
+  leftShimInner,
   leftBlockOuter,
+  leftShimOuter,
   rightBlockInner,
+  rightShimInner,
   rightBlockOuter,
+  rightShimOuter,
   leftBasePlate,
   rightBasePlate,
   leftUprightFront,

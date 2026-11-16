@@ -1,0 +1,683 @@
+@settings(defaultLengthUnit = mm, kclVersion = 3.0)
+
+import block, pin, tube, pinX from "machining.kcl"
+
+export fn motorCase() {
+  blank = block(
+    w = 42.3mm,
+    d = 42.3mm,
+    h = 48mm,
+    x = -21.15mm,
+    y = -21.15mm,
+    z = -48mm,
+  )
+  bore1 = pin(
+    dia = 2.5mm,
+    length = 5mm,
+    x = -15.5mm,
+    y = -15.5mm,
+    z = -4.5mm,
+  )
+  bore2 = pin(
+    dia = 2.5mm,
+    length = 5mm,
+    x = -15.5mm,
+    y = 15.5mm,
+    z = -4.5mm,
+  )
+  bore3 = pin(
+    dia = 2.5mm,
+    length = 5mm,
+    x = 15.5mm,
+    y = -15.5mm,
+    z = -4.5mm,
+  )
+  bore4 = pin(
+    dia = 2.5mm,
+    length = 5mm,
+    x = 15.5mm,
+    y = 15.5mm,
+    z = -4.5mm,
+  )
+  return subtract(blank, tools = [bore1, bore2, bore3, bore4])
+}
+
+export fn motor() {
+  caseBody = motorCase()
+  pilot = pin(
+    dia = 22mm,
+    length = 2mm,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  roundShaft = pin(
+    dia = 5mm,
+    length = 22mm,
+    x = 0mm,
+    y = 0mm,
+    z = 2mm,
+  )
+  shaft = subtract(
+    roundShaft,
+    tools = block(
+      w = 2mm,
+      d = 6mm,
+      h = 16mm,
+      x = 2mm,
+      y = -3mm,
+      z = 9mm,
+    ),
+  )
+  return union([caseBody, pilot, shaft])
+    |> appearance(color = '#394652')
+}
+
+export fn beltBridge(spacing) {
+  blank = block(
+    w = spacing + 20mm,
+    d = 44mm,
+    h = 6mm,
+    x = -spacing / 2 - 10mm,
+    y = -22mm,
+    z = 0mm,
+  )
+  bore1 = pin(
+    dia = 3.4mm,
+    length = 8mm,
+    x = -15.5mm,
+    y = -15.5mm,
+    z = -1mm,
+  )
+  bore2 = pin(
+    dia = 3.4mm,
+    length = 8mm,
+    x = -15.5mm,
+    y = 15.5mm,
+    z = -1mm,
+  )
+  bore3 = pin(
+    dia = 3.4mm,
+    length = 8mm,
+    x = 15.5mm,
+    y = -15.5mm,
+    z = -1mm,
+  )
+  bore4 = pin(
+    dia = 3.4mm,
+    length = 8mm,
+    x = 15.5mm,
+    y = 15.5mm,
+    z = -1mm,
+  )
+  bore5 = pin(
+    dia = 22.5mm,
+    length = 8mm,
+    x = 0mm,
+    y = 0mm,
+    z = -1mm,
+  )
+  bore6 = pin(
+    dia = 5.5mm,
+    length = 8mm,
+    x = -spacing / 2,
+    y = -12mm,
+    z = -1mm,
+  )
+  bore7 = pin(
+    dia = 5.5mm,
+    length = 8mm,
+    x = -spacing / 2,
+    y = 12mm,
+    z = -1mm,
+  )
+  bore8 = pin(
+    dia = 5.5mm,
+    length = 8mm,
+    x = spacing / 2,
+    y = -12mm,
+    z = -1mm,
+  )
+  bore9 = pin(
+    dia = 5.5mm,
+    length = 8mm,
+    x = spacing / 2,
+    y = 12mm,
+    z = -1mm,
+  )
+  return subtract(
+    blank,
+    tools = [
+      bore1,
+      bore2,
+      bore3,
+      bore4,
+      bore5,
+      bore6,
+      bore7,
+      bore8,
+      bore9
+    ],
+  )
+}
+
+export fn idlerBridge(spacing) {
+  blank = block(
+    w = spacing + 20mm,
+    d = 32mm,
+    h = 6mm,
+    x = -spacing / 2 - 10mm,
+    y = -16mm,
+    z = 0mm,
+  )
+  bore1 = pin(
+    dia = 5.2mm,
+    length = 8mm,
+    x = 0mm,
+    y = 0mm,
+    z = -1mm,
+  )
+  bore2 = pin(
+    dia = 5.5mm,
+    length = 8mm,
+    x = -spacing / 2,
+    y = -8mm,
+    z = -1mm,
+  )
+  bore3 = pin(
+    dia = 5.5mm,
+    length = 8mm,
+    x = -spacing / 2,
+    y = 8mm,
+    z = -1mm,
+  )
+  bore4 = pin(
+    dia = 5.5mm,
+    length = 8mm,
+    x = spacing / 2,
+    y = -8mm,
+    z = -1mm,
+  )
+  bore5 = pin(
+    dia = 5.5mm,
+    length = 8mm,
+    x = spacing / 2,
+    y = 8mm,
+    z = -1mm,
+  )
+  return subtract(blank, tools = [bore1, bore2, bore3, bore4, bore5])
+}
+
+export fn towerMotorPlate() {
+  blank = block(
+    w = 48mm,
+    d = 88mm,
+    h = 6mm,
+    x = -24mm,
+    y = -44mm,
+    z = 0mm,
+  )
+  bore1 = pin(
+    dia = 3.4mm,
+    length = 8mm,
+    x = -15.5mm,
+    y = -15.5mm,
+    z = -1mm,
+  )
+  bore2 = pin(
+    dia = 3.4mm,
+    length = 8mm,
+    x = -15.5mm,
+    y = 15.5mm,
+    z = -1mm,
+  )
+  bore3 = pin(
+    dia = 3.4mm,
+    length = 8mm,
+    x = 15.5mm,
+    y = -15.5mm,
+    z = -1mm,
+  )
+  bore4 = pin(
+    dia = 3.4mm,
+    length = 8mm,
+    x = 15.5mm,
+    y = 15.5mm,
+    z = -1mm,
+  )
+  bore5 = pin(
+    dia = 22.5mm,
+    length = 8mm,
+    x = 0mm,
+    y = 0mm,
+    z = -1mm,
+  )
+  bore6 = pin(
+    dia = 5.5mm,
+    length = 8mm,
+    x = 10mm,
+    y = -36mm,
+    z = -1mm,
+  )
+  bore7 = pin(
+    dia = 5.5mm,
+    length = 8mm,
+    x = 10mm,
+    y = 36mm,
+    z = -1mm,
+  )
+  bore8 = pin(
+    dia = 5.5mm,
+    length = 8mm,
+    x = -10mm,
+    y = -36mm,
+    z = -1mm,
+  )
+  bore9 = pin(
+    dia = 5.5mm,
+    length = 8mm,
+    x = -10mm,
+    y = 36mm,
+    z = -1mm,
+  )
+  return subtract(
+    blank,
+    tools = [
+      bore1,
+      bore2,
+      bore3,
+      bore4,
+      bore5,
+      bore6,
+      bore7,
+      bore8,
+      bore9
+    ],
+  )
+}
+
+export fn wheel() {
+  lower = tube(od = 15mm, id = 5mm, length = 1.5mm)
+  rim = tube(od = 12.22mm, id = 5mm, length = 11mm)
+    |> translate(z = 1.5mm, global = true)
+  upper = tube(od = 15mm, id = 5mm, length = 1.5mm)
+    |> translate(z = 12.5mm, global = true)
+  return union([lower, rim, upper])
+}
+
+// Two side screws below the belt draw the jaw against the 9 mm-wide run.
+// The vertical pair secures the fixed half to the moving carriage.
+export fn beltClamp() {
+  blank = block(
+    w = 13.9mm,
+    d = 32mm,
+    h = 17mm,
+    x = -8mm,
+    y = -16mm,
+    z = 0mm,
+  )
+  mountA = pin(
+    dia = 3.4mm,
+    length = 19mm,
+    x = 0mm,
+    y = -10mm,
+    z = -1mm,
+  )
+  mountB = pin(
+    dia = 3.4mm,
+    length = 19mm,
+    x = 0mm,
+    y = 10mm,
+    z = -1mm,
+  )
+  tapA = pinX(
+    dia = 2.5mm,
+    length = 9mm,
+    x = -2mm,
+    y = -7mm,
+    z = 2.8mm,
+  )
+  tapB = pinX(
+    dia = 2.5mm,
+    length = 9mm,
+    x = -2mm,
+    y = 7mm,
+    z = 2.8mm,
+  )
+  return subtract(blank, tools = [mountA, mountB, tapA, tapB])
+}
+
+export fn beltJaw() {
+  blank = block(
+    w = 4mm,
+    d = 32mm,
+    h = 15mm,
+    x = 7.35mm,
+    y = -16mm,
+    z = 0mm,
+  )
+  a = pinX(
+    dia = 3.4mm,
+    length = 6mm,
+    x = 6.35mm,
+    y = -7mm,
+    z = 2.8mm,
+  )
+  b = pinX(
+    dia = 3.4mm,
+    length = 6mm,
+    x = 6.35mm,
+    y = 7mm,
+    z = 2.8mm,
+  )
+  return subtract(blank, tools = [a, b])
+}
+
+export fn cornerPlate() {
+  blank = block(
+    w = 56mm,
+    d = 56mm,
+    h = 4mm,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  bore1 = pin(
+    dia = 5.5mm,
+    length = 6mm,
+    x = 10mm,
+    y = 42mm,
+    z = -1mm,
+  )
+  bore2 = pin(
+    dia = 5.5mm,
+    length = 6mm,
+    x = 42mm,
+    y = 10mm,
+    z = -1mm,
+  )
+  bore3 = pin(
+    dia = 5.5mm,
+    length = 6mm,
+    x = 10mm,
+    y = 10mm,
+    z = -1mm,
+  )
+  bore4 = pin(
+    dia = 65mm,
+    length = 6mm,
+    x = 56mm,
+    y = 56mm,
+    z = -1mm,
+  )
+  return subtract(blank, tools = [bore1, bore2, bore3, bore4])
+}
+
+export fn switchCase() {
+  blank = block(
+    w = 19.8mm,
+    d = 10.2mm,
+    h = 6.4mm,
+    x = -9.9mm,
+    y = -2.9mm,
+    z = 0mm,
+  )
+  bore1 = pin(
+    dia = 2.35mm,
+    length = 9mm,
+    x = -4.75mm,
+    y = 0mm,
+    z = -1mm,
+  )
+  bore2 = pin(
+    dia = 2.35mm,
+    length = 9mm,
+    x = 4.75mm,
+    y = 0mm,
+    z = -1mm,
+  )
+  return subtract(blank, tools = [bore1, bore2])
+}
+
+export fn switchBracket() {
+  blank = block(
+    w = 34mm,
+    d = 18mm,
+    h = 4mm,
+    x = -17mm,
+    y = -8mm,
+    z = -4mm,
+  )
+  bore1 = pin(
+    dia = 2.2mm,
+    length = 6mm,
+    x = -4.75mm,
+    y = 0mm,
+    z = -5mm,
+  )
+  bore2 = pin(
+    dia = 2.2mm,
+    length = 6mm,
+    x = 4.75mm,
+    y = 0mm,
+    z = -5mm,
+  )
+  bore3 = pin(
+    dia = 3.4mm,
+    length = 6mm,
+    x = 13mm,
+    y = 3mm,
+    z = -5mm,
+  )
+  return subtract(blank, tools = [bore1, bore2, bore3])
+}
+
+export fn coupler() {
+  blank = pin(
+    dia = 19mm,
+    length = 25mm,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  lower = pin(
+    dia = 8mm,
+    length = 13.5mm,
+    x = 0mm,
+    y = 0mm,
+    z = -1mm,
+  )
+  upper = pin(
+    dia = 5mm,
+    length = 14mm,
+    x = 0mm,
+    y = 0mm,
+    z = 12mm,
+  )
+  upperTap = pinX(
+    dia = 2.5mm,
+    length = 10mm,
+    x = 1mm,
+    y = 0mm,
+    z = 19mm,
+  )
+  lowerTap = pinX(
+    dia = 2.5mm,
+    length = 10mm,
+    x = 1mm,
+    y = 0mm,
+    z = 6mm,
+  )
+  return subtract(blank, tools = [lower, upper, upperTap, lowerTap])
+}
+
+export fn nutFlange() {
+  blank = block(
+    w = 28mm,
+    d = 32mm,
+    h = 5mm,
+    x = -14mm,
+    y = -16mm,
+    z = 0mm,
+  )
+  bore1 = pin(
+    dia = 8mm,
+    length = 7mm,
+    x = 0mm,
+    y = 0mm,
+    z = -1mm,
+  )
+  bore2 = pin(
+    dia = 3.4mm,
+    length = 7mm,
+    x = -9mm,
+    y = -10mm,
+    z = -1mm,
+  )
+  bore3 = pin(
+    dia = 3.4mm,
+    length = 7mm,
+    x = -9mm,
+    y = 10mm,
+    z = -1mm,
+  )
+  bore4 = pin(
+    dia = 3.4mm,
+    length = 7mm,
+    x = 9mm,
+    y = -10mm,
+    z = -1mm,
+  )
+  bore5 = pin(
+    dia = 3.4mm,
+    length = 7mm,
+    x = 9mm,
+    y = 10mm,
+    z = -1mm,
+  )
+  return subtract(blank, tools = [bore1, bore2, bore3, bore4, bore5])
+}
+
+export fn drilledRail(length, height) {
+  rail = block(
+    w = 12mm,
+    d = length,
+    h = height,
+    x = 0mm,
+    y = 0mm,
+    z = 0mm,
+  )
+  first = pin(
+    dia = 3.5mm,
+    length = height + 2mm,
+    x = 6mm,
+    y = 12.5mm,
+    z = -1mm,
+  )
+  bores = patternLinear3d(
+    first,
+    instances = floor(length / 25mm),
+    distance = 25mm,
+    axis = Y,
+  )
+  counter = pin(
+    dia = 6mm,
+    length = 4.5mm,
+    x = 6mm,
+    y = 12.5mm,
+    z = height - 3.5mm,
+  )
+  seats = patternLinear3d(
+    counter,
+    instances = floor(length / 25mm),
+    distance = 25mm,
+    axis = Y,
+  )
+  drilled = subtract(rail, tools = bores)
+  return subtract(drilled, tools = seats)
+    |> appearance(color = '#444E5C')
+}
+
+export fn wrap(radius, rear) {
+  ring = tube(od = 2 * radius + 1.4mm, id = 2 * radius - 1.4mm, length = 9mm)
+  cutter = block(
+    w = 24mm,
+    d = 12mm,
+    h = 11mm,
+    x = -12mm,
+    y = -6mm - (rear * 6mm),
+    z = -1mm,
+  )
+  return subtract(ring, tools = cutter)
+}
+
+export fn nutShelf(sign) {
+  shelf = block(
+    w = 41mm,
+    d = 32mm,
+    h = 6mm,
+    x = -41mm,
+    y = -16mm,
+    z = -6mm,
+  )
+  nose = block(
+    w = 16mm,
+    d = 32mm,
+    h = 6mm,
+    x = 0mm,
+    y = -16mm,
+    z = -6mm,
+  )
+  base = union([shelf, nose])
+  passage = pin(
+    dia = 15mm,
+    length = 8mm,
+    x = 0mm,
+    y = 0mm,
+    z = -7mm,
+  )
+  a = pin(
+    dia = 3.4mm,
+    length = 8mm,
+    x = -9mm,
+    y = -10mm,
+    z = -7mm,
+  )
+  b = pin(
+    dia = 3.4mm,
+    length = 8mm,
+    x = -9mm,
+    y = 10mm,
+    z = -7mm,
+  )
+  c = pin(
+    dia = 3.4mm,
+    length = 8mm,
+    x = 9mm,
+    y = -10mm,
+    z = -7mm,
+  )
+  e = pin(
+    dia = 3.4mm,
+    length = 8mm,
+    x = 9mm,
+    y = 10mm,
+    z = -7mm,
+  )
+  f = pinX(
+    dia = 2.5mm,
+    length = 13mm,
+    x = -42mm,
+    y = 9mm,
+    z = -3mm,
+  )
+  g = pinX(
+    dia = 2.5mm,
+    length = 13mm,
+    x = -42mm,
+    y = -9mm,
+    z = -3mm,
+  )
+  return subtract(base, tools = [passage, a, b, c, e, f, g])
+    |> rotate(axis = Z, angle = (1 - sign) * 90deg, global = true)
+}
